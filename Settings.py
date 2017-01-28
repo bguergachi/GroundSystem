@@ -3,6 +3,7 @@
 #@author: Alejandra Zavala
 
 from tkinter import *
+#from Serial import *
 global imp, met, portLab, ser1,ser2,ser3
 
 #***************FUNCTIONS************************
@@ -12,8 +13,6 @@ def hover_color(widget, color): # function changes color of button when hovering
 
 def close_popup(root):
     root.destroy()
-
-
 
 def cancel_confirm():
     popup = Tk()
@@ -39,8 +38,31 @@ def update_confirm():
     update_bttn=Button(popup,text= "OK")
     update_bttn.bind("<Button-1>", lambda event: close_popup(popup))
     update_bttn.pack()
-
     return()
+
+def disable_check(var1,var2):
+    B1= var1.get()
+    B2= var2.get()
+    if ((B1 and B2)==1):
+        popup = Tk()
+        popup.geometry('200x70')
+        popup.title('ERROR!')
+
+        error_txt = Label(popup, text="ERROR:Select only ONE\n option. ")
+        error_txt.pack()
+
+        update_bttn = Button(popup, text="OK")
+        update_bttn.bind("<Button-1>", lambda event: close_popup(popup))
+        update_bttn.pack()
+    return()
+
+def avail_ports():
+    return()
+
+def select_port():
+    return()
+
+
 
 # *****************************GUI PORTION************************************
 #*****************************************************************************
@@ -56,11 +78,15 @@ Frame1.grid(row = 0, column = 0, rowspan = 3, columnspan = 2, sticky = W+E+N+S, 
 #************** UNITS SLECTION SUBMENU***********************************
 Units = Label(root, text = "Unit Selection", bg="khaki").grid(row=0,column=0)
 imp = IntVar()
-imperial = Checkbutton(root, text = "imperial",anchor = SW,width = 10,bg ="khaki", variable = imp,onvalue = 1, offvalue = 0).grid(row = 1, column = 0)
-
 met = IntVar()
-metric = Checkbutton(root,text ="metric",anchor= SW, width = 10, bg ="khaki",variable = met,onvalue = 1, offvalue = 0).grid(row=2,column=0)
 
+imperial = Checkbutton(root, text = "imperial",anchor = SW,width = 10,bg ="khaki", variable = imp,onvalue = 1, offvalue = 0, command = disable_check(imp,met))
+#imperial.bind("<Button-1>", lambda event: disable_check(imp,met))
+imperial.grid(row = 1, column = 0)
+
+metric = Checkbutton(root,text ="metric",anchor= SW, width = 10, bg ="khaki",variable = met,onvalue = 1, offvalue = 0, command= disable_check(imp,met))
+#metric.bind("<Button-1>", lambda event: disable_check(imp,met))
+metric.grid(row=2,column=0)
 #****************************************************************************
 
 
@@ -82,13 +108,13 @@ Frame2 = Frame(root, bg="navy",relief="sunken", width=420, height=30)
 Frame2.grid(row = 7, column = 0, rowspan = 1, columnspan = 3, sticky = W+E+N+S)
 Label(root, bg ="navy").grid(row=7, column=0)
 
-update = Button(root, text =" Update Settings ", width = 15, height=1)
+update = Button(root, text =" Update Settings ", width = 20, height=1)
 update.bind("<Button-1>",lambda event: update_confirm())
 update.bind("<B1-Motion>", lambda event:hover_color(update,"green"))
 update.grid(row=7, column = 2)
 
 cancel= Button(root, text =" Cancel", width = 10, height=1)
-cancel.bind("<Button-1>",lambda event: update_confirm())
+cancel.bind("<Button-1>",lambda event: cancel_confirm())
 cancel.grid(row=7,column= 0)
 
 root.mainloop()
