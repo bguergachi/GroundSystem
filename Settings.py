@@ -10,6 +10,35 @@ global imp, met, portLab, ser1,ser2,ser3
 def hover_color(widget, color, event): # function changes color of button when hovering above it
     widget.config(foreground=color)
 
+def close_popup(root):
+    root.destroy()
+
+
+
+def cancel_confirm():
+    popup = Tk()
+    popup.geometry('75*50')
+    popup.title('Abandon Settings')
+
+    cancel_txt= Label(popup, text="No unsaved changes will be applied. ")
+    cancel_txt.pack()
+
+    cancel_bttn= Button(popup,text= "OK", command = close_popup(popup))
+    cancel_bttn.pack()
+    return()
+
+def update_confirm():
+    popup = Tk()
+    popup.geometry('50*50')
+    popup.title('Confirm Updates')
+
+    update_txt=Label(popup, text="New settings have been saved. ")
+    update_txt.pack()
+
+    update_bttn=Button(popup,text= "OK", command = close_popup(popup))
+    update_bttn.pack()
+
+    return()
 
 
 root = Tk() #root is the "name of the window that will contain the GUI
@@ -51,7 +80,7 @@ Label(root, bg ="navy").grid(row=7, column=0)
 
 update = Button(root, text =" Update Settings ", width = 15, height=1)
 update.grid(row=7, column = 2)
-update.bind("<Enter>",hover_color())
+update.bind("<Enter>",hover_color(update,"green",'Motion>'))
 
 cancel= Button(root, text =" Cancel", width = 10, height=1)
 cancel.grid(row=7,column= 0)
