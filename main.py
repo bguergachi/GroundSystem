@@ -4,6 +4,7 @@ from time import sleep
 import os,sys,random
 from PIL import ImageTk,Image
 
+
 '''
 
     This class is used to display the main window
@@ -33,10 +34,13 @@ class Display:
         self.__lastMesgTime = StringVar()
 
 
+
         self.printLabel()
         self.statusBar()
         self.SettingsImageButtons()
         self.scrollButtons()
+
+
 
 
 
@@ -51,6 +55,9 @@ class Display:
                      bd=1, relief=SUNKEN,width = 60)
         time.pack_propagate(False)
         time.pack(side=TOP, anchor=W)
+
+        testFrame = Frame(self.__master, height=250, width=422,bg="white")
+        testFrame.place(x=2,y=25)
 
 
 
@@ -120,8 +127,8 @@ class Display:
         settingsCanvas = Canvas(self.__master, height=(width-78)/2-4, width=35, background="SystemButtonFace", borderwidth=2,
                            relief="raised")
         settingsCanvas.create_text((15, (width-78)/4-15), angle="90", anchor="ne", text=settingsLabel, fill="SystemButtonText", font=textFont)
-        settingsCanvas.bind("<ButtonPress-1>", lambda ev: ev.widget.configure(relief="sunken"))
-        settingsCanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief="raised"))
+        settingsCanvas.bind("<ButtonPress-1>", lambda ev: ev.widget.configure(relief=SUNKEN))
+        settingsCanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief=RAISED))
         settingsCanvas.place(x=height-40,y=0)
 
         #Images button built as a canvas
@@ -130,8 +137,8 @@ class Display:
                         relief="raised")
         Imagecanvas.create_text((15, (width - 78) / 4-15), angle="90", anchor="ne", text=ImageLabel, fill="SystemButtonText",
                            font=textFont)
-        Imagecanvas.bind("<ButtonPress-1>", lambda ev: ev.widget.configure(relief="sunken"))
-        Imagecanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief="raised"))
+        Imagecanvas.bind("<ButtonPress-1>", lambda ev: ev.widget.configure(relief=SUNKEN))
+        Imagecanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief=RAISED))
         Imagecanvas.place(x=height-40,y=(width-78)/2+2)
 
 
