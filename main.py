@@ -13,7 +13,7 @@ from PIL import ImageTk,Image
 height = 480
 width = 320
 statusBG = 'cyan'
-#hey
+
 
 
 
