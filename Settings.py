@@ -3,7 +3,6 @@
 #@author: Alejandra Zavala
 
 from tkinter import *
-#from Serial import *
 global imp, met, portLab, ser1,ser2,ser3
 
 #***************FUNCTIONS************************
