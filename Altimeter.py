@@ -7,17 +7,17 @@ def window (main):
     width=422
     root.geometry('{}x{}'.format(width, height))
 
-def printaltitude(event):
-    print("shit this works")
+def printaltitude(e):
+    sensor.config(text='blue')
 
-def printtemperature():
-    sensor.config(text='shazzy')
+def printtemperature(e):
+    sensor.config(text='red')
 
-def printpressure(event):
-    print("Shit this works!")
+def printpressure(e):
+    sensor.config(text='orange')
 
-def printairspeed(event):
-    print("Shit his works!")
+def printairspeed(e):
+    sensor.config(text='green')
 
 root = Tk()
 root.resizable(width=False, height=False)
@@ -37,27 +37,30 @@ metricFrame= Frame(mainFrame, height=250, width=240, bg='cyan')
 metricFrame.pack_propagate(False)
 metricFrame.pack(side=LEFT, anchor=W)
 
-sensor = Label(metricFrame).pack()
+sensor = Label(metricFrame, height=50,width=200, font='size, 20', text='shiaf')
+sensor.place(relx=0.5, rely=0.5, anchor=CENTER)
+sensor.pack()
 
 # This is the configuration for the Altitude Button. It includes the location, size of font, and the print command
-altitude = Button(buttonFrame, text='Altitude', command = printaltitude, bg='red', fg='white')
+altitude = Button(buttonFrame, text='Altitude', bg='red', fg='white')
 altitude.bind("<Button-1>", printaltitude)
 altitude.config(font=("times,12"))
 altitude.pack(side=BOTTOM, fill=BOTH, anchor=W)
 
 # This is the configuration for the Temperature Button. It includes the location, size of font, and the print command
-temperature = Button(buttonFrame, text='Temperature', command = printtemperature, bg='cyan', fg='black')
+temperature = Button(buttonFrame, text='Temperature', bg='cyan', fg='black')
+temperature.bind("<Button-1>", printtemperature)
 temperature.config(font=("times,12"))
 temperature.pack(side=BOTTOM, fill=BOTH, anchor=W)
 
 # This is the configuration for the Pressure Button. It includes the location, size of font, and the print command
-pressure = Button(buttonFrame, text='Pressure', command = printpressure, bg='red', fg='white')
+pressure = Button(buttonFrame, text='Pressure', bg='red', fg='white')
 pressure.bind("<Button-1>", printpressure)
 pressure.config(font=("times,12"))
 pressure.pack(side=BOTTOM, fill=BOTH, anchor=W)
 
 # This is the configuration for the Airspeed Button. It includes the location, size of font, and the print command
-airspeed = Button(buttonFrame, text='Airspeed', command = printairspeed, bg='cyan', fg='black')
+airspeed = Button(buttonFrame, text='Airspeed', bg='cyan', fg='black')
 airspeed.bind("<Button-1>", printairspeed)
 airspeed.config(font=("times,12"))
 airspeed.pack(side=BOTTOM, fill=BOTH, anchor=W)
