@@ -6,7 +6,7 @@ from PIL import ImageTk,Image
 
 root = Tk()
 
-'''Defines frame dimensions'''
+#Defines frame dimensions
 
 height=250
 width=422
@@ -16,14 +16,14 @@ root.geometry('{}x{}'.format(width, height))
 frame = Frame(root)
 frame.pack()
 
-'''Shows Map'''
+#Loads Map
 
-load = Image.open("Map Image.png")
-load.thumbnail(size=(width, height))
+load_map = Image.open("Map Image.png")
+load_map.thumbnail(size=(width, height))
 
-map = ImageTk.PhotoImage(load)
-label = Label(frame, image=map)
-label.pack()
+map = ImageTk.PhotoImage(load_map)
+label_map = Label(frame, image=map)
+label_map.pack()
 
 '''Coordinates of map corners
 topleft = 32.955651, -106.930123
@@ -32,7 +32,7 @@ botleft = 32.937436, -106.930123
 botright = 32.937436, -106.892924
 '''
 
-'''Sets length and width of map frame in terms of latitude and longitude coordinates'''
+#Sets length and width of map frame in terms of latitude and longitude coordinates
 latitude_top = 32.955651
 latitude_bot = 32.937436
 latitude_length = latitude_top - latitude_bot
@@ -41,21 +41,46 @@ longitude_right = 106.892924
 longitude_left = 106.930123
 longitude_length = longitude_left - longitude_right
 
-'''Derives proportionality between latitude/longitude coordinates and x,y direction pixels'''
+#Derives proportionality between latitude/longitude coordinates and x,y direction pixels
 y_relation = height/latitude_length
 x_relation = width/longitude_length
 
-'''Converts latitude/longitude coordinates to x,y parameters'''
-
-def convert(latitude, longitude):
-    y = (latitude-latitude_bot)*y_relation
+#Converts latitude/longitude coordinates to x,y parameters
+def convert_pixel(latitude, longitude):
+    y = (latitude_top-latitude)*y_relation
     x = (longitude_left-(longitude*(-1)))*x_relation
     return x, y
 
-'''Gets the latitude and longitude coordinates'''
+'''Gets the latitude and longitude coordinates
 getLatitude()
 getLongitude()
-'''Eg. latitude = 32.949512, longitude = -106.911585'''
+'''
+
+#Random test coordinates
+def getRandomNumber():
+    rand_lat = round(random.uniform(latitude_bot, latitude_top), 6)
+    rand_long = round(random.uniform(longitude_right, longitude_left), 6)*(-1)
+    return rand_lat, rand_long
+
+random_coordinate = getRandomNumber()
+print(random_coordinate)
+
+pixel_values = convert_pixel(random_coordinate[0], random_coordinate[1])
+print(pixel_values)
+
+#Seperates integer and decimals
+pixel_integer = [int(pixel_values[0]), int(pixel_values[1])]
+pixel_decimals = (pixel_values[0] % 1, pixel_values[1] % 1)
+print(pixel_integer)
+print(pixel_decimals)
+
+#Loads Crosshair
+load_crosshair = Image.open("Crosshair.png")
+load_crosshair.thumbnail(size=(10, 10))
+crosshair = ImageTk.PhotoImage(load_crosshair)
+
+label_crosshair = Label(frame, image=crosshair)
+label_crosshair.place(x=pixel_integer[0], y=pixel_integer[1])
 
 root.mainloop()
 
