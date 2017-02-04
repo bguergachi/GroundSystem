@@ -3,7 +3,7 @@
 #@author: Alejandra Zavala
 
 from tkinter import *
-global imp, met, portLab, ser1,ser2,ser3
+global imp, met, imperial,metric
 
 #***************FUNCTIONS************************
 
@@ -39,24 +39,8 @@ def update_confirm():
     update_bttn.pack()
     return()
 
-def disable_check(var1,var2):
-    B1= var1.get()
-    B2= var2.get()
-    if ((B1 and B2)==1):
-        popup = Tk()
-        popup.geometry('200x70')
-        popup.title('ERROR!')
-
-        error_txt = Label(popup, text="ERROR:Select only ONE\n option. ")
-        error_txt.pack()
-
-        update_bttn = Button(popup, text="OK")
-        update_bttn.bind("<Button-1>", lambda event: close_popup(popup))
-        update_bttn.pack()
-    return()
-
-def avail_ports():
-    return()
+def get_availPorts():
+    return("port1,port2")
 
 def select_port():
     return()
@@ -71,20 +55,19 @@ root.geometry('422x250') # this function defines the size of the window
 root.title('Settings Menu') # this function names the overall window
 root.configure( background = "snow",)
 
-frame1 = Frame(root, bg="khaki",relief="sunken", width=100, height=220)
-frame1.grid(row = 0, column = 0, rowspan = 3, columnspan = 2, sticky = W+E+N+S, padx= 5)
+frame1 = Frame(root, bg="khaki",relief="sunken", width=100, height=220)#everything after root is juts formattign settings
+frame1.grid(row = 0, column = 0, rowspan = 3, columnspan = 2, sticky = W+E+N+S, padx= 5) # formatting locations and span of widget
 
 #************** UNITS SLECTION SUBMENU***********************************
-units = Label(root, text = "Unit Selection", bg="khaki").grid(row=0,column=0)
-imp = IntVar()
-met = IntVar()
+unit_label = Label(root, text = "Unit Selection", bg="khaki").grid(row=0,column=0)
+units= IntVar()
 
-imperial = Checkbutton(root, text = "imperial",anchor = SW,width = 10,bg ="khaki", variable = imp)
-imperial.bind("<Button-1>", lambda event: disable_check(imp,met))
+imperial = Radiobutton(root, text = "imperial",anchor = SW,width = 10,bg ="khaki", variable = units,value =1)
+#imperial.bind("<Button-1>", lambda event: disable_check(imperial,metric))
 imperial.grid(row = 1, column = 0)
 
-metric = Checkbutton(root,text ="metric",anchor= SW, width = 10, bg ="khaki",variable = met)
-metric.bind("<Button-1>", lambda event: disable_check(imp,met))
+metric = Radiobutton(root,text ="metric",anchor= SW, width = 10, bg ="khaki",variable = units,value=2)
+#metric.bind("<Button-1>", lambda event: disable_check(imperial,metric))
 metric.grid(row=2,column=0)
 #****************************************************************************
 
