@@ -31,27 +31,31 @@ topright = 32.955651, -106.892924
 botleft = 32.937436, -106.930123
 botright = 32.937436, -106.892924
 '''
-'''Sets length and width of map frame in terms of longitude and latitude coordinates'''
-longitude_right = 106.892924
-longitude_left = 106.930123
-longitude_length = longitude_left - longitude_right
 
+'''Sets length and width of map frame in terms of latitude and longitude coordinates'''
 latitude_top = 32.955651
 latitude_bot = 32.937436
 latitude_length = latitude_top - latitude_bot
 
-'''Derives proportionality between longitude/latitude coordinates and x,y direction pixels'''
-x_relation = longitude_length/width
-y_relation = latitude_length/height
+longitude_right = 106.892924
+longitude_left = 106.930123
+longitude_length = longitude_left - longitude_right
 
-
+'''Derives proportionality between latitude/longitude coordinates and x,y direction pixels'''
+y_relation = height/latitude_length
+x_relation = width/longitude_length
 
 '''Converts latitude/longitude coordinates to x,y parameters'''
 
-#def convert(latitude, longitude)
+def convert(latitude, longitude):
+    y = (latitude-latitude_bot)*y_relation
+    x = (longitude_left-(longitude*(-1)))*x_relation
+    return x, y
 
-
-
+'''Gets the latitude and longitude coordinates'''
+getLatitude()
+getLongitude()
+'''Eg. latitude = 32.949512, longitude = -106.911585'''
 
 root.mainloop()
 
