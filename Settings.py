@@ -48,13 +48,13 @@ root = Tk() #root is the "name of the window that will contain the GUI
 root.geometry('422x250') # this function defines the size of the window
 root.title('Settings Menu') # this function names the overall window
 root.configure( background = "snow")
-#logo=PhotoImage(file=C:\Users\Alejandra Zavala\Desktop\rocketry.gif)
+logo=PhotoImage(file='rocketry-smaller.gif')
 
 frame1 = Frame(root, bg="khaki",relief="sunken", width=100, height=220)#everything after root is juts formattign settings
 frame1.grid(row = 0, column = 0, rowspan = 3, columnspan = 2, sticky = W+E+N+S, padx= 5) # formatting locations and span of widget
 
 #************** UNITS SLECTION SUBMENU***********************************
-unit_label = Label(root, text = "Unit Selection", bg="goldenrod3",font="Verdana 9 bold").grid(row=0,column=0)#title of subsection
+unit_label = Label(root, text = "Unit Selection", bg="goldenrod3",font="Verdana 9 bold",height=2).grid(row=0,column=0)#title of subsection
 units= IntVar()# variable will hold variable value assigned to each radiobutton
 
 #used radiobutton because they only admit one selection (either metric or imperial)
@@ -66,9 +66,10 @@ metric.grid(row=2,column=0)
 
 # *******************AVAILABLE PORTS LIST ******************************
 frame2 = Frame(root,bg="lightcyan1",borderwidth=5, relief="sunken", width=300, height=220)
-frame2.grid(row = 0, column = 2, rowspan = 7, columnspan = 2, sticky = W+E+N+S)
+frame2.grid(row = 0, column = 2, rowspan = 7, columnspan = 3, sticky = W+E+N+S)
 
-port_Title = Label(root, text= "Port Selection Menu ", bg ="blue4",fg= 'white',font="Verdana 10 bold").grid(row =0, column =2)
+#port_img = Label(root,image=logo,justify=LEFT).grid(row=0,column=3)
+port_Title = Label(root, compound=RIGHT,text= "Port Selection Menu ",image=logo, bg ="blue4",width=275,fg= 'white',font="Verdana 10 bold").grid(row =0, column =2)
 avail = Listbox(root,height=7)
 
 ports = get_availPorts() # function outputs a list with available ports
@@ -76,7 +77,7 @@ ports = get_availPorts() # function outputs a list with available ports
 for port in ports: # for all items in the ports list
     avail.insert(END,port) #insert the item in the listbox
 
-avail.config(width = 25)#formatting
+avail.config(width = 20)#formatting
 avail.bind('<<ListboxSelect>>',lambda event:select_port(avail)) # lamda function gets invoked after <<Event>>
 avail.grid(row=1,column=2,rowspan =5, columnspan = 1)
 
