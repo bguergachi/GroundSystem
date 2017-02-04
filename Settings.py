@@ -76,7 +76,7 @@ for port in ports: # for all items in the ports list
     avail.insert(END,port) #insert the item in the listbox
 
 avail.config(width = 25)#formatting
-avail.bind('<<ListboxSelect>>',lambda event:select_port(avail))
+avail.bind('<<ListboxSelect>>',lambda event:select_port(avail)) # lamda function gets invoked after <<Event>>
 avail.grid(row=1,column=2,rowspan =5, columnspan = 1)
 
 
