@@ -22,7 +22,8 @@ load_map.thumbnail(size=(width, height))
 
 #Loads Crosshair
 load_crosshair = Image.open("Crosshair.png")
-load_crosshair.thumbnail(size=(20, 20))
+crosshair_size = (20, 20)
+load_crosshair.thumbnail(size=(crosshair_size[0], crosshair_size[1]))
 
 '''Coordinates of map corners
 topleft = 32.955651, -106.930123
@@ -69,13 +70,17 @@ print(pixel_integer)
 print(pixel_decimals)
 
 #Displays Map and Crosshair
-load_map.paste(load_crosshair,(pixel_integer[1], pixel_integer[0]), load_crosshair)
+load_map.paste(load_crosshair,(pixel_integer[1]-int(crosshair_size[0]/2), pixel_integer[0]-int(crosshair_size[1]/2)), load_crosshair) #Positions and blends Crosshair with map
 map = ImageTk.PhotoImage(load_map)
 crosshair = ImageTk.PhotoImage(load_crosshair)
 label_map = Label(frame, image=map)
 label_map.pack()
 
-
+#Notifies user if crosshair leaves map
+if random_coordinate[0] > latitude_top or random_coordinate[0] < latitude_bot:
+    print("Rocket has left competition area!!!")
+elif random_coordinate[1]*(-1) > longitude_left or random_coordinate[1]*(-1) < longitude_right:
+    print("Rocket has left competition area!!!")
 
 root.mainloop()
 
