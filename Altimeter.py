@@ -17,7 +17,7 @@ def printpressure(event):
     print("Shit this works!")
 
 def printairspeed(event):
-    print("Shit this works!")
+    print("Shit his works!")
 
 root = Tk()
 root.resizable(width=False, height=False)
