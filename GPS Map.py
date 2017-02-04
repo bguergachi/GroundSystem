@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter.font as tkfont
+import tkinter.messagebox
 from time import sleep
 import os,sys,random
 from PIL import ImageTk,Image
@@ -25,7 +26,7 @@ load_crosshair = Image.open("Crosshair.png")
 crosshair_size = (20, 20)
 load_crosshair.thumbnail(size=(crosshair_size[0], crosshair_size[1]))
 
-'''Coordinates of map corners
+'''Coordinates of Map corners
 topleft = 32.955651, -106.930123
 topright = 32.955651, -106.892924
 botleft = 32.937436, -106.930123
@@ -78,9 +79,12 @@ label_map.pack()
 
 #Notifies user if crosshair leaves map
 if random_coordinate[0] > latitude_top or random_coordinate[0] < latitude_bot:
+    tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
     print("Rocket has left competition area!!!")
 elif random_coordinate[1]*(-1) > longitude_left or random_coordinate[1]*(-1) < longitude_right:
+    tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
     print("Rocket has left competition area!!!")
+
 
 root.mainloop()
 
