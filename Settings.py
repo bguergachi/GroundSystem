@@ -33,7 +33,7 @@ def send_settings(): # function that tells status menu which units to display
 
 # need to update once we figure out the uart stuff
 def get_availPorts(): #function outputs list of ports avilable
-    ports = ["port1", "port2", "port3"]
+    ports = ["port1", "port2", "port3", "port4", "port5", "port6"]
     return(ports)
 
 # need to update once we figure out the uart stuff
@@ -47,28 +47,29 @@ def select_port(listb): # sends port selection to pywire
 root = Tk() #root is the "name of the window that will contain the GUI
 root.geometry('422x250') # this function defines the size of the window
 root.title('Settings Menu') # this function names the overall window
-root.configure( background = "snow",)
+root.configure( background = "snow")
+#logo=PhotoImage(file=C:\Users\Alejandra Zavala\Desktop\rocketry.gif)
 
 frame1 = Frame(root, bg="khaki",relief="sunken", width=100, height=220)#everything after root is juts formattign settings
 frame1.grid(row = 0, column = 0, rowspan = 3, columnspan = 2, sticky = W+E+N+S, padx= 5) # formatting locations and span of widget
 
 #************** UNITS SLECTION SUBMENU***********************************
-unit_label = Label(root, text = "Unit Selection", bg="khaki").grid(row=0,column=0)#title of subsection
+unit_label = Label(root, text = "Unit Selection", bg="goldenrod3",font="Verdana 9 bold").grid(row=0,column=0)#title of subsection
 units= IntVar()# variable will hold variable value assigned to each radiobutton
 
 #used radiobutton because they only admit one selection (either metric or imperial)
-imperial = Radiobutton(root, text = "imperial",anchor = SW,width = 10,bg ="khaki", variable = units,value =1)
+imperial = Radiobutton(root, text = "Imperial",font="Verdana 9 bold",anchor = SW,width = 10,bg ="khaki", variable = units,value =1)
 imperial.grid(row = 1, column = 0)
 
-metric = Radiobutton(root,text ="metric",anchor= SW, width = 10, bg ="khaki",variable = units,value=2)
+metric = Radiobutton(root,text ="Metric",font="Verdana 9 bold",anchor= SW, width = 10, bg ="khaki",variable = units,value=2)
 metric.grid(row=2,column=0)
 
 # *******************AVAILABLE PORTS LIST ******************************
 frame2 = Frame(root,bg="lightcyan1",borderwidth=5, relief="sunken", width=300, height=220)
 frame2.grid(row = 0, column = 2, rowspan = 7, columnspan = 2, sticky = W+E+N+S)
 
-port_Title = Label(root, text= "Port Selection Menu ", bg ="lightcyan1").grid(row =0, column =2)
-avail = Listbox(root)
+port_Title = Label(root, text= "Port Selection Menu ", bg ="blue4",fg= 'white',font="Verdana 10 bold").grid(row =0, column =2)
+avail = Listbox(root,height=7)
 
 ports = get_availPorts() # function outputs a list with available ports
 
@@ -82,15 +83,15 @@ avail.grid(row=1,column=2,rowspan =5, columnspan = 1)
 
 
 #************UPDATE/CANCEL BUTTONS *************************************
-Frame2 = Frame(root, bg="navy",relief="sunken", width=420, height=30)
+Frame2 = Frame(root, bg="slate gray",relief="sunken", width=420, height=30)
 Frame2.grid(row = 7, column = 0, rowspan = 1, columnspan = 3, sticky = W+E+N+S)
 Label(root, bg ="navy").grid(row=7, column=0)
 
-update = Button(root, text =" Update Settings ", width = 20, height=1)
+update = Button(root, text =" Update Settings ", width = 20, height=1,relief = RAISED)
 update.bind("<Button-1>",lambda event: update_confirm("New settings \nhave been saved. "))
 update.grid(row=7, column = 2)
 
-cancel= Button(root, text =" Cancel", width = 10, height=1)
+cancel= Button(root, text =" Cancel", width = 10, height=1,relief=GROOVE)
 cancel.bind("<Button-1>",lambda event: update_confirm("Unsaved setting will be lost. "))
 cancel.grid(row=7,column= 0)
 
