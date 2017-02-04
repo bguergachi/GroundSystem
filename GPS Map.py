@@ -7,9 +7,9 @@ from PIL import ImageTk,Image
 root = Tk()
 
 #Defines frame dimensions
-
 height=250
 width=422
+
 root.resizable(width=False, height=False)
 root.geometry('{}x{}'.format(width, height))
 
@@ -17,13 +17,12 @@ frame = Frame(root)
 frame.pack()
 
 #Loads Map
-
 load_map = Image.open("Map Image.png")
 load_map.thumbnail(size=(width, height))
 
-map = ImageTk.PhotoImage(load_map)
-label_map = Label(frame, image=map)
-label_map.pack()
+#Loads Crosshair
+load_crosshair = Image.open("Crosshair.png")
+load_crosshair.thumbnail(size=(20, 20))
 
 '''Coordinates of map corners
 topleft = 32.955651, -106.930123
@@ -49,12 +48,7 @@ x_relation = width/longitude_length
 def convert_pixel(latitude, longitude):
     y = (latitude_top-latitude)*y_relation
     x = (longitude_left-(longitude*(-1)))*x_relation
-    return x, y
-
-'''Gets the latitude and longitude coordinates
-getLatitude()
-getLongitude()
-'''
+    return y, x
 
 #Random test coordinates
 def getRandomNumber():
@@ -74,13 +68,14 @@ pixel_decimals = (pixel_values[0] % 1, pixel_values[1] % 1)
 print(pixel_integer)
 print(pixel_decimals)
 
-#Loads Crosshair
-load_crosshair = Image.open("Crosshair.png")
-load_crosshair.thumbnail(size=(10, 10))
+#Displays Map and Crosshair
+load_map.paste(load_crosshair,(pixel_integer[1], pixel_integer[0]), load_crosshair)
+map = ImageTk.PhotoImage(load_map)
 crosshair = ImageTk.PhotoImage(load_crosshair)
+label_map = Label(frame, image=map)
+label_map.pack()
 
-label_crosshair = Label(frame, image=crosshair)
-label_crosshair.place(x=pixel_integer[0], y=pixel_integer[1])
+
 
 root.mainloop()
 
