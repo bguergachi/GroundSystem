@@ -3,6 +3,7 @@ import tkinter.font as tkfont
 from time import sleep
 import os,sys,random
 from PIL import ImageTk,Image
+import time
 
 
 '''
@@ -30,12 +31,13 @@ class Display:
         #master.overrideredirect(True)
 
         #Variables for time values
-        self.__currentTime = StringVar()
-        self.__lastMesgTime = StringVar()
+        #self.__currentTime = StringVar()
+        #self.__lastMesgTime = StringVar()
 
-
+        self.__time = Label(self.__master)
 
         self.printLabel()
+        self.getTime()
         self.statusBar()
         self.SettingsImageButtons()
         self.scrollButtons()
@@ -50,14 +52,13 @@ class Display:
 
     def printLabel(self):
         # Print label of time and time of last received message
-        time = Label(self.__master,
-                     text="Time:  " + self.getTime()[0].get() + "\t\t\t" + "Time of Last Message:  " + self.getTime()[1].get(),
-                     bd=1, relief=SUNKEN,width = 60)
-        time.pack_propagate(False)
-        time.pack(side=TOP, anchor=W)
+        self.__time.config(bd=1, relief=SUNKEN,width = 60)
+        self.__time.pack_propagate(False)
+        self.__time.pack(side=TOP, anchor=W)
 
-        testFrame = Frame(self.__master, height=250, width=422,bg="white")
-        testFrame.place(x=2,y=25)
+        #testFrame = Frame(self.__master, height=250, width=422,bg="white")
+        #testFrame.place(x=2,y=25)
+
 
 
 
@@ -157,11 +158,12 @@ class Display:
 
     def getTime(self):
 
-        self.__currentTime.set(str(random.randint(0, 24)) + ":" + str(random.randint(0, 60)) + ":" + str(
-            random.randint(0, 60))) # Current time to display
-        self.__lastMesgTime.set(str(random.randint(0, 24)) + ":" + str(random.randint(0, 60)) + ":" + str(
-            random.randint(0, 60)))  # Time of last message
-        return [self.__currentTime, self.__lastMesgTime]
+        ## 12 hour format ##
+        currentTime = time.strftime("%I:%M:%S")# Current time to display
+        lastMesgTime =str(random.randint(0, 24)) + ":" + str(random.randint(0, 60)) + ":" + str(
+            random.randint(0, 60))  # Time of last message
+        self.__time.config(text="Time:  " + currentTime + "\t\t\t" + "Time of Last Message:  " + lastMesgTime)
+        self.__master.after(1000,self.getTime)
 
     def getStopWatch(self):
         return "01:23.1"
