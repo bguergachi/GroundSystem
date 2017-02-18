@@ -22,8 +22,8 @@ def printseparate():
 state = 0
 opened=False
 
-redlight = ImageTk.PhotoImage(Image.open("C:/Users/shiva/PycharmProjects/GroundSystem/redlight.png"))
-greenlight = ImageTk.PhotoImage(Image.open("C:/Users/shiva/PycharmProjects/GroundSystem/greenlight.png"))
+redlight = ImageTk.PhotoImage(Image.open("./Image/redlight.png"))
+greenlight = ImageTk.PhotoImage(Image.open("./Image/greenlight.png"))
 
 def update():
 
@@ -33,8 +33,6 @@ def update():
     if state == 0:
 
         if opened==False:
-
-            print('open image')
 
             panel = Label(root, image=redlight)
             panel.image = redlight
