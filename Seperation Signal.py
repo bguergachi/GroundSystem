@@ -1,10 +1,10 @@
 from tkinter import *
+from PIL import ImageTk, Image
 
 root = Tk()
-root.title("Separation Signal")
 
 def window(main):
-    main.title('Altimeter')
+    main.title('Separation Signal')
     height = 250
     width = 422
     root.geometry('{}x{}'.format(width, height))
@@ -19,31 +19,43 @@ def printseparate():
     global state
     state = 1
 
-mainFrame = Frame(root)
-mainFrame.pack()
-
-var1 = StringVar(mainFrame)
-
-sensor = Label(mainFrame, height=50, width=200, font='size, 25', fg='Gold', textvariable=var1)
-sensor.place(relx=0.5, rely=0.5, anchor=CENTER)
-sensor.pack()
-
 state = 0
+opened=False
+
+redlight = ImageTk.PhotoImage(Image.open("C:/Users/shiva/PycharmProjects/GroundSystem/redlight.png"))
+greenlight = ImageTk.PhotoImage(Image.open("C:/Users/shiva/PycharmProjects/GroundSystem/greenlight.png"))
 
 def update():
-    displayText = ''
 
-    global state
+
+    global root,opened,state,redlight,greenlight
+
     if state == 0:
-        displayText = 'Didnt'
+
+        if opened==False:
+
+            print('open image')
+
+            panel = Label(root, image=redlight)
+            panel.image = redlight
+            panel.pack()
+
+            opened=True
 
     elif state == 1:
-        displayText = 'Separated'
 
-    var1.set(displayText)
-    mainFrame.update()
+        if opened==False:
+
+            panel = Label(root, image=greenlight)
+            panel.image = greenlight
+            panel.pack()
+
+            opened=True
+
+    root.update()
 
 def mainloop():
+
     while True:
         update()
 
