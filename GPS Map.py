@@ -71,12 +71,13 @@ class Map:
         return [self.__rand_lat, self.__rand_long]
 
 
-    # Derives proportionality between latitude/longitude coordinates and x,y direction pixels
-    # Converts latitude/longitude coordinates to x,y pixel parameters
+    # Converts latitude/longitude coordinates to x,y pixels for Crosshair placement
     def convert_pixel(self):
+        # Derives proportionality between latitude/longitude coordinates and x,y direction pixels
         y_relation = height / self.__latitude_length
         x_relation = width / self.__longitude_length
 
+        # Converts latitude/longitude coordinates to x,y pixel parameters
         y = (self.__map_side['top'] - self.__rand_lat) * y_relation
         x = (self.__map_side['left'] - (self.__rand_long))*(-1) * x_relation
 
