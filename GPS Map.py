@@ -18,35 +18,33 @@ largemap_corners = {topleft: [32.979024, -106.967445], topright: [32.979024, -10
 
 class Map:
 
-    # Loads Small Map
-    load_smallmap = Image.open("Map Image.png")
-    load_smallmap.thumbnail(size=(width, height))
-
-    # Loads Large Map
-    load_largemap = Image.open("Large Map.png")
-    load_largemap.thumbnail(size=(width, height))
-
-    # Loads Crosshair
-    load_crosshair = Image.open("Crosshair.png")
-    crosshair_size = (20, 20)
-    load_crosshair.thumbnail(size=(crosshair_size[0], crosshair_size[1]))
-
-    # Coordinates of Small and Large Map sides
-    smallmap_side = {'top': 32.955651, 'bot': 32.937436, 'left': -106.930123, 'right': -106.892924}
-    largemap_side = {'top': 32.979024, 'bot': 32.925260, 'left': -106.967445, 'right': -106.858726}
-    map_side = smallmap_side.copy()  # Map being displayed
-
     # ***************** Instantiate *****************
     def __init__(self, master):
         self.__master = master
+
         # Sets window parameters
         self.__master.resizable(width=False, height=False)
         self.__master.geometry('{}x{}'.format(width, height))
         self.__frame = Frame(self.__master)
         self.__frame.pack()
 
+        # Loads Small Map
+        self.__load_smallmap = Image.open("Map Image.png")
+        self.__load_smallmap.thumbnail(size=(width, height))
+        # Loads Large Map
+        self.__load_largemap = Image.open("Large Map.png")
+        self.__load_largemap.thumbnail(size=(width, height))
+        # Loads Crosshair
+        self.__load_crosshair = Image.open("Crosshair.png")
+        self.__crosshair_size = (20, 20)
+        self.__load_crosshair.thumbnail(size=(self.__crosshair_size[0], self.__crosshair_size[1]))
+
+        # Coordinates of Small and Large Map sides
+        self.__smallmap_side = {'top': 32.955651, 'bot': 32.937436, 'left': -106.930123, 'right': -106.892924}
+        self.__largemap_side = {'top': 32.979024, 'bot': 32.925260, 'left': -106.967445, 'right': -106.858726}
+
         # Runs Map functions
-        self.__map_side = self.smallmap_side.copy()  # Small Map being displayed
+        self.__map_side = self.__smallmap_side.copy()  # Small Map being displayed
         self.frame_dimensions()
         self.__random_coordinate = self.getRandomNumber()
         self.choose_map()
@@ -55,18 +53,13 @@ class Map:
 
     # Sets length, width, and border values of map frame in terms of latitude and longitude coordinates
     def frame_dimensions(self):
-        self.__latitude_top = self.__map_side['top']
-        self.__latitude_bot = self.__map_side['bot']
-        self.__latitude_length = self.__latitude_top - self.__latitude_bot
-
-        self.__longitude_right = self.__map_side['right']
-        self.__longitude_left = self.__map_side['left']
-        self.__longitude_length = (self.__longitude_left - self.__longitude_right)*(-1)
+        self.__latitude_length = self.__map_side['top'] - self.__map_side['bot']
+        self.__longitude_length = (self.__map_side['left'] - self.__map_side['right'])*(-1)
 
     # Random test coordinates
     def getRandomNumber(self):
-        self.__rand_lat = round(random.uniform(self.__latitude_bot, self.__latitude_top), 6)
-        self.__rand_long = round(random.uniform(self.__longitude_right, self.__longitude_left), 6)
+        self.__rand_lat = round(random.uniform(self.__map_side['bot'], self.__map_side['top']), 6)
+        self.__rand_long = round(random.uniform(self.__map_side['right'], self.__map_side['left']), 6)
         print(self.__rand_lat, self.__rand_long)
         return [self.__rand_lat, self.__rand_long]
 
@@ -75,8 +68,8 @@ class Map:
     def convert_pixel(self):
         y_relation = height / self.__latitude_length
         x_relation = width / self.__longitude_length
-        y = (self.__latitude_top - self.__rand_lat) * y_relation
-        x = (self.__longitude_left - (self.__rand_long))*(-1) * x_relation
+        y = (self.__map_side['top'] - self.__rand_lat) * y_relation
+        x = (self.__map_side['left'] - (self.__rand_long))*(-1) * x_relation
         # Seperates integers and decimals
         self.__pixel_integer = [int(y), int(x)]
         print(int(y), int(x))
@@ -85,31 +78,35 @@ class Map:
 
     # Chooses Map and notifies user if Rocket leaves Small Map
     def choose_map(self):
-        if self.__random_coordinate[0] > self.__latitude_top or self.__random_coordinate[0] < self.__latitude_bot:
+        if self.__random_coordinate[0] > self.__map_side['top'] or self.__random_coordinate[0] < self.__map_side['bot']:
             tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
             print("Rocket has left competition area!!!")
-            self.__map_side = self.largemap_side.copy()
-            self.__load_map = self.load_largemap
-        elif self.__random_coordinate[1] < self.__longitude_left or self.__random_coordinate[1] > self.__longitude_right:
+            self.__map_side = self.__largemap_side.copy()
+            self.__load_map = self.__load_largemap
+        elif self.__random_coordinate[1] < self.__map_side['left'] or self.__random_coordinate[1] > self.__map_side['right']:
             tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
             print("Rocket has left competition area!!!")
-            self.__map_side = self.largemap_side.copy()
-            self.__load_map = self.load_largemap
-        elif self.__random_coordinate[0] < self.smallmap_side['top'] or self.__random_coordinate[0] > self.smallmap_side['bot']:
-            self.__map_side = self.smallmap_side.copy()
-            self.__load_map = self.load_smallmap
-        elif self.__random_coordinate[1] > self.smallmap_side['left'] or self.__random_coordinate[1] < self.smallmap_side['right']:
-            self.__map_side = self.smallmap_side.copy()
-            self.__load_map = self.load_smallmap
+            self.__map_side = self.__largemap_side.copy()
+            self.__load_map = self.__load_largemap
+        elif self.__random_coordinate[0] < self.__smallmap_side['top'] or self.__random_coordinate[0] > self.__smallmap_side['bot']:
+            self.__map_side = self.__smallmap_side.copy()
+            self.__load_map = self.__load_smallmap
+        elif self.__random_coordinate[1] > self.__smallmap_side['left'] or self.__random_coordinate[1] < self.__smallmap_side['right']:
+            self.__map_side = self.__smallmap_side.copy()
+            self.__load_map = self.__load_smallmap
 
      # Displays Map and Crosshair
     def display_map(self):
-        self.__load_map.paste(self.load_crosshair, (self.__pixel_integer[1] - int(self.crosshair_size[0] / 2), self.__pixel_integer[0] - int(self.crosshair_size[1] / 2)), self.load_crosshair)  # Positions and blends Crosshair with map
+        self.__load_map.paste(self.__load_crosshair, (self.__pixel_integer[1] - int(self.__crosshair_size[0] / 2), self.__pixel_integer[0] - int(self.__crosshair_size[1] / 2)), self.__load_crosshair)  # Positions and blends Crosshair with map
         map = ImageTk.PhotoImage(self.__load_map)
-        crosshair = ImageTk.PhotoImage(self.load_crosshair)
+        crosshair = ImageTk.PhotoImage(self.__load_crosshair)
         label_map = Label(self.__frame, image=map)
         label_map.pack()
 
+
+root = Tk()
+run_map = Map(root)
+root.mainloop()
 
 #Displays path of Crosshair
 '''
@@ -123,9 +120,5 @@ def getCoordinates():
 
 root.after(0, getCoordinates)
 '''
-
-root = Tk()
-run_map = Map(root)
-root.mainloop()
 
 
