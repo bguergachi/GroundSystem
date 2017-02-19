@@ -22,22 +22,27 @@ class Map:
     def __init__(self, master):
         self.__master = master
 
+
         # Sets window parameters
         self.__master.resizable(width=False, height=False)
         self.__master.geometry('{}x{}'.format(width, height))
         self.__frame = Frame(self.__master)
         self.__frame.pack()
 
+
         # Loads Small Map
         self.__load_smallmap = Image.open("Map Image.png")
         self.__load_smallmap.thumbnail(size=(width, height))
+
         # Loads Large Map
         self.__load_largemap = Image.open("Large Map.png")
         self.__load_largemap.thumbnail(size=(width, height))
+
         # Loads Crosshair
         self.__load_crosshair = Image.open("Crosshair.png")
         self.__crosshair_size = (20, 20)
         self.__load_crosshair.thumbnail(size=(self.__crosshair_size[0], self.__crosshair_size[1]))
+
 
         # Coordinates of Small and Large Map sides
         self.__smallmap_side = {'top': 32.955651, 'bot': 32.937436, 'left': -106.930123, 'right': -106.892924}
@@ -51,10 +56,12 @@ class Map:
         self.convert_pixel()
         self.display_map()
 
+
     # Sets length, width, and border values of map frame in terms of latitude and longitude coordinates
     def frame_dimensions(self):
         self.__latitude_length = self.__map_side['top'] - self.__map_side['bot']
         self.__longitude_length = (self.__map_side['left'] - self.__map_side['right'])*(-1)
+
 
     # Random test coordinates
     def getRandomNumber(self):
@@ -63,45 +70,57 @@ class Map:
         print(self.__rand_lat, self.__rand_long)
         return [self.__rand_lat, self.__rand_long]
 
+
     # Derives proportionality between latitude/longitude coordinates and x,y direction pixels
     # Converts latitude/longitude coordinates to x,y pixel parameters
     def convert_pixel(self):
         y_relation = height / self.__latitude_length
         x_relation = width / self.__longitude_length
+
         y = (self.__map_side['top'] - self.__rand_lat) * y_relation
         x = (self.__map_side['left'] - (self.__rand_long))*(-1) * x_relation
+
         # Seperates integers and decimals
         self.__pixel_integer = [int(y), int(x)]
         print(int(y), int(x))
         self.__pixel_decimals = (y % 1, x % 1)
         print(y % 1, x % 1)
 
+
     # Chooses Map and notifies user if Rocket leaves Small Map
     def choose_map(self):
         if self.__random_coordinate[0] > self.__map_side['top'] or self.__random_coordinate[0] < self.__map_side['bot']:
             tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
             print("Rocket has left competition area!!!")
+
             self.__map_side = self.__largemap_side.copy()
             self.__load_map = self.__load_largemap
+
         elif self.__random_coordinate[1] < self.__map_side['left'] or self.__random_coordinate[1] > self.__map_side['right']:
             tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
             print("Rocket has left competition area!!!")
+
             self.__map_side = self.__largemap_side.copy()
             self.__load_map = self.__load_largemap
+
         elif self.__random_coordinate[0] < self.__smallmap_side['top'] or self.__random_coordinate[0] > self.__smallmap_side['bot']:
             self.__map_side = self.__smallmap_side.copy()
             self.__load_map = self.__load_smallmap
+
         elif self.__random_coordinate[1] > self.__smallmap_side['left'] or self.__random_coordinate[1] < self.__smallmap_side['right']:
             self.__map_side = self.__smallmap_side.copy()
             self.__load_map = self.__load_smallmap
+
+
 
      # Displays Map and Crosshair
     def display_map(self):
         self.__load_map.paste(self.__load_crosshair, (self.__pixel_integer[1] - int(self.__crosshair_size[0] / 2), self.__pixel_integer[0] - int(self.__crosshair_size[1] / 2)), self.__load_crosshair)  # Positions and blends Crosshair with map
         map = ImageTk.PhotoImage(self.__load_map)
-        crosshair = ImageTk.PhotoImage(self.__load_crosshair)
-        label_map = Label(self.__frame, image=map)
-        label_map.pack()
+        self.__crosshair = ImageTk.PhotoImage(self.__load_crosshair)
+        self.__label_map = Label(self.__frame, image=map)
+        self.__label_map.pack()
+
 
 
 root = Tk()
