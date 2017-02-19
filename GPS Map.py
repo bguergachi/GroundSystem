@@ -9,6 +9,7 @@ from PIL import ImageTk,Image
 height=250
 width=422
 
+
 '''
 smallmap_corners = {topleft: [32.955651, -106.930123], topright: [32.955651, -106.892924],
                     botleft: [32.937436, -106.930123], botright: [32.937436, -106.892924]}
@@ -22,8 +23,7 @@ class Map:
     def __init__(self, master):
         self.__master = master
 
-
-        # Sets window parameters
+        # Sets frame
         self.__master.resizable(width=False, height=False)
         self.__master.geometry('{}x{}'.format(width, height))
         self.__frame = Frame(self.__master)
@@ -89,6 +89,7 @@ class Map:
 
     # Chooses Map and notifies user if Rocket leaves Small Map
     def choose_map(self):
+        # Chooses Large Map if Rocket leaves top or bot sides of Small Map
         if self.__random_coordinate[0] > self.__map_side['top'] or self.__random_coordinate[0] < self.__map_side['bot']:
             tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
             print("Rocket has left competition area!!!")
@@ -96,6 +97,7 @@ class Map:
             self.__map_side = self.__largemap_side.copy()
             self.__load_map = self.__load_largemap
 
+        # Chooses Large Map if Rocket leaves left or right sides of Small Map
         elif self.__random_coordinate[1] < self.__map_side['left'] or self.__random_coordinate[1] > self.__map_side['right']:
             tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
             print("Rocket has left competition area!!!")
@@ -103,10 +105,12 @@ class Map:
             self.__map_side = self.__largemap_side.copy()
             self.__load_map = self.__load_largemap
 
+        # Chooses Small Map if Rocket enters top or bot sides of Small map
         elif self.__random_coordinate[0] < self.__smallmap_side['top'] or self.__random_coordinate[0] > self.__smallmap_side['bot']:
             self.__map_side = self.__smallmap_side.copy()
             self.__load_map = self.__load_smallmap
 
+        # Chooses Small Map if Rocket enters left or right sides of Small map
         elif self.__random_coordinate[1] > self.__smallmap_side['left'] or self.__random_coordinate[1] < self.__smallmap_side['right']:
             self.__map_side = self.__smallmap_side.copy()
             self.__load_map = self.__load_smallmap
