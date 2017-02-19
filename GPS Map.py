@@ -48,6 +48,7 @@ class Map:
         self.__smallmap_side = {'top': 32.955651, 'bot': 32.937436, 'left': -106.930123, 'right': -106.892924}
         self.__largemap_side = {'top': 32.979024, 'bot': 32.925260, 'left': -106.967445, 'right': -106.858726}
 
+
         # Runs Map functions
         self.__random_coordinate = self.getRandomNumber() # Gets random Coordinates for Crosshair
         self.choose_map() # Chooses Small or Large Map based on location of Crosshair
@@ -87,7 +88,7 @@ class Map:
     # Chooses Map and notifies user if Rocket leaves Small Map
     def choose_map(self):
         # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
-        if (self.__random_coordinate[0] > self.__smallmap_side['top'] or self.__random_coordinate[0] < self.__smallmap_side['bot']) and (self.__random_coordinate[1] < self.__smallmap_side['left'] or self.__random_coordinate[1] > self.__smallmap_side['right']):
+        if (self.__random_coordinate[0] > self.__smallmap_side['top'] or self.__random_coordinate[0] < self.__smallmap_side['bot']) or (self.__random_coordinate[1] < self.__smallmap_side['left'] or self.__random_coordinate[1] > self.__smallmap_side['right']):
             tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
             print("Rocket has left competition area!!!")
 
@@ -95,7 +96,7 @@ class Map:
             self.__load_map = self.__load_largemap
 
         # Chooses Small Map if Rocket enters top or bot and left or right sides of Small map
-        elif self.__random_coordinate[0] < self.__smallmap_side['top'] or self.__random_coordinate[0] > self.__smallmap_side['bot'] and (self.__random_coordinate[1] > self.__smallmap_side['left'] or self.__random_coordinate[1] < self.__smallmap_side['right']):
+        elif self.__random_coordinate[0] < self.__smallmap_side['top'] or self.__random_coordinate[0] > self.__smallmap_side['bot'] or (self.__random_coordinate[1] > self.__smallmap_side['left'] or self.__random_coordinate[1] < self.__smallmap_side['right']):
             self.__map_side = self.__smallmap_side.copy()
             self.__load_map = self.__load_smallmap
 
