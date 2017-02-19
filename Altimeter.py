@@ -2,7 +2,6 @@ from tkinter import *
 import random
 import time
 
-
 class Altimeter_Signal:
     # ***************** Instantiate *****************
     def __init__(self, master):
