@@ -5,9 +5,9 @@ class Separation_Signal:
     # ***************** Instantiate *****************
     def __init__(self, master):
         self.__opened = False
-        self.__state = 0
-        self.__redlight=ImageTk.PhotoImage(Image.open("./Image/redlight.png"))
-        self.__greenlight=ImageTk.PhotoImage(Image.open("./Image/greenlight.png"))
+        self.__state = 1
+        self.__redlight=ImageTk.PhotoImage(Image.open("Redlight.png"))
+        self.__greenlight=ImageTk.PhotoImage(Image.open("Green light.png"))
         self.window(master)
         self.update()
 
@@ -41,6 +41,7 @@ class Separation_Signal:
 
             if self.__opened == False:
 
+#
                 panel = Label(root, image=self.__greenlight)
                 panel.image = self.__greenlight
                 panel.pack()
