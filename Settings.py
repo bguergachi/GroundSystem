@@ -35,7 +35,7 @@ class Display:
 
 
     # ***************FUNCTIONS************************
-
+#ASK ADAM ABOUT GLOBAL VARIABLES
     def send_settings(self):
         global units, ports# function that tells status menu which units to display
         if units == 1:  # radio button value for imperial units is 1
