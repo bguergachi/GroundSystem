@@ -18,7 +18,7 @@
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
-int main ()
+int main1 ()
 {
   int fd ;
   int count ;
@@ -36,6 +36,8 @@ int main ()
     return 1 ;
   }
 
+  
+  
   nextTime = millis () + 300 ;
 
   for (count = 0 ; count < 256 ; )

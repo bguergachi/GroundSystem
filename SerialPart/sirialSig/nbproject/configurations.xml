@@ -13,6 +13,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>SerialTest.c</itemPath>
+      <itemPath>ledTest.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -39,7 +40,7 @@
           <commandLine>-lwiringPi</commandLine>
         </cTool>
       </compileType>
-      <item path="SerialTest.c" ex="false" tool="0" flavor2="0">
+      <item path="ledTest.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -63,6 +64,8 @@
         </asmTool>
       </compileType>
       <item path="SerialTest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ledTest.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
   </confs>
