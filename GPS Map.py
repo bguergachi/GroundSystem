@@ -29,34 +29,44 @@ class Map:
         self.__frame = Frame(self.__master)
         self.__frame.pack()
 
+        # Runs Map functions
+        self.run()
 
         # Loads Small Map
-        self.__load_smallmap = Image.open("Map Image.png")
+    def load_smap(self):
+        self.__load_smallmap = Image.open("Small Map.png")
         self.__load_smallmap.thumbnail(size=(width, height))
 
         # Loads Large Map
+    def load_lmap(self):
         self.__load_largemap = Image.open("Large Map.png")
         self.__load_largemap.thumbnail(size=(width, height))
 
         # Loads Crosshair
+    def load_Crosshair(self):
         self.__load_crosshair = Image.open("Crosshair.png")
         self.__crosshair_size = (20, 20)
         self.__load_crosshair.thumbnail(size=(self.__crosshair_size[0], self.__crosshair_size[1]))
 
-
         # Coordinates of Small and Large Map sides
+    def map_parameters(self):
         self.__smallmap_side = {'top': 32.955651, 'bot': 32.937436, 'left': -106.930123, 'right': -106.892924}
         self.__largemap_side = {'top': 32.979024, 'bot': 32.925260, 'left': -106.967445, 'right': -106.858726}
 
+    # Runs all functions
+    def run(self):
+        self.load_smap()
+        self.load_lmap()
+        self.load_Crosshair()
+        self.map_parameters()
+        self.__random_coordinate = self.getRandomNumber()  # Gets random Coordinates for Crosshair
+        self.choose_map()  # Chooses Small or Large Map based on location of Crosshair
+        self.convert_pixel()  # Converts Coordinates to x,y Pixels to position Crosshair on Map
+        self.display_map()  # Displays Map and Crosshair
+        "self.__master.after(2000, self.run)"
 
-        # Runs Map functions
-        self.__random_coordinate = self.getRandomNumber() # Gets random Coordinates for Crosshair
-        self.choose_map() # Chooses Small or Large Map based on location of Crosshair
-        self.convert_pixel() # Converts Coordinates to x,y Pixels to position Crosshair on Map
-        self.display_map() # Displays Map and Crosshair
 
-
-    # Random test coordinates
+    # Random test Coordinates
     def getRandomNumber(self):
         self.__rand_lat = round(random.uniform(self.__largemap_side['bot'], self.__largemap_side['top']), 6)
         self.__rand_long = round(random.uniform(self.__largemap_side['right'], self.__largemap_side['left']), 6)
@@ -89,8 +99,7 @@ class Map:
     def choose_map(self):
         # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
         if (self.__random_coordinate[0] > self.__smallmap_side['top'] or self.__random_coordinate[0] < self.__smallmap_side['bot']) or (self.__random_coordinate[1] < self.__smallmap_side['left'] or self.__random_coordinate[1] > self.__smallmap_side['right']):
-            tkinter.messagebox.showwarning('Warning', 'Rocket has left the competition area!!!')
-            print("Rocket has left competition area!!!")
+            print("Rocket leaving competition area!!!")
 
             self.__map_side = self.__largemap_side.copy()
             self.__load_map = self.__load_largemap
@@ -101,31 +110,17 @@ class Map:
             self.__load_map = self.__load_smallmap
 
 
-     # Displays Map and Crosshair
+    # Displays Map and Crosshair
     def display_map(self):
-        self.__load_map.paste(self.__load_crosshair, (self.__pixel_integer[1] - int(self.__crosshair_size[0] / 2), self.__pixel_integer[0] - int(self.__crosshair_size[1] / 2)), self.__load_crosshair)  # Positions and blends Crosshair with map
+        self.__load_crosshair = self.__load_crosshair.convert("RGBA")
+        self.__new_crosshair = Image.blend(self.__load_map, self.__load_crosshair, 0.5)
+        self.__new_crosshair.save("new.png", "PNG")
         self.__map = ImageTk.PhotoImage(self.__load_map)
-        crosshair = ImageTk.PhotoImage(self.__load_crosshair)
         label_map = Label(self.__frame, image=self.__map)
         label_map.pack()
 
-
-
-root = Tk()
-run_map = Map(root)
-root.mainloop()
-
-#Displays path of Crosshair
-'''
-path_array = [[32.940321, -106.913103], [32.941321, -106.913103], [32.942321, -106.913103], [32.943321, -106.913103], [32.945321, -106.913103]]
-
-def getCoordinates():
-    for i in range(5):
-        path_coordinate = path_array[i]
-    root.after(500, getCoordinates)
-    return path_coordinate
-
-root.after(0, getCoordinates)
-'''
-
+if __name__ == '__main__':
+    root = Tk()
+    run_map = Map(root)
+    root.mainloop()
 
