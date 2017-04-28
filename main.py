@@ -3,6 +3,7 @@ import tkinter.font as tkfont
 from time import sleep
 import os,sys,random
 from PIL import ImageTk,Image
+import GPSMap as gps
 
 '''
 
@@ -31,6 +32,9 @@ class Display:
         #Variables for time values
         self.__currentTime = StringVar()
         self.__lastMesgTime = StringVar()
+
+
+
 
 
         self.printLabel()
