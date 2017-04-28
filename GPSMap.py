@@ -68,10 +68,9 @@ class Map:
 
     # Random test Coordinates
     def getRandomNumber(self):
-        self.__rand_lat = round(random.uniform(self.__largemap_side['bot'], self.__largemap_side['top']), 6)
-        self.__rand_long = round(random.uniform(self.__largemap_side['right'], self.__largemap_side['left']), 6)
-        print(self.__rand_lat, self.__rand_long)
-        return [self.__rand_lat, self.__rand_long]
+        self.__rand = [round(random.uniform(self.__largemap_side['bot'], self.__largemap_side['top']), 6), round(random.uniform(self.__largemap_side['right'], self.__largemap_side['left']), 6)]
+        print(self.__rand)
+        return self.__rand
 
 
     # Converts latitude/longitude coordinates to x,y pixels for Crosshair placement
@@ -85,8 +84,8 @@ class Map:
         x_relation = width / self.__longitude_length
 
         # Converts latitude/longitude coordinates to x,y pixel parameters
-        y = (self.__map_side['top'] - self.__rand_lat) * y_relation
-        x = (self.__map_side['left'] - (self.__rand_long))*(-1) * x_relation
+        y = (self.__map_side['top'] - self.__rand[0]) * y_relation
+        x = (self.__map_side['left'] - (self.__rand[1]))*(-1) * x_relation
 
         # Seperates integers and decimals
         self.__pixel_integer = [int(y), int(x)]
