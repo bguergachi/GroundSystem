@@ -3,7 +3,6 @@
 #@author: Alejandra Zavala
 
 from tkinter import *
-#global units, ports
 import tkinter.font as tkfont
 from time import sleep
 import os,sys,random
@@ -13,11 +12,8 @@ from PIL import ImageTk,Image
 # *****************************GUI PORTION************************************
 height = 422
 width = 250
-
-class myclass(object):
-    global units,ports
-    units=0
-    ports=0
+units = 0
+ports = 0
 
 class Display:
     def __init__(self, root):
@@ -27,8 +23,6 @@ class Display:
         self.__root.geometry('{}x{}'.format(height, width))
         self.__root.title('Settings Menu') # this function names the overall window
         self.__root.configure(background="snow")
-
-
         self.send_settings()
         self.get_availPorts()
         self.formx()
@@ -117,6 +111,12 @@ class Display:
         cancel= Button(self.__root, text =" Cancel", width = 10, height=1,relief=GROOVE)
         cancel.bind("<Button-1>",lambda event: self.update_confirm("Unsaved setting will be lost. "))
         cancel.grid(row=7,column= 0)
+
+    def getunits(self):
+        return units
+
+    def getports(selfself):
+        return ports
 
 root2= Tk()
 display=Display(root2)
