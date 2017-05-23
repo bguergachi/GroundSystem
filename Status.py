@@ -113,27 +113,27 @@ class Display:
         temperatureframer.pack_propagate(False)
 
     # Paint label of altitude
-        altitudedisplayr = Label(altitudeframer, text="Altitude", bg='Cyan')
+        altitudedisplayr = Label(altitudeframer, text=self.set_altitude(self), bg='Cyan')
         altitudedisplayr.config(font=("times,12"))
         altitudedisplayr.pack(side=TOP)
 
     # Paint label of airspeed
-        airspeeddisplayr = Label(airspeedframer, text="Airspeed", bg='Cyan')
+        airspeeddisplayr = Label(airspeedframer, text=self.set_airspeed(self), bg='Cyan')
         airspeeddisplayr.config(font=("times,12"))
         airspeeddisplayr.pack(side=TOP)
 
     # Paint label of acceleration
-        accelerationdisplayr = Label(accelerationframer, text="Acceleration", bg='Cyan')
+        accelerationdisplayr = Label(accelerationframer, text=self.set_acceleration(self), bg='Cyan')
         accelerationdisplayr.config(font=("times,12"))
         accelerationdisplayr.pack(side=TOP)
 
     # Paint label of pressure
-        pressuredisplayr = Label(pressureframer, text="Pressure", bg='Cyan')
+        pressuredisplayr = Label(pressureframer, text=self.set_pressure(self), bg='Cyan')
         pressuredisplayr.config(font=("times,12"))
         pressuredisplayr.pack(side=TOP)
 
     # Paint label of temperature
-        temperaturedisplayr = Label(temperatureframer, text="Temperature", bg='Cyan')
+        temperaturedisplayr = Label(temperatureframer, text=self.set_temperature(self), bg='Cyan')
         temperaturedisplayr.config(font=("times,12"))
         temperaturedisplayr.pack(side=TOP)
 
