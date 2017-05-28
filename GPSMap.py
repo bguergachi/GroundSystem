@@ -46,12 +46,14 @@ class Map:
         # Runs all functions
     def __run(self):
         self.__getRandomNumber()  # Gets random Coordinates for Path
+        #self.getCoordinates()
         self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
         self.__load_mod_maps()  # Loads Modified Maps
+        self.__map = ImageTk.PhotoImage(self.__load_map)
         self.__label_map.config(image = self.__map)
 
 
-        self.__master.after(500, self.__run)
+        self.__master.after(700, self.__run)
 
 
         # Loads Original Large and Small Map
@@ -87,8 +89,8 @@ class Map:
 
         # Random test Coordinates
     def __getRandomNumber(self):
-        self.__rand = [round(random.uniform(self.__largemap_side['bot'], self.__largemap_side['top']), 6), round(random.uniform(self.__largemap_side['right'], self.__largemap_side['left']), 6)]
-        print(self.__rand)
+        self.__coordiantes = [round(random.uniform(self.__largemap_side['bot'], self.__largemap_side['top']), 6), round(random.uniform(self.__largemap_side['right'], self.__largemap_side['left']), 6)]
+        print(self.__coordiantes)
 
         # Converts latitude/longitude coordinates to x,y pixels for Crosshair placement
     def __convert_pixel(self):
@@ -101,8 +103,8 @@ class Map:
         x_factor = width / self.__longitude_length
 
         # Converts latitude/longitude coordinates to x,y pixel parameters
-        y = (self.__map_side['top'] - self.__rand[0]) * y_factor
-        x = (self.__map_side['left'] - (self.__rand[1])) * (-1) * x_factor
+        y = (self.__map_side['top'] - self.__coordiantes[0]) * y_factor
+        x = (self.__map_side['left'] - (self.__coordiantes[1])) * (-1) * x_factor
 
         # Seperates integers and decimals
         self.__pixel_integer = [int(y), int(x)]
@@ -114,7 +116,7 @@ class Map:
         # {Chooses *****Ininial***** Map Image, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in __init__
     def __choose_first_map(self):
             # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
-        if (self.__rand[0] > self.__smallmap_side['top'] or self.__rand[0] < self.__smallmap_side['bot']) or (self.__rand[1] < self.__smallmap_side['left'] or self.__rand[1] > self.__smallmap_side['right']):
+        if (self.__coordiantes[0] > self.__smallmap_side['top'] or self.__coordiantes[0] < self.__smallmap_side['bot']) or (self.__coordiantes[1] < self.__smallmap_side['left'] or self.__coordiantes[1] > self.__smallmap_side['right']):
             print("Rocket leaving competition area!!!")
 
             self.__map_side = self.__largemap_side.copy()
@@ -125,7 +127,7 @@ class Map:
             self.__load_map = self.__load_largemap
 
             # Chooses Small Map if Rocket enters top or bot and left or right sides of Small map
-        elif self.__rand[0] < self.__smallmap_side['top'] or self.__rand[0] > self.__smallmap_side['bot'] or (self.__rand[1] > self.__smallmap_side['left'] or self.__rand[1] < self.__smallmap_side['right']):
+        elif self.__coordiantes[0] < self.__smallmap_side['top'] or self.__coordiantes[0] > self.__smallmap_side['bot'] or (self.__coordiantes[1] > self.__smallmap_side['left'] or self.__coordiantes[1] < self.__smallmap_side['right']):
 
             self.__map_side = self.__smallmap_side.copy()
             self.__convert_pixel()
@@ -138,7 +140,7 @@ class Map:
         # {Chooses *****Consecutive***** Map Images, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in run()
     def __choose_maps(self):
             # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
-        if (self.__rand[0] > self.__smallmap_side['top'] or self.__rand[0] < self.__smallmap_side['bot']) or (self.__rand[1] < self.__smallmap_side['left'] or self.__rand[1] > self.__smallmap_side['right']):
+        if (self.__coordiantes[0] > self.__smallmap_side['top'] or self.__coordiantes[0] < self.__smallmap_side['bot']) or (self.__coordiantes[1] < self.__smallmap_side['left'] or self.__coordiantes[1] > self.__smallmap_side['right']):
             print("Rocket leaving competition area!!!")
 
             self.__map_side = self.__largemap_side.copy()
@@ -148,7 +150,7 @@ class Map:
             self.__load_map = self.__load_largemap
 
             # Chooses Small Map if Rocket enters top or bot and left or right sides of Small map
-        elif self.__rand[0] < self.__smallmap_side['top'] or self.__rand[0] > self.__smallmap_side['bot'] or (self.__rand[1] > self.__smallmap_side['left'] or self.__rand[1] < self.__smallmap_side['right']):
+        elif self.__coordiantes[0] < self.__smallmap_side['top'] or self.__coordiantes[0] > self.__smallmap_side['bot'] or (self.__coordiantes[1] > self.__smallmap_side['left'] or self.__coordiantes[1] < self.__smallmap_side['right']):
 
             self.__map_side = self.__smallmap_side.copy()
             self.__convert_pixel()
@@ -166,7 +168,11 @@ class Map:
         self.__label_map.image = self.__map
         self.__label_map.pack()
 
+    def setCoordinate(self, coordinates):
+        self.__coordiantes = coordinates
 
+    def getCoordinates(self):
+        return self.__coordiantes
 
 
 
