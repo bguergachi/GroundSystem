@@ -53,7 +53,7 @@ class Map:
         self.__label_map.config(image = self.__map)
 
 
-        self.__master.after(700, self.__run)
+        self.__master.after(700, self.run)
 
 
         # Loads Original Large and Small Map
@@ -173,6 +173,8 @@ class Map:
 
     def getCoordinates(self):
         return self.__coordiantes
+
+
 
 
 
