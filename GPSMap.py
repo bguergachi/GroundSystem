@@ -37,14 +37,14 @@ class Map:
         self.__getRandomNumber()  # Gets random Coordinates for Path
         self.__choose_first_map()
         self.__setup_display_map()  # Display the map on the Window/Fram FOR THE FIRST TIME
-        self.__run()
+        self.run()
 
 
     #**************** Defined Functions *****************
 
 
         # Runs all functions
-    def __run(self):
+    def run(self):
         self.__getRandomNumber()  # Gets random Coordinates for Path
         #self.getCoordinates()
         self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
