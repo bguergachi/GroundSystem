@@ -40,7 +40,7 @@ class Map:
         self.run()
 
 
-    #**************** Defined Functions *****************
+    #**************** Defined Functions  *****************
 
 
         # Runs all functions
