@@ -15,7 +15,7 @@ smallmap_corners = {topleft: [32.955651, -106.930123], topright: [32.955651, -10
                     botleft: [32.937436, -106.930123], botright: [32.937436, -106.892924]}
 largemap_corners = {topleft: [32.979024, -106.967445], topright: [32.979024, -106.858726],
                     botleft: [32.925260, -106.930123], botright: [32.925260, -106.858726]}
-'''
+change'''
 
 class Map:
 
@@ -48,6 +48,7 @@ class Map:
         self.__getRandomNumber()  # Gets random Coordinates for Path
         self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
         self.__load_mod_maps()  # Loads Modified Maps
+        self.__map = ImageTk.PhotoImage(self.__load_map)
         self.__label_map.config(image = self.__map)
 
 
