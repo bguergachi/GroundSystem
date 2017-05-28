@@ -31,9 +31,8 @@ class Map:
 
     # Runs Map functions
         self.__label_map = None
-        self.__load_new_maps()
+        self.__load_first_maps()
         self.__load_Circle()
-        self.__load_Crosshair()
         self.__map_parameters()
         self.__getRandomNumber()  # Gets random Coordinates for Path
         self.__choose_first_map()
@@ -56,7 +55,7 @@ class Map:
 
 
         # Loads Original Large and Small Map
-    def __load_new_maps(self):
+    def __load_first_maps(self):
         self.__load_smallmap = Image.open("Small Map.png")
         self.__load_smallmap.thumbnail(size=(width, height))
         self.__load_largemap = Image.open("Large Map.png")
