@@ -41,6 +41,9 @@ class Map:
         self.__run()
 
 
+    #**************** Defined Functions *****************
+
+
         # Runs all functions
     def __run(self):
         self.__getRandomNumber()  # Gets random Coordinates for Path
@@ -109,7 +112,7 @@ class Map:
         print(y % 1, x % 1)
 
 
-        # {Chooses Ininial Map Image, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in __init__
+        # {Chooses *****Ininial***** Map Image, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in __init__
     def __choose_first_map(self):
             # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
         if (self.__rand[0] > self.__smallmap_side['top'] or self.__rand[0] < self.__smallmap_side['bot']) or (self.__rand[1] < self.__smallmap_side['left'] or self.__rand[1] > self.__smallmap_side['right']):
@@ -133,7 +136,7 @@ class Map:
             self.__load_largemap.save("Large Map1.png")
             self.__load_map = self.__load_smallmap
 
-        # {Chooses Consecutive Map Images, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in run()
+        # {Chooses *****Consecutive***** Map Images, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in run()
     def __choose_maps(self):
             # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
         if (self.__rand[0] > self.__smallmap_side['top'] or self.__rand[0] < self.__smallmap_side['bot']) or (self.__rand[1] < self.__smallmap_side['left'] or self.__rand[1] > self.__smallmap_side['right']):
@@ -172,6 +175,8 @@ if __name__ == '__main__':
     root = Tk()
     run_map = Map(root)
     root.mainloop()
+
+
 
 
 #self.__load_map.paste(self.__load_crosshair, (self.__pixel_integer[1] - int(self.__crosshair_size[0] / 2),self.__pixel_integer[0] - int(self.__crosshair_size[1] / 2)), self.__load_crosshair)  # Positions and blends Crosshair with map
