@@ -31,11 +31,11 @@ class Map:
 
     # Runs Map functions
         self.__label_map = None
-        self.__load_smap()
-        self.__load_lmap()
+        self.__load_new_maps()
         self.__load_Circle()
         self.__load_Crosshair()
         self.__map_parameters()
+        self.__getRandomNumber()  # Gets random Coordinates for Path
         self.__choose_first_map()
         self.__setup_display_map()  # Display the map on the Window/Fram FOR THE FIRST TIME
         self.__run()
@@ -43,27 +43,24 @@ class Map:
 
         # Runs all functions
     def __run(self):
-        self.__getRandomNumber()  # Gets random Coordinates for Crosshair
-        self.__choose_map()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
-        self.__load_map()  # Loads New Maps
+        self.__getRandomNumber()  # Gets random Coordinates for Path
+        self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
+        self.__load_mod_maps()  # Loads Modified Maps
         self.__label_map.config(image = self.__map)
 
 
         self.__master.after(500, self.__run)
 
 
-        # Loads Small Map
-    def __load_smap(self):
+        # Loads Original Large and Small Map
+    def __load_new_maps(self):
         self.__load_smallmap = Image.open("Small Map.png")
         self.__load_smallmap.thumbnail(size=(width, height))
-
-        # Loads Large Map
-    def __load_lmap(self):
         self.__load_largemap = Image.open("Large Map.png")
         self.__load_largemap.thumbnail(size=(width, height))
 
-        # Loads modified Maps
-    def __load_map(self):
+        # Loads Modified Maps
+    def __load_mod_maps(self):
         self.__load_largemap = Image.open("Large map1.png")
         self.__load_largemap.thumbnail(size=(width, height))
         self.__load_smallmap = Image.open("Small map1.png")
@@ -112,7 +109,7 @@ class Map:
         print(y % 1, x % 1)
 
 
-        # Chooses Ininial Map Image and notifies user if Rocket leaves Small Map
+        # {Chooses Ininial Map Image, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in __init__
     def __choose_first_map(self):
             # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
         if (self.__rand[0] > self.__smallmap_side['top'] or self.__rand[0] < self.__smallmap_side['bot']) or (self.__rand[1] < self.__smallmap_side['left'] or self.__rand[1] > self.__smallmap_side['right']):
@@ -136,8 +133,8 @@ class Map:
             self.__load_largemap.save("Large Map1.png")
             self.__load_map = self.__load_smallmap
 
-        # Chooses Consecutive Map Images and notifies user if Rocket leaves Small Map in run()
-    def __choose_map(self):
+        # {Chooses Consecutive Map Images, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in run()
+    def __choose_maps(self):
             # Chooses Large Map if Rocket leaves top or bot and left or right sides of Small Map
         if (self.__rand[0] > self.__smallmap_side['top'] or self.__rand[0] < self.__smallmap_side['bot']) or (self.__rand[1] < self.__smallmap_side['left'] or self.__rand[1] > self.__smallmap_side['right']):
             print("Rocket leaving competition area!!!")
@@ -160,7 +157,7 @@ class Map:
             self.__load_map = self.__load_smallmap
 
 
-        # Displays Map and Crosshair
+        # Displays Map and Path
     def __setup_display_map(self):
         self.__map = ImageTk.PhotoImage(self.__load_map)
         self.__label_map = Label(self.__frame, image=self.__map)
