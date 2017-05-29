@@ -19,7 +19,7 @@ change'''
 
 class Map:
 
-    # ***************** Instantiate *****************
+    # ***************** Instantiate *********************
     def __init__(self, master):
         self.__master = master
 
@@ -38,11 +38,9 @@ class Map:
         self.__choose_first_map()
         self.__setup_display_map()  # Display the map on the Window/Fram FOR THE FIRST TIME
         self.run()
+    # *****************************************************
 
-
-    #**************** Defined Functions  *****************
-
-
+    #**************** Defined Functions  ******************
         # Runs all functions
     def run(self):
         self.__getRandomNumber()  # Gets random Coordinates for Path
@@ -156,6 +154,8 @@ class Map:
             self.__convert_pixel()
             self.__load_smallmap.paste(self.__load_circle, (self.__pixel_integer[1] - int(self.__circle_size[0] / 2), self.__pixel_integer[0] - int(self.__circle_size[1] / 2)), self.__load_circle)
             self.__load_smallmap.save("Small Map1.png")
+            self.__map_side = self.__largemap_side.copy()
+            self.__convert_pixel()
             self.__load_largemap.paste(self.__load_circle, (self.__pixel_integer[1] - int(self.__circle_size[0] / 2), self.__pixel_integer[0] - int(self.__circle_size[1] / 2)), self.__load_circle)
             self.__load_largemap.save("Large Map1.png")
             self.__load_map = self.__load_smallmap
@@ -173,15 +173,15 @@ class Map:
 
     def getCoordinates(self):
         return self.__coordiantes
+    # *****************************************************
 
-
-
-
+#   ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
 
 if __name__ == '__main__':
     root = Tk()
     run_map = Map(root)
     root.mainloop()
+
 
 
 
