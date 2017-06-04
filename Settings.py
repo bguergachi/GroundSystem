@@ -29,13 +29,13 @@ class Display:
 
 
     # ***************FUNCTIONS************************
-#ASK ADAM ABOUT GLOBAL VARIABLES
-    def send_settings(self):
-        global units, ports# function that tells status menu which units to display
-        if units == 1:  # radio button value for imperial units is 1
-            print("display imperial units")
-        else:
-            print("display metric units")
+    # units are no longer in use
+        # "def send_settings(self):
+        #global units, ports# function that tells status menu which units to display
+        #if units == 1:  # radio button value for imperial units is 1
+            #print("display imperial units")
+        #else:
+            #print("display metric units")"
 
     # need to update once we figure out the uart stuff
     def get_availPorts(self):  # function outputs list of ports avilable
@@ -71,15 +71,15 @@ class Display:
         frame1.grid(row = 0, column = 0, rowspan = 3, columnspan = 2, sticky = W+E+N+S, padx= 5) # formatting locations and span of widget
 
         #************** UNITS SLECTION SUBMENU**********************************
-        unit_label = Label(self.__root, text = "Unit Selection", bg="goldenrod3",font="Verdana 9 bold",height=2).grid(row=0,column=0)#title of subsection
-        units= IntVar()# variable will hold variable value assigned to each radiobutton
+        #unit_label = Label(self.__root, text = "Unit Selection", bg="goldenrod3",font="Verdana 9 bold",height=2).grid(row=0,column=0)#title of subsection
+        #units= IntVar()# variable will hold variable value assigned to each radiobutton
 
         #used radiobutton because they only admit one selection (either metric or imperial)
-        imperial = Radiobutton(self.__root, text = "Imperial",font="Verdana 9 bold",anchor = SW,width = 10,bg ="khaki", variable = units,value =1)
-        imperial.grid(row = 1, column = 0)
+        #imperial = Radiobutton(self.__root, text = "Imperial",font="Verdana 9 bold",anchor = SW,width = 10,bg ="khaki", variable = units,value =1)
+        #imperial.grid(row = 1, column = 0)
 
-        metric = Radiobutton(self.__root,text ="Metric",font="Verdana 9 bold",anchor= SW, width = 10, bg ="khaki",variable = units,value=2)
-        metric.grid(row=2,column=0)
+        #metric = Radiobutton(self.__root,text ="Metric",font="Verdana 9 bold",anchor= SW, width = 10, bg ="khaki",variable = units,value=2)
+        #metric.grid(row=2,column=0)
 
         # *******************AVAILABLE PORTS LIST ******************************
         frame2 = Frame(self.__root,bg="lightcyan1",borderwidth=5, relief="sunken", width=300, height=220)
@@ -112,12 +112,12 @@ class Display:
         cancel.bind("<Button-1>",lambda event: self.update_confirm("Unsaved setting will be lost. "))
         cancel.grid(row=7,column= 0)
 
-    def getunits(self):
-        return units
+    #def getunits(self):#fucntion that returns unit option
+        #return units
 
-    def getports(selfself):
+    def getports(selfself):#function that returns port option
         return ports
-
-root2= Tk()
-display=Display(root2)
-root2.mainloop()
+if __name__ == '__main__':
+    root2= Tk()
+    display=Display(root2)
+    root2.mainloop()
