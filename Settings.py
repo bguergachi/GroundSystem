@@ -41,6 +41,8 @@ class Display:
     def get_availPorts(self):  # function outputs list of ports avilable
         ports = ["port1", "port2", "port3", "port4", "port5", "port6"]
         return (ports)
+    def send_settings(selfself):
+        return ()
 
     def hover_color(self, widget, color):  # function changes color of button when hovering above it
         widget.config(bg=color)  # backgrounf color widget configuration
