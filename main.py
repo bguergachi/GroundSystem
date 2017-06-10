@@ -125,18 +125,16 @@ class Display:
         #Settings button built as a canvas
         textFont = tkfont.nametofont("TkDefaultFont")
         settingsLabel = "Settings"
-        settingsCanvas = Canvas(self.__master, height=(width-78)/2-4, width=35, background="SystemButtonFace", borderwidth=2,
-                           relief="raised")
-        settingsCanvas.create_text((15, (width-78)/4-15), angle="90", anchor="ne", text=settingsLabel, fill="SystemButtonText", font=textFont)
+        settingsCanvas = Canvas(self.__master, height=(width-78)/2-4, width=35, borderwidth=2, relief="raised")
+        settingsCanvas.create_text((15, (width-78)/4-15), angle="90", anchor="ne", text=settingsLabel, font=textFont)
         settingsCanvas.bind("<ButtonPress-1>", lambda ev: ev.widget.configure(relief=SUNKEN))
         settingsCanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief=RAISED))
         settingsCanvas.place(x=height-40,y=0)
 
         #Images button built as a canvas
         ImageLabel = "Images"
-        Imagecanvas = Canvas(self.__master, height=(width - 78) / 2-4, width=35, background="SystemButtonFace", borderwidth=2,
-                        relief="raised")
-        Imagecanvas.create_text((15, (width - 78) / 4-15), angle="90", anchor="ne", text=ImageLabel, fill="SystemButtonText",
+        Imagecanvas = Canvas(self.__master, height=(width - 78) / 2-4, width=35, borderwidth=2, relief="raised")
+        Imagecanvas.create_text((15, (width - 78) / 4-15), angle="90", anchor="ne", text=ImageLabel,
                            font=textFont)
         Imagecanvas.bind("<ButtonPress-1>", lambda ev: ev.widget.configure(relief=SUNKEN))
         Imagecanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief=RAISED))
