@@ -13,19 +13,22 @@ class Display:
     def __init__(self, master):
         self.__master = master
 
+        self.__status = 0
+
         # Set window parameters
         self.__master.resizable(width=False, height=False)
         self.__master.geometry('{}x{}'.format(height, width))
 
-        self.sBar()
-        self.valueBar()
-        self.sepsig()
+        self.__sBar()
+        self.__valueBar()
+        self.__sepsig()
+        self.__runSigImage()
 
 
 
 #Left Main Frame
 
-    def sBar(self):
+    def __sBar(self):
     # Main frame
         sval = Frame(self.__master)
         sval.pack(side=LEFT, anchor=S)
@@ -82,7 +85,7 @@ class Display:
 
 #Right Main Frame
 
-    def valueBar(self):
+    def __valueBar(self):
         # Main frame
         values = Frame(self.__master)
         values.pack(side=LEFT, anchor=S)
@@ -113,44 +116,44 @@ class Display:
         temperatureframer.pack_propagate(False)
 
     # Paint label of altitude
-        altitudedisplayr = Label(altitudeframer, text=self.set_altitude(self), bg='Cyan')
+        altitudedisplayr = Label(altitudeframer, text=self.setAltitude(self), bg='Cyan')
         altitudedisplayr.config(font=("times,12"))
         altitudedisplayr.pack(side=TOP)
 
     # Paint label of airspeed
-        airspeeddisplayr = Label(airspeedframer, text=self.set_airspeed(self), bg='Cyan')
+        airspeeddisplayr = Label(airspeedframer, text=self.setAirspeed(self), bg='Cyan')
         airspeeddisplayr.config(font=("times,12"))
         airspeeddisplayr.pack(side=TOP)
 
     # Paint label of acceleration
-        accelerationdisplayr = Label(accelerationframer, text=self.set_acceleration(self), bg='Cyan')
+        accelerationdisplayr = Label(accelerationframer, text=self.setAcceleration(self), bg='Cyan')
         accelerationdisplayr.config(font=("times,12"))
         accelerationdisplayr.pack(side=TOP)
 
     # Paint label of pressure
-        pressuredisplayr = Label(pressureframer, text=self.set_pressure(self), bg='Cyan')
+        pressuredisplayr = Label(pressureframer, text=self.setPressure(self), bg='Cyan')
         pressuredisplayr.config(font=("times,12"))
         pressuredisplayr.pack(side=TOP)
 
     # Paint label of temperature
-        temperaturedisplayr = Label(temperatureframer, text=self.set_temperature(self), bg='Cyan')
+        temperaturedisplayr = Label(temperatureframer, text=self.setTemperature(self), bg='Cyan')
         temperaturedisplayr.config(font=("times,12"))
         temperaturedisplayr.pack(side=TOP)
 
 #Far Right SepSig Frame
 
-    def sepsig(self):
+    def __sepsig(self):
     # Main frame
         sep = Frame(self.__master)
         sep.pack(side=RIGHT, anchor=S)
 
     #Frame with title
-        septitleframe = Frame(sep, height=28, width=height / 2)
+        septitleframe = Frame(sep, height=28, width=height / 2, bg='Cyan')
         septitleframe.pack(side=TOP, pady=2, padx=2)
         septitleframe.pack_propagate(False)
 
-        sepsigname = Label(septitleframe, text="Seperation Signal", bg='Cyan')
-        sepsigname.config(font=("times,12"))
+        sepsigname = Label(septitleframe, text=" Sep Signal", bg='Cyan')
+        sepsigname.config(font=("times,3"))
         sepsigname.pack(side=TOP)
 
     # Frame and display of sepsig
@@ -158,31 +161,67 @@ class Display:
         sepsignal.pack(side=TOP, pady=2, padx=2)
         sepsignal.pack_propagate(False)
 
-    #Load light image and render image
-        load = ImageTk.PhotoImage(Image.open("Redlight.png"))
+    #Load compass image and render image
+        load = Image.open("Redlight.png")
+        load.thumbnail(size = (100,100))
+        render = ImageTk.PhotoImage(load)
 
-    #Label into which Image is inserted
-        img = Label(sepsignal,image = load, bg='gold')
-        img.pack()
+    #Paint signal image in label with parent being frame with map information
+        self.__img = Label(sepsignal,image = render,bg="gold")
+        self.__img.image = render
+        self.__img.pack()
 
-#Setters
+        self.__imageFrame = sepsignal
 
-    def set_altitude(self, altitude):
+
+
+
+
+    def __runSigImage(self):
+    #Check if seperation sig is true or false
+        load = ""ea
+
+        if self.__status:
+            load = Image.open("Green Light.png")
+        else:
+            load = Image.open("Redlight.png")
+
+        load.thumbnail(size = (100,100))
+        render = ImageTk.PhotoImage(load)
+        self.__img.config(image = render)
+
+        self.__master.after(700,self.__runSigImage)
+
+
+
+
+
+
+
+
+#****************************************Setters******************************************
+    def setStatus(self, status):
+        self.__status = status
+
+
+    def setAltitude(self, altitude):
         self.__altitude = altitude
 
-    def set_airspeed(self, airspeed):
+    def setAirspeed(self, airspeed):
         self.__airspeed = airspeed
 
-    def set_acceleration(self, acceleration):
+    def setAcceleration(self, acceleration):
         self.__acceleration = acceleration
 
-    def set_pressure(self, pressure):
+    def setPressure(self, pressure):
         self.__pressure = pressure
 
-    def set_temperature(self, temperature):
+    def setTemperature(self, temperature):
         self.__temperature = temperature
 
-root = Tk()
-root.wm_title("Status/Signal")
-display = Display(root)
-root.mainloop()
+if __name__ == '__main__':
+
+    root = Tk()
+    root.wm_title("Status/Signal")
+    display = Display(root)
+    root.mainloop()
