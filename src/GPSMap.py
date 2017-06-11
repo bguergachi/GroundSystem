@@ -7,7 +7,7 @@ from PIL import ImageTk,Image
 
 #Defines frame dimensions
 height=220
-width=700
+width=800
 
 
 '''
@@ -60,15 +60,19 @@ class Map:
         # Loads Original Large and Small Map
     def __load_first_maps(self):
         self.__load_smallmap = Image.open("../Maps/Small Map.png")
+        self.__load_smallmap.load()
         self.__load_smallmap.thumbnail(size=(width, height))
         self.__load_largemap = Image.open("../Maps/Large Map.png")
+        self.__load_largemap.load()
         self.__load_largemap.thumbnail(size=(width, height))
 
         # Loads Modified Maps
     def __load_mod_maps(self):
-        self.__load_largemap = Image.open("../Maps/Large map1.png")
+        self.__load_largemap = Image.open("../Maps/Large Map1.png")
+        self.__load_largemap.load()
         self.__load_largemap.thumbnail(size=(width, height))
-        self.__load_smallmap = Image.open("../Maps/Small map1.png")
+        self.__load_smallmap.load()
+        self.__load_smallmap = Image.open("../Maps/Small Map1.png")
         self.__load_smallmap.thumbnail(size=(width, height))
 
         # Loads Crosshair
@@ -169,7 +173,7 @@ class Map:
         self.__map = ImageTk.PhotoImage(self.__load_map)
         self.__label_map = Label(self.__frame, image=self.__map)
         self.__label_map.image = self.__map
-        self.__label_map.pack(side = LEFT, anchor =W)
+        self.__label_map.pack(side = RIGHT, anchor =W)
 
     def setCoordinate(self, coordinates):
         self.__coordiantes = coordinates
