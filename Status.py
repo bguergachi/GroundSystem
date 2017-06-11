@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk,Image
 import os
+import Seperation_Signal
 
 # resolution of the screen
 height = 422
@@ -157,21 +158,15 @@ class Display:
         sepsigname.pack(side=TOP)
 
     # Frame and display of sepsig
-        sepsignal = Frame(sep, height=160, width=height / 2)
-        sepsignal.pack(side=TOP, pady=2, padx=2)
-        sepsignal.pack_propagate(False)
+        self.__imageFrame = Frame(sep, height=160, width=height / 2)
+        self.__imageFrame.pack(side=TOP, pady=2, padx=2)
+        self.__imageFrame.pack_propagate(False)
 
-    #Load compass image and render image
-        load = Image.open("Redlight.png")
-        load.thumbnail(size = (100,100))
-        render = ImageTk.PhotoImage(load)
 
     #Paint signal image in label with parent being frame with map information
-        self.__img = Label(sepsignal,image = render,bg="gold")
-        self.__img.image = render
-        self.__img.pack()
+        self.__statusImage = Seperation_Signal.Separation_Signal(self.__imageFrame)
 
-        self.__imageFrame = sepsignal
+
 
 
 
@@ -179,17 +174,12 @@ class Display:
 
     def __runSigImage(self):
     #Check if seperation sig is true or false
-        load = ""ea
-
         if self.__status:
-            load = Image.open("Green Light.png")
+            self.__statusImage.printdseparate()
         else:
-            load = Image.open("Redlight.png")
+            self.__statusImage.printseparate()
 
-        load.thumbnail(size = (100,100))
-        render = ImageTk.PhotoImage(load)
-        self.__img.config(image = render)
-
+        self.__statusImage.update()
         self.__master.after(700,self.__runSigImage)
 
 
@@ -220,7 +210,6 @@ class Display:
         self.__temperature = temperature
 
 if __name__ == '__main__':
-
     root = Tk()
     root.wm_title("Status/Signal")
     display = Display(root)
