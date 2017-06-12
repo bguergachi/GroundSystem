@@ -24,7 +24,7 @@ class Display:
 
 
     # ***************FUNCTIONS************************
-    def getimages:
+    def getimages(self):
         return rocket
 
     def showimage(self):
