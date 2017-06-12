@@ -7,7 +7,7 @@ from PIL import ImageTk,Image
 
 #Defines frame dimensions
 height=220
-width=800
+width=450
 
 
 '''
@@ -26,10 +26,11 @@ class Map:
     # Sets frame
         if __name__ == '__main__':
             self.__master.resizable(width=False, height=False)
-            self.__master.geometry('{}x{}'.format(435, 220))
+            self.__master.geometry('{}x{}'.format(370, 220))
             self.__frame = Frame(self.__master)
         else:
-            self.__frame = master
+            self.__mainFrame = self.__master
+            self.__frame = Frame(self.__mainFrame)
         self.__frame.pack()
 
     # Runs Map functions
@@ -173,7 +174,7 @@ class Map:
         self.__map = ImageTk.PhotoImage(self.__load_map)
         self.__label_map = Label(self.__frame, image=self.__map)
         self.__label_map.image = self.__map
-        self.__label_map.pack(side = RIGHT, anchor =W)
+        self.__label_map.pack(side = TOP, anchor =NW)
 
     def setCoordinate(self, coordinates):
         self.__coordiantes = coordinates
