@@ -12,13 +12,25 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
-int main1 ()
+struct data{
+    
+    int alt;
+    int temp;
+    
+};
+
+
+int main ()
 {
   int fd ;
   int count ;
@@ -35,21 +47,21 @@ int main1 ()
     fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
     return 1 ;
   }
-
   
+  struct data stuff;
   
-  nextTime = millis () + 300 ;
+  stuff.alt = 5;
+  stuff.temp =2;
+  
 
-  for (count = 0 ; count < 256 ; )
-  {
-    if (millis () > nextTime)
-    {
+
+ 
+    
+
       printf ("\nOut: %3d: ", count) ;
       fflush (stdout) ;
-      serialPutchar (fd, count) ;
-      nextTime += 300 ;
-      ++count ;
-    }
+      serialPutchar (fd, stuff) ;
+
 
     delay (1000) ;
 
@@ -59,9 +71,11 @@ int main1 ()
       printf (" -> %3d", serialGetchar (fd)) ;
       fflush (stdout) ;
     }
-  }
 
   printf ("\n") ;
   return 0 ;
 }
+
+
+
 

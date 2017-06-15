@@ -3,7 +3,7 @@ import tkinter.font as tkfont
 from time import sleep
 import os,sys,random
 from PIL import ImageTk,Image
-import time, GPSMap, Status
+import time, GPSMap, Status , Settings, re
 
 
 '''
@@ -29,6 +29,8 @@ class Display:
         self.__master.geometry('{}x{}'.format(height, width))
         #To make window borderless
         #master.overrideredirect(True)
+
+        self.__mapShowFlag = 0
 
         self.__placeMainFrame()
 
@@ -154,7 +156,9 @@ class Display:
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
-        GPSMap.Map(self.__mainFrame)
+        self.__runMap = GPSMap.Map(self.__mainFrame, self.__mapShowFlag)
+        self.__mapBGRun()
+        self.__mapShowFlag = 5
 
         # Unbind when pushed
         self.__mapCoordinates.unbind("<ButtonPress-1>")
@@ -194,6 +198,7 @@ class Display:
         self.__mainFrame.destroy()
         self.__placeMainFrame()
 
+
         # Unbind when pushed
         self.__altitudePressure.unbind("<ButtonPress-1>")
         self.__altitude_pressure.unbind("<ButtonPress-1>")
@@ -209,8 +214,27 @@ class Display:
 
     def __changeFrameSeting(self,ev):
         # Switch frame to map
-        #GPSMap.Map(
+        self.__mainFrame.destroy()
+        self.__placeMainFrame()
+        Settings.Display(self.__mainFrame)
         ev.widget.configure(relief=SUNKEN)
+
+        # Unbind when pushed
+        self.__settingsCanvas.unbind("<ButtonPress-1>")
+
+        # Bind all other buttons
+        self.__mapCoordinates.bind("<ButtonPress-1>", self.__changeFrameMap)
+        self.__img.bind("<ButtonPress-1>", self.__changeFrameMap)
+        self.__latitude_longitude.bind("<ButtonPress-1>", self.__changeFrameMap)
+        self.__statusStopWatch.bind("<ButtonPress-1>", self.__changeFrameStatus)
+        self.__stopWatch.bind("<ButtonPress-1>", self.__changeFrameStatus)
+        self.__statusFlag.bind("<ButtonPress-1>", self.__changeFrameStatus)
+        self.__altitudePressure.bind("<ButtonPress-1>",self.__changeFrameAltimeter)
+        self.__altitude_pressure.bind("<ButtonPress-1>",self.__changeFrameAltimeter)
+
+    def __mapBGRun(self):
+        self.__runMap.update()
+        self.__master.after(700,self.__mapBGRun)
 
 
 

@@ -25,7 +25,7 @@
 /*
  * 
  */
-int main(int argc, char** argv) {
+int main1(int argc, char** argv) {
     if (wiringPiSetupGpio() == -1) {
         fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno));
         return 1;

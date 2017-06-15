@@ -10,8 +10,8 @@ from PIL import ImageTk,Image
 
 
 # *****************************GUI PORTION************************************
-height = 422
-width = 250
+height = 435
+width = 220
 units = 0
 ports = 0
 
@@ -19,10 +19,11 @@ class Display:
     def __init__(self, root):
         self.__root = root
         # Set window parameters
-        self.__root.resizable(width=False, height=False)
-        self.__root.geometry('{}x{}'.format(height, width))
-        self.__root.title('Settings Menu') # this function names the overall window
-        self.__root.configure(background="snow")
+        if __name__ == '__main__':
+            self.__root.resizable(width=False, height=False)
+            self.__root.geometry('{}x{}'.format(height, width))
+            self.__root.title('Settings Menu') # this function names the overall window
+            self.__root.configure(background="snow")
         self.send_settings()
         self.get_availPorts()
         self.formx()
@@ -88,7 +89,7 @@ class Display:
         frame2.grid(row = 0, column = 2, rowspan = 7, columnspan = 3, sticky = W+E+N+S)
 
         #port_img = Label(root,image=logo,justify=LEFT).grid(row=0,column=3)
-        logo=PhotoImage(file='rocketry-smaller.gif')
+        logo=PhotoImage("../images/Scale")
         port_Title = Label(self.__root, compound=RIGHT,text= "Port Selection Menu ",image=logo, bg ="blue4",width=275,fg= 'white',font="Verdana 10 bold").grid(row =0, column =2)
         avail = Listbox(self.__root,height=7)
 

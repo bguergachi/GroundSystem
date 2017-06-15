@@ -20,9 +20,10 @@ change'''
 class Map:
 
     # ***************** Instantiate *********************
-    def __init__(self, master):
+    def __init__(self, master, first):
         self.__master = master
 
+        self.__firstImage = first
     # Sets frame
         if __name__ == '__main__':
             self.__master.resizable(width=False, height=False)
@@ -41,31 +42,41 @@ class Map:
         self.__getRandomNumber()  # Gets random Coordinates for Path
         self.__choose_first_map()
         self.__setup_display_map()  # Display the map on the Window/Fram FOR THE FIRST TIME
-        self.run()
+        self.__run()
     # *****************************************************
 
     #**************** Defined Functions  ******************
         # Runs all functions
-    def run(self):
-        self.__getRandomNumber()  # Gets random Coordinates for Path
-        #self.getCoordinates()
-        self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
-        self.__load_mod_maps()  # Loads Modified Maps
+    def __run(self):
+        self.update()
         self.__map = ImageTk.PhotoImage(self.__load_map)
         self.__label_map.config(image = self.__map)
+        self.__master.after(700, self.__run)
 
 
-        self.__master.after(700, self.run)
 
+    def update(self):
+        self.__getRandomNumber()  # Gets random Coordinates for Path
+        # self.getCoordinates()
+        self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
+        self.__load_mod_maps()  # Loads Modified Maps
 
         # Loads Original Large and Small Map
     def __load_first_maps(self):
-        self.__load_smallmap = Image.open("../Maps/Small Map.png")
-        self.__load_smallmap.load()
-        self.__load_smallmap.thumbnail(size=(width, height))
-        self.__load_largemap = Image.open("../Maps/Large Map.png")
-        self.__load_largemap.load()
-        self.__load_largemap.thumbnail(size=(width, height))
+        if self.__firstImage == 0:
+            self.__load_smallmap = Image.open("../Maps/Small Map.png")
+            self.__load_smallmap.load()
+            self.__load_smallmap.thumbnail(size=(width, height))
+            self.__load_largemap = Image.open("../Maps/Large Map.png")
+            self.__load_largemap.load()
+            self.__load_largemap.thumbnail(size=(width, height))
+        else:
+            self.__load_smallmap = Image.open("../Maps/Small Map1.png")
+            self.__load_smallmap.load()
+            self.__load_smallmap.thumbnail(size=(width, height))
+            self.__load_largemap = Image.open("../Maps/Large Map1.png")
+            self.__load_largemap.load()
+            self.__load_largemap.thumbnail(size=(width, height))
 
         # Loads Modified Maps
     def __load_mod_maps(self):
@@ -181,6 +192,11 @@ class Map:
 
     def getCoordinates(self):
         return self.__coordiantes
+
+    def setFrame(self, frame):
+        self.__frame = frame
+
+
     # *****************************************************
 
 #   ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
