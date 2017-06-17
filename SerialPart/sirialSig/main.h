@@ -16,17 +16,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <String.h>
+#include <wiringPi.h>
+#include <wiringSerial.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <time.h> 
+
+
+extern void setup();
+extern void sendByte();
+extern int getChar();
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-
-
 #ifdef __cplusplus
 }
 #endif
+
+
+
 
 #endif /* MAIN_H */
 

@@ -16,11 +16,9 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <errno.h>
-#include <unistd.h>
 
-#include <wiringPi.h>
-#include <wiringSerial.h>
+
+
 
 struct data{
     
@@ -36,17 +34,6 @@ int main ()
   int count ;
   unsigned int nextTime ;
 
-  if ((fd = serialOpen ("/dev/ttyS0", 115200)) < 0)
-  {
-    fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
-    return 1 ;
-  }
-
-  if (wiringPiSetupGpio () == -1)
-  {
-    fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
-    return 1 ;
-  }
   
   struct data stuff;
   
@@ -60,17 +47,12 @@ int main ()
 
       printf ("\nOut: %3d: ", count) ;
       fflush (stdout) ;
-      serialPutchar (fd, stuff) ;
+      
 
 
     delay (1000) ;
 
-    while (serialDataAvail (fd))
-    {
-      
-      printf (" -> %3d", serialGetchar (fd)) ;
-      fflush (stdout) ;
-    }
+    
 
   printf ("\n") ;
   return 0 ;
