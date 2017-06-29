@@ -70,7 +70,7 @@ class Display:
         airdisplay.pack(side=TOP)
 
     # Paint label of acceleration
-        accdisplay = Label(accframe, text="Acceleration", bg=statusBackGround)
+        accdisplay = Label(accframe, text="Speed", bg=statusBackGround)
         accdisplay.config(font=("times,12"))
         accdisplay.pack(side=TOP)
 

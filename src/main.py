@@ -3,7 +3,7 @@ import tkinter.font as tkfont
 from time import sleep
 import os,sys,random, socket
 from PIL import ImageTk,Image
-import time, GPSMap, Status , Settings, re
+import time, GPSMap, Status , Settings, StartSocket
 
 
 '''
@@ -88,7 +88,7 @@ class Display:
         self.__altitudePressure.bind("<ButtonPress-1>",self.__changeFrameAltimeter)
 
         #Load compass image and render image
-        load = Image.open("../images/compass.png")
+        load = Image.open("../appImages/compass.png")
         load.thumbnail(size = (50,50))
         render = ImageTk.PhotoImage(load)
 
@@ -178,8 +178,8 @@ class Display:
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
-        Status.Display(self.__mainFrame)
-
+        self.__statusFrame = Status.Display(self.__mainFrame)
+        self.__statusFrameSetFlag = TRUE;
         # Unbind when pushed
         self.__statusStopWatch.unbind("<ButtonPress-1>")
         self.__stopWatch.unbind("<ButtonPress-1>")
@@ -236,6 +236,16 @@ class Display:
         self.__runMap.update()
         self.__master.after(700,self.__mapBGRun)
 
+
+    '''
+    def __startSocketGetter(self):
+        self.__dataArray = StartSocket.start()
+        if(self.__mapShowFlag ==5):
+
+        if(self.__statusFrameSetFlag):
+
+        if
+    '''
 
 
 

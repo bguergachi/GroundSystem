@@ -4,7 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>main.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -13,10 +12,8 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>SerialTest.c</itemPath>
       <itemPath>ledTest.c</itemPath>
       <itemPath>main.c</itemPath>
-      <itemPath>utility.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -43,15 +40,9 @@
           <commandLine>-lwiringPi</commandLine>
         </cTool>
       </compileType>
-      <item path="SerialTest.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ledTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="main.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="utility.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -74,15 +65,9 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="SerialTest.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ledTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="main.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="utility.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -35,10 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/SerialTest.o \
 	${OBJECTDIR}/ledTest.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/utility.o
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -65,11 +63,6 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sirialsig.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sirialsig ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/SerialTest.o: SerialTest.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SerialTest.o SerialTest.c
-
 ${OBJECTDIR}/ledTest.o: ledTest.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -79,11 +72,6 @@ ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
-
-${OBJECTDIR}/utility.o: utility.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/utility.o utility.c
 
 # Subprojects
 .build-subprojects:

@@ -40,7 +40,7 @@ class Display:
 
     # need to update once we figure out the uart stuff
     def get_availPorts(self):  # function outputs list of ports avilable
-        ports = ["port1", "port2", "port3", "port4", "port5", "port6"]
+        ports = ["ttyS0", "ttyS1", "ttyUSB0", "ttyUSB1", "ttyAMA0"]
         return (ports)
     def send_settings(selfself):
         return ()
@@ -70,8 +70,13 @@ class Display:
         return (list_num)
 
     def formx(self):
-        frame1 = Frame(self.__root, bg="khaki",relief="sunken", width=100, height=220)#everything after root is juts formattign settings
+        frame1 = Frame(self.__root, bg="khaki",relief="sunken", width=height*(2/8), height=width)#everything after root is juts formattign settings
         frame1.grid(row = 0, column = 0, rowspan = 3, columnspan = 2, sticky = W+E+N+S, padx= 5) # formatting locations and span of widget
+        frame1.pack_propagate(False)
+
+        update = Button(frame1, text =" Update Settings ", width = 20, height=1,relief = RAISED)
+        update.bind("<Button-1>",lambda event: self.update_confirm("New settings \nhave been saved. "))
+        update.pack(anchor = N,pady = 20)
 
         #************** UNITS SLECTION SUBMENU**********************************
         #unit_label = Label(self.__root, text = "Unit Selection", bg="goldenrod3",font="Verdana 9 bold",height=2).grid(row=0,column=0)#title of subsection
@@ -85,11 +90,11 @@ class Display:
         #metric.grid(row=2,column=0)
 
         # *******************AVAILABLE PORTS LIST ******************************
-        frame2 = Frame(self.__root,bg="lightcyan1",borderwidth=5, relief="sunken", width=300, height=220)
+        frame2 = Frame(self.__root,bg="lightcyan1",borderwidth=5, relief="sunken", width=height*(6/8), height=width)
         frame2.grid(row = 0, column = 2, rowspan = 7, columnspan = 3, sticky = W+E+N+S)
 
         #port_img = Label(root,image=logo,justify=LEFT).grid(row=0,column=3)
-        logo=PhotoImage("../images/Scale")
+        logo=PhotoImage("../appImages/Scale")
         port_Title = Label(self.__root, compound=RIGHT,text= "Port Selection Menu ",image=logo, bg ="blue4",width=275,fg= 'white',font="Verdana 10 bold").grid(row =0, column =2)
         avail = Listbox(self.__root,height=7)
 
@@ -103,18 +108,16 @@ class Display:
         avail.grid(row=1,column=2,rowspan =5, columnspan = 1)
 
         #************UPDATE/CANCEL BUTTONS *************************************
+        '''
         Frame2 = Frame(self.__root, bg="slate gray",relief="sunken", width=420, height=30)
         Frame2.grid(row = 7, column = 0, rowspan = 1, columnspan = 3, sticky = W+E+N+S)
         Label(self.__root, bg ="navy").grid(row=7, column=0)
 
-        update = Button(self.__root, text =" Update Settings ", width = 20, height=1,relief = RAISED)
-        update.bind("<Button-1>",lambda event: self.update_confirm("New settings \nhave been saved. "))
-        update.grid(row=7, column = 2)
 
         cancel= Button(self.__root, text =" Cancel", width = 10, height=1,relief=GROOVE)
         cancel.bind("<Button-1>",lambda event: self.update_confirm("Unsaved setting will be lost. "))
         cancel.grid(row=7,column= 0)
-
+        '''
     #def getunits(self):#fucntion that returns unit option
         #return units
 

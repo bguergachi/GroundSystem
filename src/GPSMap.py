@@ -89,12 +89,12 @@ class Map:
 
         # Loads Crosshair
     def __load_Crosshair(self):
-        self.__load_crosshair = Image.open("../images/Crosshair.png")
+        self.__load_crosshair = Image.open("../appImages/Crosshair.png")
         self.__crosshair_size = (20, 20)
         self.__load_crosshair.thumbnail(size=(self.__crosshair_size[0], self.__crosshair_size[1]))
 
     def __load_Circle(self):
-        self.__load_circle = Image.open("../images/circle.png")
+        self.__load_circle = Image.open("../appImages/circle.png")
         self.__circle_size = (5, 5)
         self.__load_circle.thumbnail(size=(self.__circle_size[0], self.__circle_size[1]))
 
