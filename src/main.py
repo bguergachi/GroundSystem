@@ -34,6 +34,16 @@ class Display:
 
         self.__placeMainFrame()
 
+        # Load compass image and render image
+        load = Image.open("../appImages/rocketry.png")
+        load.thumbnail(size=(220, 435))
+        render = ImageTk.PhotoImage(load)
+
+        self.__img = Label(self.__mainFrame, image=render, bg='light cyan')
+        self.__img.image = render
+        self.__img.pack()
+
+
 
         self.__printLabel()
         self.__statusBar()
@@ -137,7 +147,7 @@ class Display:
         self.__settingsCanvas.create_text((15, (width-78)/2-30), angle="90", anchor="ne", text=settingsLabel, font=textFont)
         self.__settingsCanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief=RAISED))
         self.__settingsCanvas.place(x=height-42,y=2)
-        self.__settingsCanvas.bind("<ButtonPress-1>",self.__changeFrameSeting)
+        self.__settingsCanvas.bind("<ButtonPress-1>",self.__changeFrameSetting)
 
         '''
         #Images button built as a canvas
@@ -171,7 +181,7 @@ class Display:
         self.__statusFlag.bind("<ButtonPress-1>", self.__changeFrameStatus)
         self.__altitudePressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
         self.__altitude_pressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
-        self.__settingsCanvas.bind("<ButtonPress-1>", self.__changeFrameSeting)
+        self.__settingsCanvas.bind("<ButtonPress-1>", self.__changeFrameSetting)
 
 
     def __changeFrameStatus(self,ev):
@@ -179,7 +189,6 @@ class Display:
         self.__mainFrame.destroy()
         self.__placeMainFrame()
         self.__statusFrame = Status.Display(self.__mainFrame)
-        self.__statusFrameSetFlag = TRUE;
         # Unbind when pushed
         self.__statusStopWatch.unbind("<ButtonPress-1>")
         self.__stopWatch.unbind("<ButtonPress-1>")
@@ -191,7 +200,7 @@ class Display:
         self.__latitude_longitude.bind("<ButtonPress-1>", self.__changeFrameMap)
         self.__altitudePressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
         self.__altitude_pressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
-        self.__settingsCanvas.bind("<ButtonPress-1>", self.__changeFrameSeting)
+        self.__settingsCanvas.bind("<ButtonPress-1>", self.__changeFrameSetting)
 
     def __changeFrameAltimeter(self,ev):
         # Switch frame to map
@@ -210,9 +219,9 @@ class Display:
         self.__statusStopWatch.bind("<ButtonPress-1>", self.__changeFrameStatus)
         self.__stopWatch.bind("<ButtonPress-1>", self.__changeFrameStatus)
         self.__statusFlag.bind("<ButtonPress-1>", self.__changeFrameStatus)
-        self.__settingsCanvas.bind("<ButtonPress-1>", self.__changeFrameSeting)
+        self.__settingsCanvas.bind("<ButtonPress-1>", self.__changeFrameSetting)
 
-    def __changeFrameSeting(self,ev):
+    def __changeFrameSetting(self,ev):
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
