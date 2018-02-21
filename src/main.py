@@ -2,7 +2,6 @@ from tkinter import *
 import tkinter.font as tkfont
 from time import sleep
 import os,sys,random, socket
-sys.path.append(os.path.join(os.path.dirname(__file__), "GroundSystem/src", "GroundSystem/src"))
 from PIL import ImageTk,Image
 import time, GPSMap, Status , Settings, StartSocket
 import threading
