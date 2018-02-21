@@ -2,9 +2,11 @@ from tkinter import *
 import tkinter.font as tkfont
 from time import sleep
 import os,sys,random, socket
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 from PIL import ImageTk,Image
 import time, GPSMap, Status , Settings, StartSocket
-
+import threading
+from queue import Queue
 
 '''
 
@@ -16,8 +18,8 @@ height = 480
 width = 320
 statusBackGround = 'cyan'
 
-
-
+threadLock = threading.Lock()
+queue = Queue()
 
 
 class Display:
@@ -48,7 +50,14 @@ class Display:
         self.__printLabel()
         self.__statusBar()
         self.__SettingsImageButtons()
+        self.__startDataThread()
 
+    def __startDataThread(self):
+        #for x in range(1):
+        #    t = threading.Thread(target = threader)
+        #    t.daemon = True
+        #    t.start()
+        pass
 
 
     def __placeMainFrame(self):
