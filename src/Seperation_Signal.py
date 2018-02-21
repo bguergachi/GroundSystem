@@ -10,7 +10,7 @@ class Separation_Signal:
         loadRed = Image.open("../appImages/Redlight.png")
         loadRed.thumbnail(size=(100,100))
         self.__redlight=ImageTk.PhotoImage(loadRed)
-        loadGreen = Image.open("../appImages/Green light.png")
+        loadGreen = Image.open("../appImages/Green_light.png")
         loadGreen.thumbnail(size=(100, 100))
         self.__greenlight=ImageTk.PhotoImage(loadGreen)
         if __name__ == '__main__':
