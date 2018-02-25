@@ -107,7 +107,7 @@ class Display:
         self.__altitudePressure.bind("<ButtonPress-1>",self.__changeFrameAltimeter)
 
         #Load compass image and render image
-        load = Image.open("../appImages/compass.png")
+        load = Image.open(os.path.dirname(os.path.realpath(__file__))+"/../appImages/compass.png")
         load.thumbnail(size = (50,50))
         render = ImageTk.PhotoImage(load)
 
