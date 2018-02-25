@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="613d5c51-efb3-45f4-a7e3-eebe869289d3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maps/Large Map1.png" afterPath="$PROJECT_DIR$/Maps/Large Map1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Maps/Small Map1.png" afterPath="$PROJECT_DIR$/Maps/Small Map1.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GPSMap.py" afterPath="$PROJECT_DIR$/src/GPSMap.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Seperation_Signal.py" afterPath="$PROJECT_DIR$/src/Seperation_Signal.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
@@ -16,7 +17,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/GroundSystem$Altimeter.coverage" NAME="Altimeter Coverage Results" MODIFIED="1497215621374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GroundSystem$main.coverage" NAME="main Coverage Results" MODIFIED="1519544719523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/GroundSystem$main.coverage" NAME="main Coverage Results" MODIFIED="1519544898095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/GroundSystem$GPSMap__1_.coverage" NAME="GPSMap (1) Coverage Results" MODIFIED="1497215056429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/GroundSystem$Status.coverage" NAME="Status Coverage Results" MODIFIED="1519539610609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/GroundSystem$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1497236375908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
@@ -33,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="171">
-              <caret line="39" column="52" lean-forward="false" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
+              <caret line="39" column="58" lean-forward="false" selection-start-line="39" selection-start-column="58" selection-end-line="39" selection-end-column="58" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -81,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/src/Seperation_Signal.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="166">
-              <caret line="13" column="63" lean-forward="false" selection-start-line="13" selection-start-column="63" selection-end-line="13" selection-end-column="63" />
+              <caret line="13" column="74" lean-forward="false" selection-start-line="13" selection-start-column="74" selection-end-line="13" selection-end-column="74" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -101,11 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GPSMap.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GPSMap.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GPSMap.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="171">
-              <caret line="178" column="70" lean-forward="false" selection-start-line="178" selection-start-column="70" selection-end-line="178" selection-end-column="70" />
+              <caret line="178" column="81" lean-forward="false" selection-start-line="178" selection-start-column="81" selection-end-line="178" selection-end-column="81" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -154,12 +155,14 @@
       <find>avil</find>
       <find>avail</find>
       <find>select_port</find>
-      <find>os.path.realpath(__file__)</find>
       <find>os.getcwd()</find>
+      <find>os.path.realpath(__file__)+&quot;/..&quot;</find>
+      <find>os.path.realpath(__file__)</find>
     </findStrings>
     <replaceStrings>
-      <replace>os.path.realpath(__file__)+&quot;/..&quot;</replace>
       <replace>os.path.realpath(__file__)</replace>
+      <replace>os.path.dirname(os.path.realpath(__file__))</replace>
+      <replace>os.path.realpath(__file__)+&quot;/..&quot;</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -188,9 +191,9 @@
         <option value="$PROJECT_DIR$/src/serialCOM.py" />
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/src/Status.py" />
-        <option value="$PROJECT_DIR$/src/GPSMap.py" />
-        <option value="$PROJECT_DIR$/src/Seperation_Signal.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/src/Seperation_Signal.py" />
+        <option value="$PROJECT_DIR$/src/GPSMap.py" />
       </list>
     </option>
   </component>
@@ -964,10 +967,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GPSMap.py">
+    <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
-          <caret line="178" column="70" lean-forward="false" selection-start-line="178" selection-start-column="70" selection-end-line="178" selection-end-column="70" />
+          <caret line="39" column="58" lean-forward="false" selection-start-line="39" selection-start-column="58" selection-end-line="39" selection-end-column="58" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -977,17 +980,17 @@
     <entry file="file://$PROJECT_DIR$/src/Seperation_Signal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
-          <caret line="13" column="63" lean-forward="false" selection-start-line="13" selection-start-column="63" selection-end-line="13" selection-end-column="63" />
+          <caret line="13" column="74" lean-forward="false" selection-start-line="13" selection-start-column="74" selection-end-line="13" selection-end-column="74" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.py">
+    <entry file="file://$PROJECT_DIR$/src/GPSMap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
-          <caret line="39" column="52" lean-forward="false" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
+          <caret line="178" column="81" lean-forward="false" selection-start-line="178" selection-start-column="81" selection-end-line="178" selection-end-column="81" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
