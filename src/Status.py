@@ -1,6 +1,6 @@
 from tkinter import *
 
-from GroundSystem.src import Seperation_Signal
+from src import Seperation_Signal
 
 # resolution of the screen
 height = 422
