@@ -37,7 +37,7 @@ class Display:
         self.__placeMainFrame()
 
         # Load compass image and render image
-        load = Image.open(os.path.realpath(__file__)+"/../appImages/rocketry.png")
+        load = Image.open(os.path.realpath(__file__)+"/.."+"/../appImages/rocketry.png")
         load.thumbnail(size=(220, 435))
         render = ImageTk.PhotoImage(load)
 
