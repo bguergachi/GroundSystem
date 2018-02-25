@@ -3,7 +3,8 @@ import tkinter.font as tkfont
 from time import sleep
 import os,sys,random, socket
 from PIL import ImageTk,Image
-import time, GPSMap, Status , Settings, StartSocket
+import time
+import src.GPSMap as GPSMap , src.Status as Status, src.Settings as Settings
 import threading
 from queue import Queue
 

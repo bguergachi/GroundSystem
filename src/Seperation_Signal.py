@@ -1,4 +1,6 @@
 from tkinter import *
+import os,sys
+sys.path.insert(0, os.getcwd()+"/..")
 from PIL import ImageTk, Image
 
 class Separation_Signal:
@@ -7,10 +9,10 @@ class Separation_Signal:
         self.__master = master
         self.__opened = False
         self.__state = 0
-        loadRed = Image.open("../appImages/Redlight.png")
+        loadRed = Image.open(os.getcwd()+"../appImages/Redlight.png")
         loadRed.thumbnail(size=(100,100))
         self.__redlight=ImageTk.PhotoImage(loadRed)
-        loadGreen = Image.open("../appImages/Green_light.png")
+        loadGreen = Image.open(os.getcwd()+"../appImages/Green_Light.png")
         loadGreen.thumbnail(size=(100, 100))
         self.__greenlight=ImageTk.PhotoImage(loadGreen)
         if __name__ == '__main__':

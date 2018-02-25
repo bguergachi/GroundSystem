@@ -64,37 +64,37 @@ class Map:
         # Loads Original Large and Small Map
     def __load_first_maps(self):
         if self.__firstImage == 0:
-            self.__load_smallmap = Image.open("../Maps/Small Map.png")
+            self.__load_smallmap = Image.open(os.getcwd()+"../Maps/Small Map.png")
             self.__load_smallmap.load()
             self.__load_smallmap.thumbnail(size=(width, height))
-            self.__load_largemap = Image.open("../Maps/Large Map.png")
+            self.__load_largemap = Image.open(os.getcwd()+"../Maps/Large Map.png")
             self.__load_largemap.load()
             self.__load_largemap.thumbnail(size=(width, height))
         else:
-            self.__load_smallmap = Image.open("../Maps/Small Map1.png")
+            self.__load_smallmap = Image.open(os.getcwd()+"../Maps/Small Map1.png")
             self.__load_smallmap.load()
             self.__load_smallmap.thumbnail(size=(width, height))
-            self.__load_largemap = Image.open("../Maps/Large Map1.png")
+            self.__load_largemap = Image.open(os.getcwd()+"../Maps/Large Map1.png")
             self.__load_largemap.load()
             self.__load_largemap.thumbnail(size=(width, height))
 
         # Loads Modified Maps
     def __load_mod_maps(self):
-        self.__load_largemap = Image.open("../Maps/Large Map1.png")
+        self.__load_largemap = Image.open(os.getcwd()+"../Maps/Large Map1.png")
         self.__load_largemap.load()
         self.__load_largemap.thumbnail(size=(width, height))
         self.__load_smallmap.load()
-        self.__load_smallmap = Image.open("../Maps/Small Map1.png")
+        self.__load_smallmap = Image.open(os.getcwd()+"../Maps/Small Map1.png")
         self.__load_smallmap.thumbnail(size=(width, height))
 
         # Loads Crosshair
     def __load_Crosshair(self):
-        self.__load_crosshair = Image.open("../appImages/Crosshair.png")
+        self.__load_crosshair = Image.open(os.getcwd()+"../appImages/Crosshair.png")
         self.__crosshair_size = (20, 20)
         self.__load_crosshair.thumbnail(size=(self.__crosshair_size[0], self.__crosshair_size[1]))
 
     def __load_Circle(self):
-        self.__load_circle = Image.open("../appImages/circle.png")
+        self.__load_circle = Image.open(os.getcwd()+"../appImages/circle.png")
         self.__circle_size = (5, 5)
         self.__load_circle.thumbnail(size=(self.__circle_size[0], self.__circle_size[1]))
 
@@ -139,8 +139,8 @@ class Map:
             self.__map_side = self.__largemap_side.copy()
             self.__convert_pixel()
             self.__load_largemap.paste(self.__load_circle, (self.__pixel_integer[1] - int(self.__circle_size[0] / 2), self.__pixel_integer[0] - int(self.__circle_size[1] / 2)), self.__load_circle)
-            self.__load_largemap.save("../Maps/Large Map1.png")
-            self.__load_smallmap.save("../Maps/Small Map1.png")
+            self.__load_largemap.save(os.getcwd()+"../Maps/Large Map1.png")
+            self.__load_smallmap.save(os.getcwd()+"../Maps/Small Map1.png")
             self.__load_map = self.__load_largemap
 
             # Chooses Small Map if Rocket enters top or bot and left or right sides of Small map
@@ -149,9 +149,9 @@ class Map:
             self.__map_side = self.__smallmap_side.copy()
             self.__convert_pixel()
             self.__load_smallmap.paste(self.__load_circle, (self.__pixel_integer[1] - int(self.__circle_size[0] / 2), self.__pixel_integer[0] - int(self.__circle_size[1] / 2)), self.__load_circle)
-            self.__load_smallmap.save("../Maps/Small Map1.png")
+            self.__load_smallmap.save(os.getcwd()+"../Maps/Small Map1.png")
             self.__load_largemap.paste(self.__load_circle, (self.__pixel_integer[1] - int(self.__circle_size[0] / 2), self.__pixel_integer[0] - int(self.__circle_size[1] / 2)), self.__load_circle)
-            self.__load_largemap.save("../Maps/Large Map1.png")
+            self.__load_largemap.save(os.getcwd()+"../Maps/Large Map1.png")
             self.__load_map = self.__load_smallmap
 
         # {Chooses *****Consecutive***** Map Images, Merges Path and Map, Saves the latter as a .png file and notifies user if Rocket leaves Small Map} in run()
@@ -172,11 +172,11 @@ class Map:
             self.__map_side = self.__smallmap_side.copy()
             self.__convert_pixel()
             self.__load_smallmap.paste(self.__load_circle, (self.__pixel_integer[1] - int(self.__circle_size[0] / 2), self.__pixel_integer[0] - int(self.__circle_size[1] / 2)), self.__load_circle)
-            self.__load_smallmap.save("../Maps/Small Map1.png")
+            self.__load_smallmap.save(os.getcwd()+"../Maps/Small Map1.png")
             self.__map_side = self.__largemap_side.copy()
             self.__convert_pixel()
             self.__load_largemap.paste(self.__load_circle, (self.__pixel_integer[1] - int(self.__circle_size[0] / 2), self.__pixel_integer[0] - int(self.__circle_size[1] / 2)), self.__load_circle)
-            self.__load_largemap.save("../Maps/Large Map1.png")
+            self.__load_largemap.save(os.getcwd()+"../Maps/Large Map1.png")
             self.__load_map = self.__load_smallmap
 
 
