@@ -1,13 +1,20 @@
-char dataString[50] = {0};
-int a =0; 
+char a;
+
 
 void setup() {
-Serial.begin(9600);              //Starting serial communication
+  Serial.begin(9600);              //Starting serial communication
+  pinMode(LED_BUILTIN, OUTPUT);
 }
   
 void loop() {
-  a++;                          // a value increase every loop
-  sprintf(dataString,"%02X",a); // convert a value to hexa 
-  Serial.println(dataString);   // send the data
-  delay(1000);                  // give the loop some break
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on
+  Serial.write("\n50238\r");
+  Serial.write("\n5890231\r");
+  Serial.write("\n453623\r");
+  Serial.write("\n4536722\r");
+  Serial.write("\n45734573467\r");
+  Serial.write("\n3489560123.4112334\r");
+  delay(5000);
+  digitalWrite(LED_BUILTIN, LOW);   // turn the LED on
+  delay(5000);
 }
