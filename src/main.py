@@ -18,8 +18,12 @@ height = 480
 width = 320
 statusBackGround = 'cyan'
 
+#Threading options
 threadLock = threading.Lock()
 queue = Queue()
+
+#Serial options
+baudRate = 9600
 
 
 class Display:
