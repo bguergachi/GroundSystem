@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter.font as tkfont
 from time import sleep
 import os,sys,random, socket
+sys.path.append("..")
 from PIL import ImageTk,Image
 import time
 import src.GPSMap as GPSMap , src.Status as Status, src.Settings as Settings

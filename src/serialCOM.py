@@ -2,6 +2,7 @@ import serial
 import threading
 from queue import Queue
 import time
+import sys
 
 
 
@@ -71,15 +72,21 @@ class SerialCom:
         self.__start()
         
     def __start(self):
+        #i = 0
         print("Starting to read")
         while True:
+            #i += 1
+            #print("\n",i)  
             data = self.__serial.read().decode('utf-8')
             #print(data)
+            #sys.exit()
             if data=='\n':
                 print("Starting")
-                for n in range(0, 15):
+                for n in range(0, 16):
                     dataList.setOnIndex(n, self.__readline())
-                
+                    #print(n)
+
+
             
     def __readline(self):
         rv = ""
@@ -102,4 +109,4 @@ class SerialCom:
         
 
 if __name__ == '__main__':
-    SerialCom = SerialCom(9600)
+    SerialCom = SerialCom(57600)
