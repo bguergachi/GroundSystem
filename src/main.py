@@ -5,7 +5,7 @@ import os,sys,random, socket
 sys.path.append("..")
 from PIL import ImageTk,Image
 import time
-import src.GPSMap as GPSMap , src.Status as Status, src.Settings as Settings
+import src.GPSMap as GPSMap, src.Status as Status, src.Settings as Settings, src.serialCOM as serialCOM
 import threading
 from queue import Queue
 
@@ -24,7 +24,7 @@ threadLock = threading.Lock()
 queue = Queue()
 
 #Serial options
-baudRate = 9600
+baudRate = 57600
 
 
 class Display:
@@ -34,12 +34,18 @@ class Display:
         # Set window parameters
         self.__master.resizable(width=False, height=False)
         self.__master.geometry('{}x{}'.format(height, width))
+
         #To make window borderless
         #master.overrideredirect(True)
 
-        self.__mapShowFlag = 0
+
+        #Make serial object
+        self.__serialData = serialCOM.SerialCom(baudRate,'ttyS0')
+
 
         self.__placeMainFrame()
+
+
 
         # Load compass image and render image
         load = Image.open(os.path.dirname(os.path.realpath(__file__))+"/../appImages/rocketry.png")
@@ -58,11 +64,7 @@ class Display:
         self.__startDataThread()
 
     def __startDataThread(self):
-        #for x in range(1):
-        #    t = threading.Thread(target = threader)
-        #    t.daemon = True
-        #    t.start()
-        pass
+        self.__serialData.startThread()
 
 
     def __placeMainFrame(self):
@@ -123,13 +125,13 @@ class Display:
         self.__img.bind("<ButtonPress-1>",self.__changeFrameMap)
 
         #Set text label with coordinates with parent being frame with map information
-        self.__latitude_longitude = Label(self.__mapCoordinates, text = self.getLatitude()+",\n"+self.getLongitude(),bg="cyan",fg="black")
+        self.__latitude_longitude = Label(self.__mapCoordinates, text = self.getgpsLat()+",\n"+self.getgpsLong(),bg="cyan",fg="black")
         #latitude_longitude.bind("<Button-1>", self.__currentTime = "Hello")
         self.__latitude_longitude.pack(side=LEFT,anchor=W,padx=8)
         self.__latitude_longitude.bind("<ButtonPress-1>",self.__changeFrameMap)
 
         #Paint stopwatch timer
-        self.__stopWatch = Label(self.__statusStopWatch, text = self.getStopWatch(),bg = statusBackGround,fg="black")
+        self.__stopWatch = Label(self.__statusStopWatch, text = (time.time()-self.getgpsTime()),bg = statusBackGround,fg="black")
         self.__stopWatch.config(font=("times",20))
         self.__stopWatch.pack(side=TOP,anchor=N)
         self.__stopWatch.bind("<ButtonPress-1>",self.__changeFrameStatus)
@@ -147,7 +149,7 @@ class Display:
         self.__altitude_pressure.bind("<ButtonPress-1>",self.__changeFrameAltimeter)
 
         #Paint descriptive label of data
-        self.__title_of_data = Label(self.__altitudePressure,text=self.getAltitudePressureTitle(),bg = statusBackGround)
+        self.__title_of_data = Label(self.__altitudePressure,text=self.getpressAlt(),bg = statusBackGround)
         self.__title_of_data.config(font=("times",20))
         self.__title_of_data.pack(side=TOP)
         self.__title_of_data.bind("<ButtonPress-1>",self.__changeFrameAltimeter)
@@ -163,16 +165,7 @@ class Display:
         self.__settingsCanvas.place(x=height-42,y=2)
         self.__settingsCanvas.bind("<ButtonPress-1>",self.__changeFrameSetting)
 
-        '''
-        #Images button built as a canvas
-        ImageLabel = "Images"
-        Imagecanvas = Canvas(self.__master, height=(width - 78) / 2-4, width=35, borderwidth=2, relief="raised")
-        Imagecanvas.create_text((15, (width - 78) / 4-15), angle="90", anchor="ne", text=ImageLabel,
-                           font=textFont)
-        Imagecanvas.bind("<ButtonPress-1>", lambda ev: ev.widget.configure(relief=SUNKEN))
-        Imagecanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief=RAISED))
-        Imagecanvas.place(x=height-40,y=(width-78)/2+2)
-        '''
+
 
     #******************Event handlers*************************
 
@@ -180,9 +173,9 @@ class Display:
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
-        self.__runMap = GPSMap.Map(self.__mainFrame, self.__mapShowFlag)
+        self.__runMap = GPSMap.Map(self.__mainFrame)
         self.__mapBGRun()
-        self.__mapShowFlag = 5
+        self.__runMap.firstImage = 5
 
         # Unbind when pushed
         self.__mapCoordinates.unbind("<ButtonPress-1>")
@@ -274,6 +267,73 @@ class Display:
 
 
     #****************** Methods used to get data **************
+
+    def getgpsLat(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.gpsLat
+
+    def getgpsLong(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.gpsLong
+
+    def getgpsSpeed(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.gpsSpeed
+
+    def getgpsTime(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.gpsTime
+
+    def gpsAlt(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.gpsAlt
+
+    def getaccelX(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.accelX
+
+    def getaccelY(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.accelY
+
+    def getaccelZ(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.accelZ
+
+    def getaccelX1(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.accelX1
+
+    def getaccelY2(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.accelY2
+
+    def getaccelZ2(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.accelZ2
+
+    def getpressAlt(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.pressAlt
+
+    def getpressTemp(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.pressTemp
+
+    def gettempBattery(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.tempBattery
+
+    def getstrainGauge(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.strainGauge
+
+    def getIRdistance(self):
+        with self.__serialData.lock:
+            return self.__serialData.dataList.IRdistance
+
+
+
 
     def getLatitude(self):
         return "43.380379"

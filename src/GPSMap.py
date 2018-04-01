@@ -20,10 +20,10 @@ change'''
 class Map:
 
     # ***************** Instantiate *********************
-    def __init__(self, master, first):
+    def __init__(self, master):
         self.__master = master
 
-        self.__firstImage = first
+        self.firstImage = 0
     # Sets frame
         if __name__ == '__main__':
             self.__master.resizable(width=False, height=False)
@@ -39,7 +39,8 @@ class Map:
         self.__load_first_maps()
         self.__load_Circle()
         self.__map_parameters()
-        self.__getRandomNumber()  # Gets random Coordinates for Path
+        if __name__ == '__main__':
+            self.__getRandomNumber()  # Gets random Coordinates for Path
         self.__choose_first_map()
         self.__setup_display_map()  # Display the map on the Window/Fram FOR THE FIRST TIME
         self.__run()
@@ -56,14 +57,14 @@ class Map:
 
 
     def update(self):
-        self.__getRandomNumber()  # Gets random Coordinates for Path
-        # self.getCoordinates()
+        if __name__ == '__main__':
+            self.__getRandomNumber()  # Gets random Coordinates for Path
         self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
         self.__load_mod_maps()  # Loads Modified Maps
 
         # Loads Original Large and Small Map
     def __load_first_maps(self):
-        if self.__firstImage == 0:
+        if self.firstImage == 0:
             self.__load_smallmap = Image.open(os.path.dirname(os.path.realpath(__file__))+"/../Maps/Small Map.png")
             self.__load_smallmap.load()
             self.__load_smallmap.thumbnail(size=(width, height))

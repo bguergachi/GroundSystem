@@ -1,8 +1,7 @@
 import serial
 import threading
-from queue import Queue
-import time
-import sys
+import time, sys
+import src.DataSave as DataSave
 
 
 
@@ -24,7 +23,41 @@ class Data:
         self.tempBattery = 0
         self.strainGauge = 0
         self.IRdistance = 0
-    
+
+    def getOnIndex(self,index):
+        if index == 0:
+            return self.gpsLat
+        elif index == 1:
+            return self.gpsLong
+        elif index == 2:
+            return self.gpsSpeed
+        elif index == 3:
+            return self.gpsTime
+        elif index == 4:
+            return self.gpsAlt
+        elif index == 5:
+            return self.accelX
+        elif index == 6:
+            return self.accelY
+        elif index == 7:
+            return self.accelZ
+        elif index == 8:
+            return self.accelX1
+        elif index == 9:
+            return self.accelY2
+        elif index == 10:
+            return self.accelZ2
+        elif index == 11:
+            return self.pressAlt
+        elif index == 12:
+            return self.pressTemp
+        elif index == 13:
+            return self.tempBattery
+        elif index == 14:
+            return self.strainGauge
+        elif index == 15:
+            return self.IRdistance
+
     def setOnIndex(self,index,value):
         if index == 0:
             self.gpsLat = value
@@ -60,38 +93,48 @@ class Data:
             self.IRdistance = value
 
 
-dataList = Data()
+
 
 class SerialCom:
-    def __init__(self,baud):
-        self.__port = 'ttyS0'
-        self.__serial = serial.Serial('/dev/'+self.__port, baudrate=baud,
+    def __init__(self,baud,port):
+        self.dataList = Data()
+        self.lock = threading.Lock()
+        self.__baud = baud
+        self.__port = port
+        self.__serial = serial.Serial('/dev/'+self.__port, baudrate=self.__baud,
                                       parity=serial.PARITY_NONE,
                                       stopbits=serial.STOPBITS_ONE,
                                       bytesize=serial.EIGHTBITS)
-        self.__start()
+        self.__fileSaver = DataSave()
+
+    def startThread(self):
+        t = threading.Thread(target=self.__start, args= self.dataList)
+        t.daemon = True
+        t.start()
         
-    def __start(self):
+    def __start(self,dataList):
         #i = 0
         print("Starting to read")
         while True:
             #i += 1
             #print("\n",i)  
             data = self.__serial.read().decode('utf-8')
+            self.__fileSaver.addToTelemetry(data)
             #print(data)
             #sys.exit()
             if data=='\n':
                 print("Starting")
                 for n in range(0, 16):
-                    dataList.setOnIndex(n, self.__readline())
+                    with self.lock:
+                        dataList.setOnIndex(n, self.__readline())
                     #print(n)
+        self.__fileSaver.addToCSV(dataList)
 
 
             
     def __readline(self):
         rv = ""
         while True:
-            
             ch = self.__serial.read().decode('utf-8')
             if ch=='\r':
                 print(rv)
@@ -102,11 +145,11 @@ class SerialCom:
 
     def setPort(self,port):
         self.__port = port
-        self.__serial = serial.Serial('/dev/'+self.__port, baudrate=baud,
+        self.__serial = serial.Serial('/dev/'+self.__port, baudrate=self.__baud,
                                       parity=serial.PARITY_NONE,
                                       stopbits=serial.STOPBITS_ONE,
                                       bytesize=serial.EIGHTBITS)
         
 
 if __name__ == '__main__':
-    SerialCom = SerialCom(57600)
+    SerialCom = SerialCom(57600,'ttyS0')
