@@ -18,39 +18,7 @@ class Separation_Signal:
             self.window(master)
         self.printShit()
 
-    def window(self, main):
-        main.title('Separation Signal')
-        height = 250
-        width = 422
-        self.__master.geometry('{}x{}'.format(width, height))
 
-    def getState(self):
-        return self.__state
-
-    def printdseparate(self):
-        self.__state = 0
-
-    def printseparate(self):
-        self.__state = 1
-
-    def printShit(self):
-
-        if self.__state == 0:
-            self.__panel = Label(self.__master, image=self.__redlight)
-            self.__panel.image = self.__redlight
-            self.__panel.pack()
-
-        elif self.__state == 1:
-            self.__panel = Label(self.__master, image=self.__greenlight)
-            self.__panel.image = self.__greenlight
-            self.__panel.pack()
-
-    def update(self):
-        if self.__state == 0:
-            self.__panel.config(image=self.__redlight)
-
-        elif self.__state == 1:
-            self.__panel.config(image=self.__greenlight)
 
 
 

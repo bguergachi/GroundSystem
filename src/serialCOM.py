@@ -54,8 +54,6 @@ class Data:
         elif index == 13:
             return self.tempBattery
         elif index == 14:
-            return self.strainGauge
-        elif index == 15:
             return self.IRdistance
 
     def setOnIndex(self,index,value):
@@ -88,8 +86,6 @@ class Data:
         elif index == 13:
             self.tempBattery = value
         elif index == 14:
-            self.strainGauge = value
-        elif index == 15:
             self.IRdistance = value
 
 
@@ -124,7 +120,7 @@ class SerialCom:
             #sys.exit()
             if data=='\n':
                 print("Starting")
-                for n in range(0, 16):
+                for n in range(0, 15):
                     with self.lock:
                         dataList.setOnIndex(n, self.__readline())
                     #print(n)

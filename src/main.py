@@ -3,7 +3,7 @@ import tkinter.font as tkfont
 from time import sleep
 import os,sys,random, socket
 sys.path.append("..")
-from PIL import ImageTk,Image
+from PIL import ImageTk,Image,ImageDraw
 import time
 import src.GPSMap as GPSMap, src.Status as Status, src.Settings as Settings, src.serialCOM as serialCOM
 import threading
@@ -154,18 +154,18 @@ class Display:
         self.__title_of_data.pack(side=TOP)
         self.__title_of_data.bind("<ButtonPress-1>",self.__changeFrameAltimeter)
 
-
-    def __SettingsImageButtons(self):
+    def __BatteryMeter(self):
         #Settings button built as a canvas
         textFont = tkfont.nametofont("TkDefaultFont")
         settingsLabel = "Settings"
-        self.__settingsCanvas = Canvas(self.__master, height=(width-78)-8, width=35, borderwidth=2, relief="raised")
-        self.__settingsCanvas.create_text((15, (width-78)/2-30), angle="90", anchor="ne", text=settingsLabel, font=textFont)
-        self.__settingsCanvas.bind("<ButtonRelease-1>", lambda ev: ev.widget.configure(relief=RAISED))
-        self.__settingsCanvas.place(x=height-42,y=2)
-        self.__settingsCanvas.bind("<ButtonPress-1>",self.__changeFrameSetting)
+        self.__settingsCanvas = Canvas(self.__master, height=(width-78)-8, width=35, borderwidth=2)
+        self.__settingsCanvas.create_text((15, (width-78)/2-30), anchor="S", text=settingsLabel, font=textFont)
 
 
+
+
+    def __BatteryLife(self):
+        return self.gettempBattery()
 
     #******************Event handlers*************************
 
@@ -251,17 +251,6 @@ class Display:
     def __mapBGRun(self):
         self.__runMap.update()
         self.__master.after(700,self.__mapBGRun)
-
-
-    '''
-    def __startSocketGetter(self):
-        self.__dataArray = StartSocket.start()
-        if(self.__mapShowFlag ==5):
-
-        if(self.__statusFrameSetFlag):
-
-        if
-    '''
 
 
 
