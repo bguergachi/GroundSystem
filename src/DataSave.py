@@ -7,7 +7,7 @@ class DataSave:
         self.__csv = open(os.path.dirname(os.path.realpath(__file__))+"/../DataFiles/telemetry.csv","w")
         self.__altitude = open(os.path.dirname(os.path.realpath(__file__))+"/../DataFiles/altitude","w")
         self.__pressure = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/pressure","w")
-        self.__distance = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/distance","w")
+        self.__distance = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/IRdistance","w")
         self.__battery = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/battery","w")
 
     def addToTelemetry(self,string):
