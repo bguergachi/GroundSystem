@@ -33,8 +33,8 @@ class Plot:
         self.__avt.bind("<Button-1>", self.update("/../DataFiles/altitude"))
         self.__avt.pack(side=LEFT, pady=6, padx=4)
 
-        self.__irvt = Button(fullFrame, text = "IR - Time", height= 2, width=7, bg='Cyan')
-        self.__irvt.bind("<Button-1>", self.update("/../DataFiles/pressure"))
+        self.__irvt = Button(fullFrame, text = "Battery - Time", height= 2, width=7, bg='Cyan')
+        self.__irvt.bind("<Button-1>", self.update("/../DataFiles/battery"))
         self.__irvt.pack(side=LEFT, pady=6, padx=4)
 
         self.__iacvt = Button(fullFrame, text = "In. Accel - Time", height= 2, width=12, bg='Cyan')
@@ -42,7 +42,7 @@ class Plot:
         self.__iacvt.pack(side=LEFT, pady=6, padx=4)
 
         self.__eacvt = Button(fullFrame, text = "Ex. Accel - Time", height= 2, width=12, bg='Cyan')
-        self.__eacvt.bind("<Button-1>", self.update("/../DataFiles/battery"))
+        self.__eacvt.bind("<Button-1>", self.update("/../DataFiles/SECOND ACCEL CHANGE THIS"))
         self.__eacvt.pack(side=LEFT, pady=6, padx=4)
 
         self.__tvt = Button(fullFrame, text = "Temp - Time", height= 2, width=12, bg='Cyan')
