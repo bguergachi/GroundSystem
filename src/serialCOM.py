@@ -148,9 +148,10 @@ class SerialCom:
             ch = self.__serial.read().decode('utf-8')
             if ch=='\r':
                 print(rv)
-                return rv
+                self.lastTimeDataReceived = time.strftime("%I:%M:%S")
+                return float(rv)
             rv += ch
-            self.lastTimeDataReceived = time.strftime("%I:%M:%S")
+
             
             #recived
     #public api to change port
