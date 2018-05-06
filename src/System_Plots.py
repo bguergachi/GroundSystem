@@ -33,11 +33,11 @@ class Plot:
         self.__avt.bind("<Button-1>", self.update("/../DataFiles/altitude"))
         self.__avt.pack(side=LEFT, pady=6, padx=4)
 
-        self.__irvt = Button(fullFrame, text = "Battery - Time", height= 2, width=7, bg='Cyan')
-        self.__irvt.bind("<Button-1>", self.update("/../DataFiles/battery"))
+        self.__irvt = Button(fullFrame, text = "Temperature - Time", height= 2, width=7, bg='Cyan')
+        self.__irvt.bind("<Button-1>", self.update("/../DataFiles/temperature"))
         self.__irvt.pack(side=LEFT, pady=6, padx=4)
 
-        self.__iacvt = Button(fullFrame, text = "In. Accel - Time", height= 2, width=12, bg='Cyan')
+        self.__iacvt = Button(fullFrame, text = "IR Distance - Time", height= 2, width=12, bg='Cyan')
         self.__iacvt.bind("<Button-1>", self.update("/../DataFiles/IRdistance"))
         self.__iacvt.pack(side=LEFT, pady=6, padx=4)
 

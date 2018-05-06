@@ -6,7 +6,7 @@ import os, sys, random, socket
 sys.path.append("..")
 from PIL import ImageTk, Image, ImageDraw
 import time
-import src.GPSMap as GPSMap, src.Status as Status, src.Settings as Settings, src.serialCOM as serialCOM
+import src.GPSMap as GPSMap, src.Status as Status, src.System_Plots as System_Plots, src.Settings as Settings, src.serialCOM as serialCOM
 import threading
 from queue import Queue
 
@@ -204,12 +204,13 @@ class Display:
         self.__statusFrame.setTemperature(self.getpressTemp())
         self.__statusFrame.setIRDistance(self.getIRdistance())
         self.__statusFrame.update()
-        self.__master.after(70, self.__statusBackgroundUpdate())
+        self.__master.after(70, self.__statusBackgroundUpdate)
 
     def __changeFrameAltimeter(self, ev):
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
+        self.__statusFrame = System_Plots.Plot(self.__mainFrame)
 
         # Unbind when pushed
         self.__altitudePressure.unbind("<ButtonPress-1>")
@@ -224,7 +225,8 @@ class Display:
         self.__statusFlag.bind("<ButtonPress-1>", self.__changeFrameStatus)
 
     def __altimeterBagroundUpdate(self):
-        pass
+        self.__statusFrame.update()
+        self.__master.after(70,self.__altimeterBagroundUpdate)
 
     # ****************** Methods used to get data **************
 

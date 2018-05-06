@@ -137,7 +137,8 @@ class SerialCom:
             self.__fileSaver.addToAltitude(dataList)
             self.__fileSaver.addToPressure(dataList)
             self.__fileSaver.addToDistance(dataList)
-            self.__fileSaver.addToBattery(dataList)
+            self.__fileSaver.addToTemperature(dataList)
+            self.__fileSaver.addToAcceleration(dataList)
 
 
     #This function will data char for what ever amount is needed

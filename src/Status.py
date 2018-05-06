@@ -23,6 +23,7 @@ class Display:
         self.__accel1 = [0, 0, 0]
         self.__pressure = 0
         self.__temperature = 0
+        self.__batteryTemperature = 0
         self.__IRdistance = 0
 
         self.__labels()
@@ -34,13 +35,13 @@ class Display:
         self.__labelFrame.pack(fill=BOTH)
 
         # Paint label of Speed
-        self.__accelSpeed = Label(self.__labelFrame, text="Speed:\t" + str(self.__speed), bg=statusBackGround)
+        self.__accelSpeed = Label(self.__labelFrame, text="Speed:\t\t" + str(self.__speed), bg=statusBackGround)
         self.__accelSpeed.pack_propagate(False)
         self.__accelSpeed.config(font=("arial", "12", "italic", "bold"), fg="white")
         self.__accelSpeed.pack(side=TOP, anchor=W)
 
         # Paint label of Altitude
-        self.__accelAltitude = Label(self.__labelFrame, text="Altitude:\t" + str(self.__altitude), bg=statusBackGround)
+        self.__accelAltitude = Label(self.__labelFrame, text="Altitude:\t\t" + str(self.__altitude), bg=statusBackGround)
         self.__accelAltitude.config(font=("arial", "12", "italic", "bold"), fg="white")
         self.__accelAltitude.pack(side=TOP, anchor=W)
 
@@ -70,14 +71,20 @@ class Display:
         self.__temperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
         self.__temperatureDisplay.pack(side=TOP, anchor=W)
 
+        # Paint label of temperature
+        self.__batteryTemperatureDisplay = Label(self.__labelFrame, text="Temperature:\t" + str(self.__batteryTemperature),
+                                          bg=statusBackGround)
+        self.__batteryTemperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__batteryTemperatureDisplay.pack(side=TOP, anchor=W)
+
         # Paint label of IR distance of payload
         self.__IRDisplay = Label(self.__labelFrame, text="IR Distance:\t" + str(self.__IRdistance), bg=statusBackGround)
         self.__IRDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
         self.__IRDisplay.pack(side=TOP, anchor=W)
 
     def update(self):
-        self.__accelSpeed.config(text="Speed:\t" + str(self.__speed))
-        self.__accelAltitude.config(text="Altitude:\t" + str(self.__altitude))
+        self.__accelSpeed.config(text="Speed:\t\t" + str(self.__speed))
+        self.__accelAltitude.config(text="Altitude:\t\t" + str(self.__altitude))
         self.__accelerationOfRocket.config(
             text="Rocket Acc.\tX:  " + str(self.__accel[0]) + "\tY:  " + str(self.__accel[1]) + "\tZ:  " + str(
                 self.__accel[2]))
@@ -85,7 +92,8 @@ class Display:
             text="Payload Acc.\tX:  " + str(self.__accel1[0]) + "\tY:  " + str(self.__accel1[1]) + "\tZ:  " + str(
                 self.__accel1[2]))
         self.__pressureDisplay.config(text="Pressure:\t" + str(self.__pressure))
-        self.__temperatureDisplay.config(text="Temperature:\t" + str(self.__temperature))
+        self.__temperatureDisplay.config(text="Battery Temperature:\t" + str(self.__temperature))
+        self.__batteryTemperatureDisplay.config(text="Temperature:\t" + str(self.__batteryTemperature))
         self.__IRDisplay.config(text="IR Distance:\t" + str(self.__IRdistance))
 
     # ****************************************Setters******************************************
@@ -109,6 +117,9 @@ class Display:
     def setTemperature(self, temperature):
         self.__temperature = temperature
 
+    def setBatteryTemperature(self, batteryTemp):
+        self.__batteryTemperature = batteryTemp
+
     def setIRDistance(self, IRDistance):
         self.__IRdistance = IRDistance
 
@@ -123,6 +134,7 @@ if __name__ == '__main__':
     display.setaccel1([5, 7, 4])
     display.setPressure(543)
     display.setTemperature(57)
+    display.setBatteryTemperature(69)
     display.setIRDistance(12)
     display.update()
     root.mainloop()

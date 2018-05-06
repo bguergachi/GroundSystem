@@ -1,4 +1,4 @@
-import sys,os, time
+import sys,os,time,math
 
 
 class DataSave:
@@ -8,7 +8,8 @@ class DataSave:
         self.__altitude = open(os.path.dirname(os.path.realpath(__file__))+"/../DataFiles/altitude","w")
         self.__pressure = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/pressure","w")
         self.__distance = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/IRdistance","w")
-        self.__battery = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/battery","w")
+        self.__temperature = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/temperature", "w")
+        self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/acceleration", "w")
 
     def addToTelemetry(self,string):
         self.__telemetry.write(string)
@@ -34,10 +35,15 @@ class DataSave:
         self.__distance.write(","+dataObj.getOnIndex(15))
         self.__distance.write("\n")
 
-    def addToBattery(self,dataObj):
-        self.__battery.write(time.time())
-        self.__battery.write(","+dataObj.getOnIndex(13))
-        self.__battery.write("\n")
+    def addToTemperature(self, dataObj):
+        self.__temperature.write(time.time())
+        self.__temperature.write("," + dataObj.getOnIndex(12))
+        self.__temperature.write("\n")
+
+    def addToAcceleration(self, dataObj):
+        self.__acceleration.write(time.time())
+        self.__acceleration.write("," + str(math.sqrt(dataObj.getOnIndex(5)**2 + dataObj.getOnIndex(6)**2 + dataObj.getOnIndex(7)**2)))
+        self.__acceleration.write("\n")
 
 
 if __name__ == '__main__':
