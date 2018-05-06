@@ -4,7 +4,7 @@ import time, sys
 import src.DataSave as DataSave
 
 
-
+#Class used to store temporally all values
 class Data:
     def __init__(self):
         self.gpsLat = 0
@@ -16,14 +16,15 @@ class Data:
         self.accelY = 0
         self.accelZ = 0
         self.accelX1 = 0
-        self.accelY2 = 0
-        self.accelZ2 = 0
+        self.accelY1 = 0
+        self.accelZ1 = 0
         self.pressAlt = 0
         self.pressTemp = 0
         self.tempBattery = 0
-        self.strainGauge = 0
         self.IRdistance = 0
+        self.pressure = 0
 
+    #Get function to get value of stored data
     def getOnIndex(self,index):
         if index == 0:
             return self.gpsLat
@@ -44,9 +45,9 @@ class Data:
         elif index == 8:
             return self.accelX1
         elif index == 9:
-            return self.accelY2
+            return self.accelY1
         elif index == 10:
-            return self.accelZ2
+            return self.accelZ1
         elif index == 11:
             return self.pressAlt
         elif index == 12:
@@ -54,10 +55,11 @@ class Data:
         elif index == 13:
             return self.tempBattery
         elif index == 14:
-            return self.strainGauge
-        elif index == 15:
             return self.IRdistance
+        elif index == 15:
+            return self.pressure
 
+    #set function to set value of data
     def setOnIndex(self,index,value):
         if index == 0:
             self.gpsLat = value
@@ -78,9 +80,9 @@ class Data:
         elif index == 8:
             self.accelX1 = value
         elif index == 9:
-            self.accelY2 = value
+            self.accelY1 = value
         elif index == 10:
-            self.accelZ2 = value
+            self.accelZ1 = value
         elif index == 11:
             self.pressAlt = value
         elif index == 12:
@@ -88,23 +90,27 @@ class Data:
         elif index == 13:
             self.tempBattery = value
         elif index == 14:
-            self.strainGauge = value
-        elif index == 15:
             self.IRdistance = value
+        elif index == 15:
+            self.pressure = value
 
 
 
-
+#Class to start serial communication
 class SerialCom:
     def __init__(self,baud,port):
+        #Create new data object to start saving data
         self.dataList = Data()
+        #Create lock for threading
         self.lock = threading.Lock()
+        #Set communication settings
         self.__baud = baud
         self.__port = port
         self.__serial = serial.Serial('/dev/'+self.__port, baudrate=self.__baud,
                                       parity=serial.PARITY_NONE,
                                       stopbits=serial.STOPBITS_ONE,
                                       bytesize=serial.EIGHTBITS)
+
         self.__fileSaver = DataSave()
 
     def startThread(self):
@@ -113,25 +119,28 @@ class SerialCom:
         t.start()
         
     def __start(self,dataList):
-        #i = 0
+        #Start reading data
         print("Starting to read")
         while True:
-            #i += 1
-            #print("\n",i)  
             data = self.__serial.read().decode('utf-8')
+            #save data to txt file
             self.__fileSaver.addToTelemetry(data)
-            #print(data)
-            #sys.exit()
             if data=='\n':
                 print("Starting")
-                for n in range(0, 16):
+                for n in range(0, 15):
                     with self.lock:
                         dataList.setOnIndex(n, self.__readline())
                     #print(n)
-        self.__fileSaver.addToCSV(dataList)
+
+            #Save Graph data to files
+            self.__fileSaver.addToCSV(dataList)
+            self.__fileSaver.addToAltitude(dataList)
+            self.__fileSaver.addToPressure(dataList)
+            self.__fileSaver.addToDistance(dataList)
+            self.__fileSaver.addToBattery(dataList)
 
 
-            
+    #This function will data char for what ever amount is needed
     def __readline(self):
         rv = ""
         while True:
@@ -140,9 +149,10 @@ class SerialCom:
                 print(rv)
                 return rv
             rv += ch
+            self.lastTimeDataReceived = time.strftime("%I:%M:%S")
             
-            
-
+            #recived
+    #public api to change port
     def setPort(self,port):
         self.__port = port
         self.__serial = serial.Serial('/dev/'+self.__port, baudrate=self.__baud,

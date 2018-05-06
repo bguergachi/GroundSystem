@@ -1,207 +1,107 @@
 from tkinter import *
 
-from src import Seperation_Signal
-
 # resolution of the screen
 height = 422
 width = 250
 statusBackGround = 'cyan'
 BackGround = 'red'
 
+
 class Display:
     # ***************** Instantiate *****************
     def __init__(self, master):
         self.__master = master
-
-        self.__status = 0
 
         # Set window parameters
         if __name__ == '__main__':
             self.__master.resizable(width=False, height=False)
             self.__master.geometry('{}x{}'.format(height, width))
 
-        self.__sBar()
-        self.__valueBar()
-        self.__sepsig()
-        self.__runSigImage()
+        self.__speed = 0
+        self.__altitude = 0
+        self.__accel = [0, 0, 0]
+        self.__accel1 = [0, 0, 0]
+        self.__pressure = 0
+        self.__temperature = 0
+        self.__IRdistance = 0
 
+        self.__labels()
 
-
-#Left Main Frame
-
-    def __sBar(self):
-    # Main frame
-        sval = Frame(self.__master)
-        sval.pack(side=LEFT, anchor=S)
-
-    # Altitude Frame
-        alframe = Frame(sval, bg=statusBackGround, height=35, width=height / 3)
-        alframe.pack(side=TOP, pady=2, padx=2)
-        alframe.pack_propagate(False)
-
-    # Airspeed Frame
-        airframe = Frame(sval, bg=statusBackGround, height=35, width=height / 3)
-        airframe.pack(side=TOP, pady=2, padx=2)
-        airframe.pack_propagate(False)
-
-    # Acceleration Frame
-        accframe = Frame(sval, bg=statusBackGround, height=35, width=height / 3)
-        accframe.pack(side=TOP, pady=2, padx=2)
-        accframe.pack_propagate(False)
-
-    # Pressure Frame
-        presframe = Frame(sval, bg=statusBackGround, height=35, width=height / 3)
-        presframe.pack(side=TOP, pady=2, padx=2)
-        presframe.pack_propagate(False)
-
-    # Temperature Frame
-        tempframe = Frame(sval, bg=statusBackGround, height=35, width=height / 3)
-        tempframe.pack(side=TOP, pady=2, padx=2)
-        tempframe.pack_propagate(False)
-
-    # Paint label of altitude
-        altdisplay = Label(alframe, text="Altitude", bg=statusBackGround)
-        altdisplay.config(font=("times,12"))
-        altdisplay.pack(side=TOP)
-
-    # Paint label of airspeed
-        airdisplay = Label(airframe, text="Airspeed", bg=statusBackGround)
-        airdisplay.config(font=("times,12"))
-        airdisplay.pack(side=TOP)
-
-    # Paint label of acceleration
-        accdisplay = Label(accframe, text="Speed", bg=statusBackGround)
-        accdisplay.config(font=("times,12"))
-        accdisplay.pack(side=TOP)
-
-    # Paint label of pressure
-        presdisplay = Label(presframe, text="Pressure", bg=statusBackGround)
-        presdisplay.config(font=("times,12"))
-        presdisplay.pack(side=TOP)
-
-    # Paint label of temperature
-        tempdisplay = Label(tempframe, text="Temperature", bg=statusBackGround)
-        tempdisplay.config(font=("times,12"))
-        tempdisplay.pack(side=TOP)
-
-#Right Main Frame
-
-    def __valueBar(self):
+    # Main Frame For labels
+    def __labels(self):
         # Main frame
-        values = Frame(self.__master)
-        values.pack(side=LEFT, anchor=S)
+        self.__labelFrame = Frame(self.__master, bg=statusBackGround)
+        self.__labelFrame.pack(fill=BOTH)
 
-    # Altitude Frame
-        altitudeframer = Frame(values, bg=BackGround, height=35, width=height / 3)
-        altitudeframer.pack(side=TOP, pady=2, padx=2)
-        altitudeframer.pack_propagate(False)
+        # Paint label of Speed
+        self.__accelSpeed = Label(self.__labelFrame, text="Speed:\t" + str(self.__speed), bg=statusBackGround)
+        self.__accelSpeed.pack_propagate(False)
+        self.__accelSpeed.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__accelSpeed.pack(side=TOP, anchor=W)
 
-    # Airspeed Frame
-        airspeedframer = Frame(values, bg=BackGround, height=35, width=height / 3)
-        airspeedframer.pack(side=TOP, pady=2, padx=2)
-        airspeedframer.pack_propagate(False)
+        # Paint label of Altitude
+        self.__accelAltitude = Label(self.__labelFrame, text="Altitude:\t" + str(self.__altitude), bg=statusBackGround)
+        self.__accelAltitude.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__accelAltitude.pack(side=TOP, anchor=W)
 
-    # Acceleration Frame
-        accelerationframer = Frame(values, bg=BackGround, height=35, width=height / 3)
-        accelerationframer.pack(side=TOP, pady=2, padx=2)
-        accelerationframer.pack_propagate(False)
+        # Paint label of all axis of acceleration of rocket
+        self.__accelerationOfRocket = Label(self.__labelFrame,
+                                            text="Rocket Acc.\tX:  " + str(self.__accel[0]) + "\tY:  " + str(
+                                                self.__accel[1]) + "\tZ:  " + str(self.__accel[2]), bg=statusBackGround)
+        self.__accelerationOfRocket.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__accelerationOfRocket.pack(side=TOP, anchor=W)
 
-    # Pressure Frame
-        pressureframer = Frame(values, bg=BackGround, height=35, width=height / 3)
-        pressureframer.pack(side=TOP, pady=2, padx=2)
-        pressureframer.pack_propagate(False)
+        # Paint label of all axis of acceleration of payload
+        self.__accelerationOfPayload = Label(self.__labelFrame,
+                                             text="Payload Acc.\tX:  " + str(self.__accel1[0]) + "\tY:  " + str(
+                                                 self.__accel1[1]) + "\tZ:  " + str(self.__accel1[2]), bg=statusBackGround)
+        self.__accelerationOfPayload.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__accelerationOfPayload.pack(side=TOP, anchor=W)
 
-    # Temperature Frame
-        temperatureframer = Frame(values, bg=BackGround, height=35, width=height / 3)
-        temperatureframer.pack(side=TOP, pady=2, padx=2)
-        temperatureframer.pack_propagate(False)
+        # Paint label of pressure
+        self.__pressureDisplay = Label(self.__labelFrame, text="Pressure:\t" + str(self.__pressure),
+                                       bg=statusBackGround)
+        self.__pressureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__pressureDisplay.pack(side=TOP, anchor=W)
 
-    # Paint label of altitude
-        altitudedisplayr = Label(altitudeframer, text=self.setAltitude(self), bg='Cyan')
-        altitudedisplayr.config(font=("times,12"))
-        altitudedisplayr.pack(side=TOP)
+        # Paint label of temperature
+        self.__temperatureDisplay = Label(self.__labelFrame, text="Temperature:\t" + str(self.__temperature),
+                                          bg=statusBackGround)
+        self.__temperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__temperatureDisplay.pack(side=TOP, anchor=W)
 
-    # Paint label of airspeed
-        airspeeddisplayr = Label(airspeedframer, text=self.setAirspeed(self), bg='Cyan')
-        airspeeddisplayr.config(font=("times,12"))
-        airspeeddisplayr.pack(side=TOP)
+        # Paint label of IR distance of payload
+        self.__IRDisplay = Label(self.__labelFrame, text="IR Distance:\t" + str(self.__IRdistance), bg=statusBackGround)
+        self.__IRDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
+        self.__IRDisplay.pack(side=TOP, anchor=W)
 
-    # Paint label of acceleration
-        accelerationdisplayr = Label(accelerationframer, text=self.setAcceleration(self), bg='Cyan')
-        accelerationdisplayr.config(font=("times,12"))
-        accelerationdisplayr.pack(side=TOP)
+    def update(self):
+        self.__accelSpeed.config(text="Speed:\t" + str(self.__speed))
+        self.__accelAltitude.config(text="Altitude:\t" + str(self.__altitude))
+        self.__accelerationOfRocket.config(
+            text="Rocket Acc.\tX:  " + str(self.__accel[0]) + "\tY:  " + str(self.__accel[1]) + "\tZ:  " + str(
+                self.__accel[2]))
+        self.__accelerationOfPayload.config(
+            text="Payload Acc.\tX:  " + str(self.__accel1[0]) + "\tY:  " + str(self.__accel1[1]) + "\tZ:  " + str(
+                self.__accel1[2]))
+        self.__pressureDisplay.config(text="Pressure:\t" + str(self.__pressure))
+        self.__temperatureDisplay.config(text="Temperature:\t" + str(self.__temperature))
+        self.__IRDisplay.config(text="IR Distance:\t" + str(self.__IRdistance))
 
-    # Paint label of pressure
-        pressuredisplayr = Label(pressureframer, text=self.setPressure(self), bg='Cyan')
-        pressuredisplayr.config(font=("times,12"))
-        pressuredisplayr.pack(side=TOP)
-
-    # Paint label of temperature
-        temperaturedisplayr = Label(temperatureframer, text=self.setTemperature(self), bg='Cyan')
-        temperaturedisplayr.config(font=("times,12"))
-        temperaturedisplayr.pack(side=TOP)
-
-#Far Right SepSig Frame
-
-    def __sepsig(self):
-    # Main frame
-        sep = Frame(self.__master)
-        sep.pack(side=LEFT, anchor=S)
-
-    #Frame with title
-        septitleframe = Frame(sep, height=28, width=height / 2, bg='Cyan')
-        septitleframe.pack(side=TOP, pady=2, padx=2)
-        septitleframe.pack_propagate(False)
-
-        sepsigname = Label(septitleframe, text=" Sep Signal", bg='Cyan')
-        sepsigname.config(font=("times,3"))
-        sepsigname.pack(side=TOP)
-
-    # Frame and display of sepsig
-        self.__imageFrame = Frame(sep, height=160, width=height / 2)
-        self.__imageFrame.pack(side=TOP, pady=2, padx=2)
-        self.__imageFrame.pack_propagate(False)
-
-
-    #Paint signal image in label with parent being frame with map information
-        self.__statusImage = Seperation_Signal.Separation_Signal(self.__imageFrame)
-
-
-
-
-
-
-
-    def __runSigImage(self):
-    #Check if seperation sig is true or false
-        if self.__status:
-            self.__statusImage.printdseparate()
-        else:
-            self.__statusImage.printseparate()
-
-        self.__statusImage.update()
-        self.__master.after(700,self.__runSigImage)
-
-
-
-
-
-
-
-
-#****************************************Setters******************************************
-    def setStatus(self, status):
-        self.__status = status
-
+    # ****************************************Setters******************************************
+    def setSpeed(self, speed):
+        self.__speed = speed
 
     def setAltitude(self, altitude):
         self.__altitude = altitude
 
-    def setAirspeed(self, airspeed):
-        self.__airspeed = airspeed
+    # must input an array [x,y,z]
+    def setaccel(self, accel):
+        self.__accel = accel
 
-    def setAcceleration(self, acceleration):
-        self.__acceleration = acceleration
+    # must input an array [x,y,z]
+    def setaccel1(self, accel1):
+        self.__accel1 = accel1
 
     def setPressure(self, pressure):
         self.__pressure = pressure
@@ -209,8 +109,20 @@ class Display:
     def setTemperature(self, temperature):
         self.__temperature = temperature
 
+    def setIRDistance(self, IRDistance):
+        self.__IRdistance = IRDistance
+
+
 if __name__ == '__main__':
     root = Tk()
     root.wm_title("Status/Signal")
     display = Display(root)
+    display.setSpeed(456)
+    display.setAltitude(534)
+    display.setaccel([5, 3, 1])
+    display.setaccel1([5, 7, 4])
+    display.setPressure(543)
+    display.setTemperature(57)
+    display.setIRDistance(12)
+    display.update()
     root.mainloop()
