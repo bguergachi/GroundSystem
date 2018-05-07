@@ -56,14 +56,13 @@ class Display:
 
         self.__printLabel()
         self.__statusBar()
-        self.__SettingsImageButtons()
         self.__startDataThread()
 
     def __startDataThread(self):
         self.__serialData.startThread()
 
     def __placeMainFrame(self):
-        self.__mainFrame = Frame(self.__master, height=220, width=435, bg='light cyan')
+        self.__mainFrame = Frame(self.__master, height=220, width=435, bg=statusBackGround)
         self.__mainFrame.pack_propagate(False)
         self.__mainFrame.place(x=4, y=22)
 
@@ -121,13 +120,13 @@ class Display:
         self.__img.bind("<ButtonPress-1>", self.__changeFrameMap)
 
         # Set text label with coordinates with parent being frame with map information
-        self.__latitude_longitude = Label(self.__mapCoordinates, text=self.getgpsLat() + ",\n" + self.getgpsLong(),
-                                          bg="cyan", fg="black")
+        self.__latitude_longitude = Label(self.__mapCoordinates, text=str(self.getgpsLat()) + ",\n" + str(self.getgpsLong()),
+                                          bg=statusBackGround, fg="black")
         self.__latitude_longitude.pack(side=LEFT, anchor=W, padx=8)
         self.__latitude_longitude.bind("<ButtonPress-1>", self.__changeFrameMap)
 
         # Paint stopwatch timer
-        self.__stopWatch = Label(self.__statusStopWatch, text=(time.time() - self.getgpsTime()), bg=statusBackGround,
+        self.__stopWatch = Label(self.__statusStopWatch, text=str(float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)), bg=statusBackGround,
                                  fg="black")
         self.__stopWatch.config(font=("times", 20))
         self.__stopWatch.pack(side=TOP, anchor=N)
@@ -140,14 +139,14 @@ class Display:
         self.__statusFlag.bind("<ButtonPress-1>", self.__changeFrameStatus)
 
         # Paint label of altitude or pressure value
-        self.__altitude_pressure = Label(self.__altitudePressure, text=self.getpressAlt() + "m",
+        self.__altitude_pressure = Label(self.__altitudePressure, text=str(self.getpressAlt()) + "m",
                                          bg=statusBackGround)
         self.__altitude_pressure.config(font=("times"))
         self.__altitude_pressure.pack(side=TOP, anchor=N)
         self.__altitude_pressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
 
         # Paint descriptive label of data
-        self.__title_of_data = Label(self.__altitudePressure, text=self.getpressAlt(), bg=statusBackGround)
+        self.__title_of_data = Label(self.__altitudePressure, text=str(self.getpressAlt()), bg=statusBackGround)
         self.__title_of_data.config(font=("times", 20))
         self.__title_of_data.pack(side=TOP)
         self.__title_of_data.bind("<ButtonPress-1>", self.__changeFrameAltimeter)

@@ -111,7 +111,9 @@ class SerialCom:
                                       stopbits=serial.STOPBITS_ONE,
                                       bytesize=serial.EIGHTBITS)
 
-        self.__fileSaver = DataSave()
+        self.lastTimeDataReceived = time.strftime("%I:%M:%S")
+        self.lastTimeDataRecivedNumber = time.time()
+        self.__fileSaver = DataSave.DataSave()
 
     def startThread(self):
         t = threading.Thread(target=self.__start, args= self.dataList)
@@ -149,6 +151,7 @@ class SerialCom:
             if ch=='\r':
                 print(rv)
                 self.lastTimeDataReceived = time.strftime("%I:%M:%S")
+                self.lastTimeDataRecivedNumber = time.time()
                 return float(rv)
             rv += ch
 
