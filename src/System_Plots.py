@@ -30,23 +30,23 @@ class Plot:
         fullFrame.pack(side=BOTTOM)
 
         self.__avt = Button(fullFrame, text = "Alt - Time", height= 2, width=7, bg='Cyan')
-        self.__avt.bind("<Button-1>", self.update("/../DataFiles/altitude"))
+        self.__avt.bind("<Button-1>", self.update("/../DataFiles/altitude.csv"))
         self.__avt.pack(side=LEFT, pady=6, padx=4)
 
         self.__irvt = Button(fullFrame, text = "Temperature - Time", height= 2, width=7, bg='Cyan')
-        self.__irvt.bind("<Button-1>", self.update("/../DataFiles/temperature"))
+        self.__irvt.bind("<Button-1>", self.update("/../DataFiles/temperature.csv"))
         self.__irvt.pack(side=LEFT, pady=6, padx=4)
 
         self.__iacvt = Button(fullFrame, text = "IR Distance - Time", height= 2, width=12, bg='Cyan')
-        self.__iacvt.bind("<Button-1>", self.update("/../DataFiles/IRdistance"))
+        self.__iacvt.bind("<Button-1>", self.update("/../DataFiles/IRdistance.csv"))
         self.__iacvt.pack(side=LEFT, pady=6, padx=4)
 
         self.__eacvt = Button(fullFrame, text = "Ex. Accel - Time", height= 2, width=12, bg='Cyan')
-        self.__eacvt.bind("<Button-1>", self.update("/../DataFiles/SECOND ACCEL CHANGE THIS"))
+        self.__eacvt.bind("<Button-1>", self.update("/../DataFiles/acceleration.csv"))
         self.__eacvt.pack(side=LEFT, pady=6, padx=4)
 
         self.__tvt = Button(fullFrame, text = "Temp - Time", height= 2, width=12, bg='Cyan')
-        self.__tvt.bind("<Button-1>", self.update("/../DataFiles/altitude"))
+        self.__tvt.bind("<Button-1>", self.update("/../DataFiles/altitude.csv"))
         self.__tvt.pack(side=LEFT, pady=6, padx=4)
 
     # Function to read data from txt file

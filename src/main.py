@@ -174,6 +174,7 @@ class Display:
         self.__altitude_pressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
 
     def __mapBackgroundUpdate(self):
+        self.__runMap.setCoordinate([self.getgpsLong(),self.getgpsLat()])
         self.__runMap.update()
         self.__master.after(70, self.__mapBackgroundUpdate)
 
@@ -209,7 +210,7 @@ class Display:
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
-        self.__statusFrame = System_Plots.Plot(self.__mainFrame)
+        self.__statusAltimeter = System_Plots.Plot(self.__mainFrame)
 
         # Unbind when pushed
         self.__altitudePressure.unbind("<ButtonPress-1>")
@@ -224,7 +225,7 @@ class Display:
         self.__statusFlag.bind("<ButtonPress-1>", self.__changeFrameStatus)
 
     def __altimeterBagroundUpdate(self):
-        self.__statusFrame.update()
+        self.__statusAltimeter.update()
         self.__master.after(70,self.__altimeterBagroundUpdate)
 
     # ****************** Methods used to get data **************

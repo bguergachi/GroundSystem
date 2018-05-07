@@ -5,11 +5,11 @@ class DataSave:
     def __init__(self):
         self.__telemetry = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/telemetry.txt", "w")
         self.__csv = open(os.path.dirname(os.path.realpath(__file__))+"/../DataFiles/telemetry.csv","w")
-        self.__altitude = open(os.path.dirname(os.path.realpath(__file__))+"/../DataFiles/altitude","w")
-        self.__pressure = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/pressure","w")
-        self.__distance = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/IRdistance","w")
-        self.__temperature = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/temperature", "w")
-        self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/acceleration", "w")
+        self.__altitude = open(os.path.dirname(os.path.realpath(__file__))+"/../DataFiles/altitude.csv","w")
+        self.__pressure = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/pressure.csv","w")
+        self.__distance = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/IRdistance.csv","w")
+        self.__temperature = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/temperature.csv", "w")
+        self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/acceleration.csv", "w")
 
     def addToTelemetry(self,string):
         self.__telemetry.write(string)
