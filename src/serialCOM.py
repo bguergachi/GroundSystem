@@ -1,6 +1,7 @@
 import serial
 import threading
 import time, sys
+#sys.path.append("..")
 import src.DataSave as DataSave
 
 
@@ -98,6 +99,9 @@ class Data:
 
 #Class to start serial communication
 class SerialCom:
+    
+
+    
     def __init__(self,baud,port):
         #Create new data object to start saving data
         self.dataList = Data()
@@ -114,9 +118,12 @@ class SerialCom:
         self.lastTimeDataReceived = time.strftime("%I:%M:%S")
         self.lastTimeDataRecivedNumber = time.time()
         self.__fileSaver = DataSave.DataSave()
+        if __name__ == '__main__':
+            self.__start(self.dataList)
 
-    def startThread(self):
-        t = threading.Thread(target=self.__start, args= self.dataList)
+    def startThread(self,dataList):
+        print("Started Thread")
+        t = threading.Thread(target=self.__start, args= (dataList,))
         t.daemon = True
         t.start()
         
@@ -129,9 +136,9 @@ class SerialCom:
             self.__fileSaver.addToTelemetry(data)
             if data=='\n':
                 print("Starting")
-                for n in range(0, 15):
+                for n in range(0, 16):
                     with self.lock:
-                        dataList.setOnIndex(n, self.__readline())
+                        self.dataList.setOnIndex(n, self.__readline())
                     #print(n)
 
             #Save Graph data to files

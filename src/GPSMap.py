@@ -41,6 +41,8 @@ class Map:
         self.__map_parameters()
         if __name__ == '__main__':
             self.__getRandomNumber()  # Gets random Coordinates for Path
+        else:
+            self.__coordiantes = [0,0]
         self.__choose_first_map()
         self.__setup_display_map()  # Display the map on the Window/Fram FOR THE FIRST TIME
         self.__run()

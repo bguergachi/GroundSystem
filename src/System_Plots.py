@@ -20,6 +20,8 @@ class Plot:
             self.__master.resizable(width=False, height=False)
             self.__master.geometry('{}x{}'.format(height, width))
 
+        self.__widget = None
+        self.__filepath = "/../DataFiles/temperature.csv"
         # self.__upFrame()
         self.__fullFrame()
 
@@ -29,35 +31,34 @@ class Plot:
         fullFrame = Frame(self.__master)
         fullFrame.pack(side=BOTTOM)
 
-        self.__avt = Button(fullFrame, text = "Alt - Time", height= 2, width=7, bg='Cyan')
-        self.__avt.bind("<Button-1>", self.update("/../DataFiles/altitude.csv"))
-        self.__avt.pack(side=LEFT, pady=6, padx=4)
+        self.__avt = Button(fullFrame, text = "Alt - Time", bg='darkcyan', fg = 'white')
+        self.__avt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/altitude.csv"))
+        self.__avt.pack(side=LEFT, pady=1, padx=1)
 
-        self.__irvt = Button(fullFrame, text = "Temperature - Time", height= 2, width=7, bg='Cyan')
-        self.__irvt.bind("<Button-1>", self.update("/../DataFiles/temperature.csv"))
-        self.__irvt.pack(side=LEFT, pady=6, padx=4)
+        self.__irvt = Button(fullFrame, text = "Temperature - Time", bg='darkcyan', fg = 'white')
+        self.__irvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/temperature.csv"))
+        self.__irvt.pack(side=LEFT, pady=1, padx=1)
 
-        self.__iacvt = Button(fullFrame, text = "IR Distance - Time", height= 2, width=12, bg='Cyan')
-        self.__iacvt.bind("<Button-1>", self.update("/../DataFiles/IRdistance.csv"))
-        self.__iacvt.pack(side=LEFT, pady=6, padx=4)
+        self.__iacvt = Button(fullFrame, text = "IR Distance - Time", bg='darkcyan', fg = 'white')
+        self.__iacvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/IRdistance.csv"))
+        self.__iacvt.pack(side=LEFT, pady=1, padx=1)
 
-        self.__eacvt = Button(fullFrame, text = "Ex. Accel - Time", height= 2, width=12, bg='Cyan')
-        self.__eacvt.bind("<Button-1>", self.update("/../DataFiles/acceleration.csv"))
-        self.__eacvt.pack(side=LEFT, pady=6, padx=4)
+        self.__eacvt = Button(fullFrame, text = "Ex. Accel - Time", bg='darkcyan', fg = 'white')
+        self.__eacvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/acceleration.csv"))
+        self.__eacvt.pack(side=LEFT, pady=1, padx=1)
 
-        self.__tvt = Button(fullFrame, text = "Temp - Time", height= 2, width=12, bg='Cyan')
-        self.__tvt.bind("<Button-1>", self.update("/../DataFiles/altitude.csv"))
-        self.__tvt.pack(side=LEFT, pady=6, padx=4)
+        self.__tvt = Button(fullFrame, text = "Temp - Time", bg='darkcyan', fg = 'white')
+        self.__tvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/altitude.csv"))
+        self.__tvt.pack(side=LEFT, pady=1, padx=1)
+        
+        
+    def __setPath(self,filepath):
+        self.__filepath = filepath
 
     # Function to read data from txt file
-    def update(self, filepath):
-
-        self.__widget = None
-
-        if self.__widget:
-            self.__widget.destroy()
-
-        pullData = open(os.path.dirname(os.path.realpath(__file__))+ filepath,"r").read()
+    def update(self):
+        print(self.__filepath)
+        pullData = open(os.path.dirname(os.path.realpath(__file__))+ self.__filepath,"r").read()
 
         dataList = pullData.split('\n')
         xList = []
@@ -65,8 +66,8 @@ class Plot:
         for eachLine in dataList:
             if len(eachLine) > 1:
                 x, y = eachLine.split(',')
-                xList.append(int(x))
-                yList.append(int(y))
+                xList.append(x)
+                yList.append(y)
 
         figure = Figure(figsize=(5, 5), dpi=100)
         a = figure.add_subplot(111)
@@ -80,10 +81,11 @@ class Plot:
         self.__widget = canvas.get_tk_widget()
         self.__widget.pack()
 
-        ani = animation.FuncAnimation(figure, self.update, interval=250)
+        #ani = animation.FuncAnimation(figure, self.update, interval=250)
 
 if __name__ == '__main__':
     root = Tk()
     root.title("System Plots")
     display = Plot(root)
+    
     root.mainloop()

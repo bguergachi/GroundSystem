@@ -72,7 +72,7 @@ class Display:
         self.__temperatureDisplay.pack(side=TOP, anchor=W)
 
         # Paint label of temperature
-        self.__batteryTemperatureDisplay = Label(self.__labelFrame, text="Temperature:\t" + str(self.__batteryTemperature),
+        self.__batteryTemperatureDisplay = Label(self.__labelFrame, text="Battery Temperature:\t" + str(self.__batteryTemperature),
                                           bg=statusBackGround)
         self.__batteryTemperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
         self.__batteryTemperatureDisplay.pack(side=TOP, anchor=W)
@@ -83,18 +83,18 @@ class Display:
         self.__IRDisplay.pack(side=TOP, anchor=W)
 
     def update(self):
-        self.__accelSpeed.config(text="Speed:\t\t" + str(self.__speed))
-        self.__accelAltitude.config(text="Altitude:\t\t" + str(self.__altitude))
+        self.__accelSpeed.config(text="Speed:\t\t\t" + str(self.__speed))
+        self.__accelAltitude.config(text="Altitude:\t\t\t" + str(self.__altitude))
         self.__accelerationOfRocket.config(
             text="Rocket Acc.\tX:  " + str(self.__accel[0]) + "\tY:  " + str(self.__accel[1]) + "\tZ:  " + str(
                 self.__accel[2]))
         self.__accelerationOfPayload.config(
             text="Payload Acc.\tX:  " + str(self.__accel1[0]) + "\tY:  " + str(self.__accel1[1]) + "\tZ:  " + str(
                 self.__accel1[2]))
-        self.__pressureDisplay.config(text="Pressure:\t" + str(self.__pressure))
-        self.__temperatureDisplay.config(text="Battery Temperature:\t" + str(self.__temperature))
-        self.__batteryTemperatureDisplay.config(text="Temperature:\t" + str(self.__batteryTemperature))
-        self.__IRDisplay.config(text="IR Distance:\t" + str(self.__IRdistance))
+        self.__pressureDisplay.config(text="Pressure:\t\t" + str(self.__pressure))
+        self.__batteryTemperatureDisplay.config(text="Battery Temperature:\t" + str(self.__batteryTemperature))
+        self.__temperatureDisplay.config(text="Temperature:\t\t" + str(self.__temperature))
+        self.__IRDisplay.config(text="IR Distance:\t\t" + str(self.__IRdistance))
 
     # ****************************************Setters******************************************
     def setSpeed(self, speed):

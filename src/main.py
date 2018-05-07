@@ -29,6 +29,8 @@ baudRate = 57600
 
 
 class Display:
+    
+    
     # ***************** Instantiate *****************
     def __init__(self, master):
         self.__master = master
@@ -40,6 +42,8 @@ class Display:
         # master.overrideredirect(True)
 
 
+        
+        
         # Make serial object
         self.__serialData = serialCOM.SerialCom(baudRate, 'ttyS0')
 
@@ -59,10 +63,10 @@ class Display:
         self.__startDataThread()
 
     def __startDataThread(self):
-        self.__serialData.startThread()
+        self.__serialData.startThread(self.__serialData.dataList)
 
     def __placeMainFrame(self):
-        self.__mainFrame = Frame(self.__master, height=220, width=435, bg=statusBackGround)
+        self.__mainFrame = Frame(self.__master, height=220, width=475, bg=statusBackGround)
         self.__mainFrame.pack_propagate(False)
         self.__mainFrame.place(x=4, y=22)
 
@@ -120,13 +124,13 @@ class Display:
         self.__img.bind("<ButtonPress-1>", self.__changeFrameMap)
 
         # Set text label with coordinates with parent being frame with map information
-        self.__latitude_longitude = Label(self.__mapCoordinates, text=str(self.getgpsLat()) + ",\n" + str(self.getgpsLong()),
+        self.__latitude_longitude = Label(self.__mapCoordinates, text="%.5f" % self.getgpsLat() + " ,\n" + "%.5f" % self.getgpsLong() + "",
                                           bg=statusBackGround, fg="black")
         self.__latitude_longitude.pack(side=LEFT, anchor=W, padx=8)
         self.__latitude_longitude.bind("<ButtonPress-1>", self.__changeFrameMap)
 
         # Paint stopwatch timer
-        self.__stopWatch = Label(self.__statusStopWatch, text=str(float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)), bg=statusBackGround,
+        self.__stopWatch = Label(self.__statusStopWatch, text= "%.5f" % (float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)) + " s", bg=statusBackGround,
                                  fg="black")
         self.__stopWatch.config(font=("times", 20))
         self.__stopWatch.pack(side=TOP, anchor=N)
@@ -146,10 +150,21 @@ class Display:
         self.__altitude_pressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
 
         # Paint descriptive label of data
-        self.__title_of_data = Label(self.__altitudePressure, text=str(self.getpressAlt()), bg=statusBackGround)
-        self.__title_of_data.config(font=("times", 20))
+        self.__title_of_data = Label(self.__altitudePressure, text="Altitude", bg=statusBackGround)
+        self.__title_of_data.config(font=("times", 18))
         self.__title_of_data.pack(side=TOP)
         self.__title_of_data.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
+        
+        self.__updateStatus()
+        
+    def __updateStatus(self):
+        self.__latitude_longitude.config(text="%.5f" % self.getgpsLat() + " ,\n" + "%.5f" % self.getgpsLong() + "")
+        
+        self.__stopWatch.config(text= "%.5f" % (float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)) + " s")
+        #print(str(float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)))        
+        self.__altitude_pressure.config(text=str(self.getpressAlt()) + " m")
+        
+        self.__master.after(10,self.__updateStatus)
 
     # ******************Event handlers*************************
 
@@ -174,15 +189,17 @@ class Display:
         self.__altitude_pressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
 
     def __mapBackgroundUpdate(self):
-        self.__runMap.setCoordinate([self.getgpsLong(),self.getgpsLat()])
+        self.__runMap.setCoordinate([self.getgpsLong,self.getgpsLat])
         self.__runMap.update()
-        self.__master.after(70, self.__mapBackgroundUpdate)
+        self.__master.after(10, self.__mapBackgroundUpdate)
 
     def __changeFrameStatus(self, ev):
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
         self.__statusFrame = Status.Display(self.__mainFrame)
+        self.__statusBackgroundUpdate()
+
         # Unbind when pushed
         self.__statusStopWatch.unbind("<ButtonPress-1>")
         self.__stopWatch.unbind("<ButtonPress-1>")
@@ -202,16 +219,18 @@ class Display:
         self.__statusFrame.setaccel1([self.getaccelX1(), self.getaccelY1(), self.getaccelZ1()])
         self.__statusFrame.setPressure(self.getpressure())
         self.__statusFrame.setTemperature(self.getpressTemp())
+        self.__statusFrame.setBatteryTemperature(self.gettempBattery())
         self.__statusFrame.setIRDistance(self.getIRdistance())
         self.__statusFrame.update()
-        self.__master.after(70, self.__statusBackgroundUpdate)
+        self.__master.after(10, self.__statusBackgroundUpdate)
 
     def __changeFrameAltimeter(self, ev):
         # Switch frame to map
         self.__mainFrame.destroy()
         self.__placeMainFrame()
         self.__statusAltimeter = System_Plots.Plot(self.__mainFrame)
-
+        self.__altimeterBagroundUpdate()
+        
         # Unbind when pushed
         self.__altitudePressure.unbind("<ButtonPress-1>")
         self.__altitude_pressure.unbind("<ButtonPress-1>")
@@ -226,7 +245,7 @@ class Display:
 
     def __altimeterBagroundUpdate(self):
         self.__statusAltimeter.update()
-        self.__master.after(70,self.__altimeterBagroundUpdate)
+        self.__master.after(100,self.__altimeterBagroundUpdate)
 
     # ****************** Methods used to get data **************
 
@@ -268,11 +287,11 @@ class Display:
 
     def getaccelY1(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelY2
+            return self.__serialData.dataList.accelY1
 
     def getaccelZ1(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelZ2
+            return self.__serialData.dataList.accelZ1
 
     def getpressAlt(self):
         with self.__serialData.lock:
