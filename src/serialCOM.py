@@ -24,76 +24,77 @@ class Data:
         self.tempBattery = 0
         self.IRdistance = 0
         self.pressure = 0
+        self.gpsDate = 0
 
     #Get function to get value of stored data
     def getOnIndex(self,index):
         if index == 0:
-            return self.gpsLat
-        elif index == 1:
-            return self.gpsLong
-        elif index == 2:
-            return self.gpsSpeed
-        elif index == 3:
-            return self.gpsTime
-        elif index == 4:
-            return self.gpsAlt
-        elif index == 5:
-            return self.accelX
-        elif index == 6:
-            return self.accelY
-        elif index == 7:
-            return self.accelZ
-        elif index == 8:
-            return self.accelX1
-        elif index == 9:
-            return self.accelY1
-        elif index == 10:
-            return self.accelZ1
-        elif index == 11:
-            return self.pressAlt
-        elif index == 12:
-            return self.pressTemp
-        elif index == 13:
-            return self.tempBattery
-        elif index == 14:
             return self.IRdistance
-        elif index == 15:
+        elif index == 1:
+            return self.pressTemp
+        elif index == 2:
             return self.pressure
+        elif index == 3:
+            return self.pressAlt
+        elif index == 4:
+            return self.tempBattery
+        elif index == 5:
+            return self.gpsLat
+        elif index == 6:
+            return self.gpsLong
+        elif index == 7:
+            return self.gpsTime
+        elif index == 8:
+            return self.gpsDate
+        elif index == 9:
+            return self.gpsSpeed
+        elif index == 10:
+            return self.accelX
+        elif index == 11:
+            return self.accelY
+        elif index == 12:
+            return self.accelZ
+        elif index == 13:
+            return self.accelX1
+        elif index == 14:
+            return self.accelY1
+        elif index == 15:
+            return self.accelZ1
 
     #set function to set value of data
     def setOnIndex(self,index,value):
         if index == 0:
-            self.gpsLat = value
-        elif index == 1:
-            self.gpsLong = value
-        elif index == 2:
-            self.gpsSpeed = value
-        elif index == 3:
-            self.gpsTime = value
-        elif index == 4:
-            self.gpsAlt = value
-        elif index == 5:
-            self.accelX = value
-        elif index == 6:
-            self.accelY = value
-        elif index == 7:
-            self.accelZ = value
-        elif index == 8:
-            self.accelX1 = value
-        elif index == 9:
-            self.accelY1 = value
-        elif index == 10:
-            self.accelZ1 = value
-        elif index == 11:
-            self.pressAlt = value
-        elif index == 12:
-            self.pressTemp = value
-        elif index == 13:
-            self.tempBattery = value
-        elif index == 14:
             self.IRdistance = value
-        elif index == 15:
+        elif index == 1:
+            self.pressTemp = value
+        elif index == 2:
             self.pressure = value
+        elif index == 3:
+            self.pressAlt = value
+        elif index == 4:
+            self.tempBattery = value
+        elif index == 5:
+            self.gpsLat = value
+        elif index == 6:
+            self.gpsLong = value
+        elif index == 7:
+            self.gpsTime = value
+        elif index == 8:
+            self.gpsDate = value
+        elif index == 9:
+            self.gpsSpeed = value
+        elif index == 10:
+            self.accelX = value
+        elif index == 11:
+            self.accelY = value
+        elif index == 12:
+            self.accelZ = value
+        elif index == 13:
+            self.accelX1 = value
+        elif index == 14:
+            self.accelY1 = value
+        elif index == 15:
+            self.accelZ1 = value
 
 
 
@@ -147,7 +148,9 @@ class SerialCom:
             self.__fileSaver.addToPressure(dataList)
             self.__fileSaver.addToDistance(dataList)
             self.__fileSaver.addToTemperature(dataList)
-            self.__fileSaver.addToAcceleration(dataList)
+            self.__fileSaver.addToAccelerationEx(dataList)
+            self.__fileSaver.addToAccelerationIn(dataList)
+            self.__fileSaver.addToBatTemperature(dataList)
 
 
     #This function will data char for what ever amount is needed
