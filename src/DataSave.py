@@ -31,35 +31,49 @@ class DataSave:
     def addToAltitude(self,dataObj):
         self.__altitude = open(os.path.dirname(os.path.realpath(__file__))+"/../DataFiles/altitude.csv","a")
         self.__altitude.write(str(time.time()-self.__notTime))
-        self.__altitude.write(","+str(dataObj.getOnIndex(4)))
+        self.__altitude.write(","+str(dataObj.getOnIndex(3)))
         self.__altitude.write("\n")
         self.__altitude.close()
 
     def addToPressure(self,dataObj):
         self.__pressure = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/pressure.csv","a")
         self.__pressure.write(str(time.time()-self.__notTime))
-        self.__pressure.write(","+str(dataObj.getOnIndex(12)))
+        self.__pressure.write(","+str(dataObj.getOnIndex(2)))
         self.__pressure.write("\n")
         self.__pressure.close()
 
     def addToDistance(self,dataObj):
         self.__distance = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/IRdistance.csv","a")
         self.__distance.write(str(time.time()-self.__notTime))
-        self.__distance.write(","+str(dataObj.getOnIndex(15)))
+        self.__distance.write(","+str(dataObj.getOnIndex(0)))
         self.__distance.write("\n")
         self.__distance.close()
 
     def addToTemperature(self, dataObj):
         self.__temperature = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/temperature.csv", "a")
         self.__temperature.write(str(time.time()-self.__notTime))
-        self.__temperature.write("," + str(dataObj.getOnIndex(12)))
+        self.__temperature.write("," + str(dataObj.getOnIndex(1)))
         self.__temperature.write("\n")
         self.__temperature.close()
 
-    def addToAcceleration(self, dataObj):
-        self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/acceleration.csv", "a")
+    def addToBatTemperature(self, dataObj):
+        self.__temperature = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/batTemperature.csv", "a")
+        self.__temperature.write(str(time.time()-self.__notTime))
+        self.__temperature.write("," + str(dataObj.getOnIndex(4)))
+        self.__temperature.write("\n")
+        self.__temperature.close()
+
+    def addToAccelerationEx(self, dataObj):
+        self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/accelerationEx.csv", "a")
         self.__acceleration.write(str(time.time()-self.__notTime))
-        self.__acceleration.write("," + str(math.sqrt(dataObj.getOnIndex(5)**2 + dataObj.getOnIndex(6)**2 + dataObj.getOnIndex(7)**2)))
+        self.__acceleration.write("," + str(dataObj.getOnIndex(12)))
+        self.__acceleration.write("\n")
+        self.__acceleration.close()
+
+    def addToAccelerationIn(self, dataObj):
+        self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/accelerationIn.csv", "a")
+        self.__acceleration.write(str(time.time()-self.__notTime))
+        self.__acceleration.write("," + str(dataObj.getOnIndex(15)))
         self.__acceleration.write("\n")
         self.__acceleration.close()
 

@@ -44,15 +44,15 @@ class Plot:
         self.__irvt.grid(row = 0, column = 3, padx = 5)
 
         self.__eacvt = Button(fullFrame, text = "Ex. a - t", bg='darkcyan', fg = 'white', width = 7)
-        self.__eacvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/acceleration.csv"))
+        self.__eacvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/accelerationEx.csv"))
         self.__eacvt.grid(row = 0, column = 4, padx = 5)
 
         self.__iavt = Button(fullFrame, text = "In. a - t", bg='darkcyan', fg = 'white', width = 7)
-        self.__iavt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/acceleration.csv"))
+        self.__iavt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/accelerationIn.csv"))
         self.__iavt.grid(row = 0, column = 5, padx = 5)
 
         self.__btvt = Button(fullFrame, text = "B.T - t", bg='darkcyan', fg = 'white', width = 7)
-        self.__btvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/acceleration.csv"))
+        self.__btvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/batTemperature.csv"))
         self.__btvt.grid(row = 0, column = 6, padx = 5)
 
     def __setPath(self,filepath):
