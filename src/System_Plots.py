@@ -31,27 +31,30 @@ class Plot:
         fullFrame = Frame(self.__master)
         fullFrame.pack(side=BOTTOM)
 
-        self.__avt = Button(fullFrame, text = "Alt - Time", bg='darkcyan', fg = 'white')
+        self.__avt = Button(fullFrame, text = "Alt - Time", bg='darkcyan', fg = 'white', width = 10)
         self.__avt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/altitude.csv"))
-        self.__avt.pack(side=LEFT, pady=1, padx=1)
+        self.__avt.grid(row = 0, column = 1, padx = 3, pady = 1)
 
-        self.__irvt = Button(fullFrame, text = "Temperature - Time", bg='darkcyan', fg = 'white')
-        self.__irvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/temperature.csv"))
-        self.__irvt.pack(side=LEFT, pady=1, padx=1)
+        self.__etvt = Button(fullFrame, text = "Ex. Temp - Time", bg='darkcyan', fg = 'white', width = 12)
+        self.__etvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/temperature.csv"))
+        self.__etvt.grid(row = 0, column = 2, padx = 3, pady = 1)
 
-        self.__iacvt = Button(fullFrame, text = "IR Distance - Time", bg='darkcyan', fg = 'white')
-        self.__iacvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/IRdistance.csv"))
-        self.__iacvt.pack(side=LEFT, pady=1, padx=1)
+        self.__irvt = Button(fullFrame, text = "IR - Time", bg='darkcyan', fg = 'white', width = 10)
+        self.__irvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/IRdistance.csv"))
+        self.__irvt.grid(row = 0, column = 3, padx = 3, pady = 1)
 
-        self.__eacvt = Button(fullFrame, text = "Ex. Accel - Time", bg='darkcyan', fg = 'white')
+        self.__eacvt = Button(fullFrame, text = "Ex. Accel - Time", bg='darkcyan', fg = 'white', width = 15)
         self.__eacvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/acceleration.csv"))
-        self.__eacvt.pack(side=LEFT, pady=1, padx=1)
+        self.__eacvt.grid(row = 1, column = 1, padx = 3, pady = 3)
 
-        self.__tvt = Button(fullFrame, text = "Temp - Time", bg='darkcyan', fg = 'white')
-        self.__tvt.bind("<Button-1>", lambda ev: self.__setPath("/../DataFiles/altitude.csv"))
-        self.__tvt.pack(side=LEFT, pady=1, padx=1)
-        
-        
+        self.__iavt = Button(fullFrame, text = "In. Accel - Time", bg='darkcyan', fg = 'white', width = 15)
+        self.__iavt.bind("<Button-1>", lambda ev: self.__setPath("SECOND MPU"))
+        self.__iavt.grid(row = 1, column = 3, padx = 3)
+
+        self.__btvt = Button(fullFrame, text = "Bat. Temp - Time", bg='darkcyan', fg = 'white', width = 15)
+        self.__btvt.bind("<Button-1>", lambda ev: self.__setPath("BAT TEMP"))
+        self.__btvt.grid(row = 1, column = 2, padx = 3, pady = 3)
+
     def __setPath(self,filepath):
         self.__filepath = filepath
 
