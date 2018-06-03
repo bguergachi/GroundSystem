@@ -39,7 +39,7 @@ class Display:
         self.__master.geometry('{}x{}'.format(height, width))
 
         # To make window borderless
-        # master.overrideredirect(True)
+        master.overrideredirect(True)
 
 
         
@@ -78,7 +78,15 @@ class Display:
         self.__time.config(bd=1, relief=SUNKEN, width=61)
         self.__time.pack_propagate(False)
         self.__time.pack(side=TOP, anchor=W, pady=1, padx=3)
+        self.__time.bind("<ButtonPress-1>", self.__exitWindow())
         self.__getTime()
+
+    def __exitWindow(self):
+        # Prompt user with popup questioning decision to exit application
+        top = Toplevel(self.__master)
+        Message(top, text="Are You Sure You Want To Exit", fg = "red").pack(side=BOTTOM)
+        Button(top,text="Exit", command=top.destroy()).pack(side=RIGHT, anchor=S, pady=1, padx=3)
+        Button(top,text="Cancel", command=top.destroy()).pack(side=RIGHT, anchor=S, pady=1, padx=3)
 
     def __getTime(self):
         ## 12 hour format ##

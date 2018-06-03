@@ -135,12 +135,70 @@ class SerialCom:
             data = self.__serial.read().decode('utf-8')
             #save data to txt file
             self.__fileSaver.addToTelemetry(data)
-            if data=='\n':
+            if data=='\a':
                 print("Starting")
-                for n in range(0, 16):
-                    with self.lock:
-                        self.dataList.setOnIndex(n, self.__readline())
-                    #print(n)
+                with self.lock:
+                    self.dataList.setOnIndex(0, self.__readline())
+            elif data == '\b':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(1, self.__readline())
+            elif data == '\f':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(2, self.__readline())
+            elif data == '\n':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(3, self.__readline())
+            elif data == '\t':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(4, self.__readline())
+            elif data == '\v':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(5, self.__readline())
+            elif data == '\\':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(6, self.__readline())
+            elif data == '^':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(7, self.__readline())
+            elif data == '\'':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(8, self.__readline())
+            elif data == '\"':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(9, self.__readline())
+            elif data == '~':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(10, self.__readline())
+            elif data == '@':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(11, self.__readline())
+            elif data == '#':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(12, self.__readline())
+            elif data == '$':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(13, self.__readline())
+            elif data == '&':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(14, self.__readline())
+            elif data == '%':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(15, self.__readline())
 
             #Save Graph data to files
             self.__fileSaver.addToCSV(dataList)
