@@ -215,7 +215,11 @@ class SerialCom:
     def __readline(self):
         rv = ""
         while True:
-            ch = self.__serial.read().decode('utf-8')
+            try:
+                ch = self.__serial.read().decode('utf-8')
+            except UnicodeDecodeError:
+                print("That wasn't a char")
+                continue
             if ch=='\r':
                 print(rv)
                 self.lastTimeDataReceived = time.strftime("%I:%M:%S")

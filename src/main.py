@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter.messagebox
 import tkinter.font as tkfont
 from time import sleep
 import os, sys, random, socket
@@ -37,9 +38,9 @@ class Display:
         # Set window parameters
         self.__master.resizable(width=False, height=False)
         self.__master.geometry('{}x{}'.format(height, width))
-
+        #self.__master.update_idletasks()
         # To make window borderless
-        master.overrideredirect(True)
+        self.__master.overrideredirect(True)
 
 
         
@@ -74,24 +75,26 @@ class Display:
 
     def __printLabel(self):
         # Print label of time and time of last received message
-        self.__time = Label(self.__master)
-        self.__time.config(bd=1, relief=SUNKEN, width=61)
+        self.__timeFrame = Frame(self.__master)
+        self.__timeFrame.pack(side=TOP)
+        self.__time = Label(self.__timeFrame)
+        self.__time.config(bd=1, relief=SUNKEN, width=57)
         self.__time.pack_propagate(False)
-        self.__time.pack(side=TOP, anchor=W, pady=1, padx=3)
-        self.__time.bind("<ButtonPress-1>", self.__exitWindow())
+        self.__time.pack(side=RIGHT, anchor=NE, padx=3)
+        self.__exit = Label(self.__timeFrame,text="X",bg="red",relief=RAISED, height=1,width=1)
+        self.__exit.bind("<ButtonPress-1>", lambda ev: self.__exit.config(relief=SUNKEN))
+        self.__exit.bind("<ButtonRelease-1>", lambda ev: sys.exit())
+        self.__exit.pack_propagate(False)
+        self.__exit.pack(anchor=NW)
         self.__getTime()
+        
 
-    def __exitWindow(self):
-        # Prompt user with popup questioning decision to exit application
-        answer = self.__master.messagebox.askquestion("Exit?","Are you sure you would like to exit?")
-        if answer == 'yes':
-            sys.exit()
 
     def __getTime(self):
         ## 12 hour format ##
         currentTime = time.strftime("%I:%M:%S")  # Current time to display
         lastMesgTime = self.__serialData.lastTimeDataReceived  # Time of last message
-        self.__time.config(text="Time:  " + currentTime + "\t\t\t" + "Time of Last Message:  " + lastMesgTime)
+        self.__time.config(text="Time:  " + currentTime + "\t\t" + "Time of Last Message:  " + lastMesgTime)
         self.__master.after(10, self.__getTime)
 
     # ***************** All descriptive status data *****************
