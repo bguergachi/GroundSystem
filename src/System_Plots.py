@@ -86,6 +86,8 @@ class Plot:
 
         #ani = animation.FuncAnimation(figure, self.update, interval=250)
 
+        pullData.close()
+
 if __name__ == '__main__':
     root = Tk()
     root.title("System Plots")

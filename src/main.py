@@ -75,7 +75,7 @@ class Display:
     def __printLabel(self):
         # Print label of time and time of last received message
         self.__time = Label(self.__master)
-        self.__time.config(bd=1, relief=SUNKEN, width=61)
+        self.__time.config(bd=1, relief=RAISED, width=61)
         self.__time.pack_propagate(False)
         self.__time.pack(side=TOP, anchor=W, pady=1, padx=3)
         self.__time.bind("<ButtonPress-1>", self.__exitWindow())
@@ -83,10 +83,18 @@ class Display:
 
     def __exitWindow(self):
         # Prompt user with popup questioning decision to exit application
+        self.__time.config(relief=SUNKEN)
         top = Toplevel(self.__master)
+        top.resizable(width=False,height=False)
+        top.title("Exit")
+
+        def destoryButton():
+            top.destroy()
+            self.__time.config(relief=RAISED)
+
         Message(top, text="Are You Sure You Want To Exit", fg = "red").pack(side=BOTTOM)
-        Button(top,text="Exit", command=top.destroy()).pack(side=RIGHT, anchor=S, pady=1, padx=3)
-        Button(top,text="Cancel", command=top.destroy()).pack(side=RIGHT, anchor=S, pady=1, padx=3)
+        Button(top,text="Exit", command=sys.exit()).pack(side=RIGHT, anchor=S, pady=1, padx=3)
+        Button(top,text="Cancel", command=destoryButton()).pack(side=RIGHT, anchor=S, pady=1, padx=3)
 
     def __getTime(self):
         ## 12 hour format ##
