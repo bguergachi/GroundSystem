@@ -255,7 +255,7 @@ class Display:
 
     def __altimeterBagroundUpdate(self):
         self.__statusAltimeter.update()
-        self.__master.after(100,self.__altimeterBagroundUpdate)
+        self.__master.after(1000,self.__altimeterBagroundUpdate)
 
     # ****************** Methods used to get data **************
 

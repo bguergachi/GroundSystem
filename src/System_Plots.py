@@ -58,11 +58,15 @@ class Plot:
     def __setPath(self,filepath):
         self.__filepath = filepath
 
+    def __setUp(self):
+        pass
+
     # Function to read data from txt file
     def update(self):
-        print(self.__filepath)
-        pullData = open(os.path.dirname(os.path.realpath(__file__))+ self.__filepath,"r").read()
-
+        print("Opening .........."+self.__filepath)
+        file = open(os.path.dirname(os.path.realpath(__file__))+ self.__filepath,"r")
+        pullData = file.read()
+        
         dataList = pullData.split('\n')
         xList = []
         yList = []
@@ -72,12 +76,15 @@ class Plot:
                 xList.append(x)
                 yList.append(y)
 
-        figure = Figure(figsize=(5, 5), dpi=100)
-        a = figure.add_subplot(111)
+        figure = Figure(figsize=(5, 5), dpi=80)
+        self.__a = figure.add_subplot(111)
         figure.subplots_adjust(bottom=0.15)
 
-        a.clear()
-        a.plot(xList, yList)
+        try:
+            self.__a.clear()
+            self.__a.plot(xList, yList)
+        except:
+            pass
 
         canvas = FigureCanvasTkAgg(figure, self.__master)
         canvas.draw()
@@ -86,7 +93,7 @@ class Plot:
 
         #ani = animation.FuncAnimation(figure, self.update, interval=250)
 
-        pullData.close()
+        file.close()
 
 if __name__ == '__main__':
     root = Tk()
