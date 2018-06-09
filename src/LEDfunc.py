@@ -1,36 +1,37 @@
 import sys, os
-import RPi.GIPO as GPIO
+import RPi.GPIO as GPIO
 
 
-def setupLED(self):
+def setupLED():
+    GPIO.cleanup()
     GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(19, GPIO.OUT)
-    GPIO.setup(21, GPIO.OUT)
-    GPIO.setup(22, GPIO.OUT)
-    GPIO.setup(23, GPIO.OUT)
-    GPIO.setup(24, GPIO.OUT)
-    GPIO.setup(26, GPIO.OUT)
+    GPIO.setup(29, GPIO.OUT)
+    GPIO.setup(31, GPIO.OUT)
+    GPIO.setup(32, GPIO.OUT)
+    GPIO.setup(33, GPIO.OUT)
+    GPIO.setup(35, GPIO.OUT)
+    GPIO.setup(36, GPIO.OUT)
 
 
-def greenLED(self, switch):
-    GPIO.output(19, switch)
+def greenLED(switch):
+    GPIO.output(39, switch)
 
 
-def redLED(self, switch):
-    GPIO.output(21, switch)
+def redLED(switch):
+    GPIO.output(31, switch)
 
 
-def slowRGB1(self, switch):
-    GPIO.output(22, switch)
+def slowRGB1(switch):
+    GPIO.output(32, switch)
 
 
-def slowRGB2(self, switch):
-    GPIO.output(23, switch)
+def slowRGB2(switch):
+    GPIO.output(33, switch)
 
 
-def fastRGB1(self, switch):
-    GPIO.output(24, switch)
+def fastRGB1(switch):
+    GPIO.output(35, switch)
 
 
-def fastRGB2(self, switch):
-    GPIO.output(26, switch)
+def fastRGB2(switch):
+    GPIO.output(36, switch)
