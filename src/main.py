@@ -7,7 +7,7 @@ import os, sys, random, socket
 sys.path.append("..")
 from PIL import ImageTk, Image, ImageDraw
 import time
-import src.GPSMap as GPSMap, src.Status as Status, src.System_Plots as System_Plots, src.Settings as Settings, src.serialCOM as serialCOM
+import src.GPSMap as GPSMap, src.Status as Status, src.System_Plots as System_Plots, src.serialCOM as serialCOM, src.LEDfunc as LEDfunc
 import threading
 from queue import Queue
 
@@ -43,12 +43,21 @@ class Display:
         self.__master.overrideredirect(True)
 
 
-        
+        #Craete setup gpio pins for LEDs
+        LEDfunc.setupLED()
         
         # Make serial object
         self.__serialData = serialCOM.SerialCom(baudRate, 'ttyS0')
 
         self.__placeMainFrame()
+
+        # Turn on LED
+        LEDfunc.slowRGB1(1)
+
+        # Turn off other LEDs
+        LEDfunc.slowRGB2(0)
+        LEDfunc.fastRGB1(0)
+        LEDfunc.fastRGB2(0)
 
         # Load compass image and render image
         load = Image.open(os.path.dirname(os.path.realpath(__file__)) + "/../appImages/rocketry.png")
@@ -79,6 +88,7 @@ class Display:
         self.__timeFrame.pack(side=TOP)
         self.__time = Label(self.__timeFrame)
         self.__time.config(bd=1, relief=SUNKEN, width=57)
+        self.__time.bind("<ButtonPress-1>", lambda ev: self.__homeReturn())
         self.__time.pack_propagate(False)
         self.__time.pack(side=RIGHT, anchor=NE, padx=3)
         self.__exit = Label(self.__timeFrame,text="X",bg="red",relief=RAISED, height=1,width=1)
@@ -88,7 +98,16 @@ class Display:
         self.__exit.pack(anchor=NW)
         self.__getTime()
         
+    def __homeReturn(self):
+        self.__mainFrame.destroy()
+        # Load compass image and render image
+        load = Image.open(os.path.dirname(os.path.realpath(__file__)) + "/../appImages/rocketry.png")
+        load.thumbnail(size=(220, 435))
+        render = ImageTk.PhotoImage(load)
 
+        self.__img = Label(self.__mainFrame, image=render, bg=statusBackGround)
+        self.__img.image = render
+        self.__img.pack()
 
     def __getTime(self):
         ## 12 hour format ##
@@ -186,6 +205,14 @@ class Display:
         self.__mapBackgroundUpdate()
         self.__runMap.firstImage = 5
 
+        #Turn on LED
+        LEDfunc.slowRGB2(1)
+
+        #Turn off other LEDs
+        LEDfunc.slowRGB1(0)
+        LEDfunc.fastRGB1(0)
+        LEDfunc.fastRGB2(0)
+
         # Unbind when pushed
         self.__mapCoordinates.unbind("<ButtonPress-1>")
         self.__img.unbind("<ButtonPress-1>")
@@ -209,6 +236,14 @@ class Display:
         self.__placeMainFrame()
         self.__statusFrame = Status.Display(self.__mainFrame)
         self.__statusBackgroundUpdate()
+
+        # Turn on LED
+        LEDfunc.fastRGB1(1)
+
+        # Turn off other LEDs
+        LEDfunc.slowRGB1(0)
+        LEDfunc.slowRGB2(0)
+        LEDfunc.fastRGB2(0)
 
         # Unbind when pushed
         self.__statusStopWatch.unbind("<ButtonPress-1>")
@@ -240,6 +275,14 @@ class Display:
         self.__placeMainFrame()
         self.__statusAltimeter = System_Plots.Plot(self.__mainFrame)
         self.__altimeterBagroundUpdate()
+
+        # Turn on LED
+        LEDfunc.fastRGB2(1)
+
+        # Turn off other LEDs
+        LEDfunc.slowRGB1(0)
+        LEDfunc.slowRGB2(0)
+        LEDfunc.fastRGB1(0)
         
         # Unbind when pushed
         self.__altitudePressure.unbind("<ButtonPress-1>")

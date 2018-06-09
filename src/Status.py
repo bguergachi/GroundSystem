@@ -3,7 +3,7 @@ from tkinter import *
 # resolution of the screen
 height = 422
 width = 250
-statusBackGround = 'cyan'
+statusBackGround = 'light cyan'
 BackGround = 'red'
 
 
@@ -31,56 +31,56 @@ class Display:
     # Main Frame For labels
     def __labels(self):
         # Main frame
-        self.__labelFrame = Frame(self.__master, bg=statusBackGround)
+        self.__labelFrame = Frame(self.__master, bg='cyan')
         self.__labelFrame.pack(fill=BOTH)
 
         # Paint label of Speed
-        self.__accelSpeed = Label(self.__labelFrame, text="Speed:\t\t" + str(self.__speed), bg=statusBackGround)
+        self.__accelSpeed = Label(self.__labelFrame, text="Speed:\t\t" + str(self.__speed), bg=statusBackGround,anchor=W)
         self.__accelSpeed.pack_propagate(False)
-        self.__accelSpeed.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__accelSpeed.pack(side=TOP, anchor=W)
+        self.__accelSpeed.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__accelSpeed.pack(side=TOP, anchor=W, fill=X, pady =1)
 
         # Paint label of Altitude
-        self.__accelAltitude = Label(self.__labelFrame, text="Altitude:\t\t" + str(self.__altitude), bg=statusBackGround)
-        self.__accelAltitude.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__accelAltitude.pack(side=TOP, anchor=W)
+        self.__accelAltitude = Label(self.__labelFrame, text="Altitude:\t\t" + str(self.__altitude), bg=statusBackGround,anchor=W)
+        self.__accelAltitude.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__accelAltitude.pack(side=TOP, anchor=W, fill=X, pady =1)
 
         # Paint label of all axis of acceleration of rocket
         self.__accelerationOfRocket = Label(self.__labelFrame,
                                             text="Rocket Acc.\tX:  " + str(self.__accel[0]) + "\tY:  " + str(
-                                                self.__accel[1]) + "\tZ:  " + str(self.__accel[2]), bg=statusBackGround)
-        self.__accelerationOfRocket.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__accelerationOfRocket.pack(side=TOP, anchor=W)
+                                                self.__accel[1]) + "\tZ:  " + str(self.__accel[2]), bg=statusBackGround,anchor=W)
+        self.__accelerationOfRocket.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__accelerationOfRocket.pack(side=TOP, anchor=W, fill=X, pady =1)
 
         # Paint label of all axis of acceleration of payload
         self.__accelerationOfPayload = Label(self.__labelFrame,
                                              text="Payload Acc.\tX:  " + str(self.__accel1[0]) + "\tY:  " + str(
-                                                 self.__accel1[1]) + "\tZ:  " + str(self.__accel1[2]), bg=statusBackGround)
-        self.__accelerationOfPayload.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__accelerationOfPayload.pack(side=TOP, anchor=W)
+                                                 self.__accel1[1]) + "\tZ:  " + str(self.__accel1[2]), bg=statusBackGround,anchor=W)
+        self.__accelerationOfPayload.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__accelerationOfPayload.pack(side=TOP, anchor=W, fill=X, pady =1)
 
         # Paint label of pressure
         self.__pressureDisplay = Label(self.__labelFrame, text="Pressure:\t" + str(self.__pressure),
-                                       bg=statusBackGround)
-        self.__pressureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__pressureDisplay.pack(side=TOP, anchor=W)
+                                       bg=statusBackGround,anchor=W)
+        self.__pressureDisplay.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__pressureDisplay.pack(side=TOP, anchor=W, fill=X, pady =1)
 
         # Paint label of temperature
         self.__temperatureDisplay = Label(self.__labelFrame, text="Temperature:\t" + str(self.__temperature),
-                                          bg=statusBackGround)
-        self.__temperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__temperatureDisplay.pack(side=TOP, anchor=W)
+                                          bg=statusBackGround,anchor=W)
+        self.__temperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__temperatureDisplay.pack(side=TOP, anchor=W, fill=X, pady =1)
 
         # Paint label of temperature
         self.__batteryTemperatureDisplay = Label(self.__labelFrame, text="Battery Temperature:\t" + str(self.__batteryTemperature),
-                                          bg=statusBackGround)
-        self.__batteryTemperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__batteryTemperatureDisplay.pack(side=TOP, anchor=W)
+                                          bg=statusBackGround,anchor=W)
+        self.__batteryTemperatureDisplay.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__batteryTemperatureDisplay.pack(side=TOP, anchor=W, fill=X, pady =1)
 
         # Paint label of IR distance of payload
-        self.__IRDisplay = Label(self.__labelFrame, text="IR Distance:\t" + str(self.__IRdistance), bg=statusBackGround)
-        self.__IRDisplay.config(font=("arial", "12", "italic", "bold"), fg="white")
-        self.__IRDisplay.pack(side=TOP, anchor=W)
+        self.__IRDisplay = Label(self.__labelFrame, text="IR Distance:\t" + str(self.__IRdistance), bg=statusBackGround,anchor=W)
+        self.__IRDisplay.config(font=("arial", "12", "italic", "bold"), fg="black",relief=RIDGE)
+        self.__IRDisplay.pack(side=TOP, anchor=W, fill=X, pady =1)
 
     def update(self):
         self.__accelSpeed.config(text="Speed:\t\t\t" + str(self.__speed))

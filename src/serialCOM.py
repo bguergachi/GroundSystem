@@ -2,7 +2,7 @@ import serial
 import threading
 import time, sys
 #sys.path.append("..")
-import src.DataSave as DataSave
+import src.DataSave as DataSave, src.LEDfunc as LEDfunc
 
 
 #Class used to store temporally all values
@@ -138,67 +138,67 @@ class SerialCom:
             if data=='\a':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(0, self.__readline())
+                    self.dataList.setOnIndex(0, self.__readline(self.dataList.getOnIndex(0)))
             elif data == '\b':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(1, self.__readline())
+                    self.dataList.setOnIndex(1, self.__readline(self.dataList.getOnIndex(1)))
             elif data == '\f':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(2, self.__readline())
+                    self.dataList.setOnIndex(2, self.__readline(self.dataList.getOnIndex(2)))
             elif data == '\n':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(3, self.__readline())
+                    self.dataList.setOnIndex(3, self.__readline(self.dataList.getOnIndex(3)))
             elif data == '\t':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(4, self.__readline())
+                    self.dataList.setOnIndex(4, self.__readline(self.dataList.getOnIndex(4)))
             elif data == '\v':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(5, self.__readline())
+                    self.dataList.setOnIndex(5, self.__readline(self.dataList.getOnIndex(5)))
             elif data == '\\':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(6, self.__readline())
+                    self.dataList.setOnIndex(6, self.__readline(self.dataList.getOnIndex(6)))
             elif data == '^':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(7, self.__readline())
+                    self.dataList.setOnIndex(7, self.__readline(self.dataList.getOnIndex(7)))
             elif data == '\'':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(8, self.__readline())
+                    self.dataList.setOnIndex(8, self.__readline(self.dataList.getOnIndex(8)))
             elif data == '\"':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(9, self.__readline())
+                    self.dataList.setOnIndex(9, self.__readline(self.dataList.getOnIndex(9)))
             elif data == '~':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(10, self.__readline())
+                    self.dataList.setOnIndex(10, self.__readline(self.dataList.getOnIndex(10)))
             elif data == '@':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(11, self.__readline())
+                    self.dataList.setOnIndex(11, self.__readline(self.dataList.getOnIndex(11)))
             elif data == '#':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(12, self.__readline())
+                    self.dataList.setOnIndex(12, self.__readline(self.dataList.getOnIndex(12)))
             elif data == '$':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(13, self.__readline())
+                    self.dataList.setOnIndex(13, self.__readline(self.dataList.getOnIndex(13)))
             elif data == '&':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(14, self.__readline())
+                    self.dataList.setOnIndex(14, self.__readline(self.dataList.getOnIndex(14)))
             elif data == '%':
                 print("Starting")
                 with self.lock:
-                    self.dataList.setOnIndex(15, self.__readline())
+                    self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
 
             #Save Graph data to files
             self.__fileSaver.addToCSV(dataList)
@@ -212,7 +212,8 @@ class SerialCom:
 
 
     #This function will data char for what ever amount is needed
-    def __readline(self):
+    def __readline(self, old):
+        LEDfunc.greenLED(1)
         rv = ""
         while True:
             try:
@@ -221,10 +222,15 @@ class SerialCom:
                 print("That wasn't a char")
                 continue
             if ch=='\r':
+                LEDfunc.greenLED(0)
                 print(rv)
                 self.lastTimeDataReceived = time.strftime("%I:%M:%S")
                 self.lastTimeDataRecivedNumber = time.time()
-                return float(rv)
+                try:
+                    return float(rv)
+                except:
+                    return old
+
             rv += ch
 
             
