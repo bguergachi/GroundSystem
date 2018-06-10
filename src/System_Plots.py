@@ -4,7 +4,6 @@ import matplotlib  # Control / to comment out/in paragraphs
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-import pandas as pd
 import matplotlib.animation as animation
 import sys, os, time
 
@@ -62,14 +61,14 @@ class Plot:
         dataList = pullData.split('\n')
         xList = []
         yList = []
+        yListExtra = []
         if filepath == "/../DataFiles/accelerationBoth.csv":
-            df = pd.read_csv("/../DataFiles/accelerationBoth.csv", header=None)
-            figure = Figure(figsize=(5, 5), dpi=100)
-            a = figure.add_subplot(111)
-            figure.subplots_adjust(bottom=0.15)
-            df.plot(ax=a)
-
-
+            for eachLine in dataList:
+                if len(eachLine) > 1:
+                    x, y, z = eachLine.split(',')
+                    xList.append(x)
+                    yList.append(y)
+                    yListExtra.append(z)
         else:
             for eachLine in dataList:
                 if len(eachLine) > 1:
@@ -77,19 +76,19 @@ class Plot:
                     xList.append(x)
                     yList.append(y)
 
-            figure = Figure(figsize=(5, 5), dpi=100)
-            a = figure.add_subplot(111)
-            figure.subplots_adjust(bottom=0.15)
+        figure = Figure(figsize=(5, 5), dpi=100)
+        a = figure.add_subplot(111)
+        figure.subplots_adjust(bottom=0.15)
 
-            a.clear()
-            a.plot(xList, yList)
+        a.clear()
+        a.plot(xList, yList)
+        if filepath == "/../DataFiles/accelerationBoth.csv":
+            a.plot(xList,yListExtra)
 
         canvas = FigureCanvasTkAgg(figure, self.__master)
         canvas.draw()
         self.__widget = canvas.get_tk_widget()
         self.__widget.pack()
-
-
 
 
         # ani = animation.FuncAnimation(figure, self.update, interval=250)

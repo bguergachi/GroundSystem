@@ -71,7 +71,7 @@ class Display:
         self.__startDataThread()
 
     def __flashCycle(self):
-        if self.__cycleCounter == 3:
+        if self.__cycleCounter == 4:
             self.__cycleCounter = 0
 
         switch = [0,0,0,0]
@@ -82,7 +82,7 @@ class Display:
 
         self.__cycleCounter += 1
 
-        self.__master.after(100,self.__flashCycle)
+        self.__master.after(5000,self.__flashCycle)
 
     def __startDataThread(self):
         self.__serialData.startThread(self.__serialData.dataList)
