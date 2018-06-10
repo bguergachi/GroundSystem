@@ -61,8 +61,11 @@ class Map:
     def update(self):
         if __name__ == '__main__':
             self.__getRandomNumber()  # Gets random Coordinates for Path
-        self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
-        self.__load_mod_maps()  # Loads Modified Maps
+        try:
+            self.__choose_maps()  # Chooses Small or Large Map based on location of Crosshair and pastes Images over New Map files
+            self.__load_mod_maps()  # Loads Modified Maps
+        except:
+            pass
 
         # Loads Original Large and Small Map
     def __load_first_maps(self):
