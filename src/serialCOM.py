@@ -136,67 +136,67 @@ class SerialCom:
             print(data+"\n")
             #save data to txt file
             self.__fileSaver.addToTelemetry(data)
-            if data=='\a':
+            if data=='a':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(0, self.__readline(self.dataList.getOnIndex(0)))
-            elif data == '\b':
+            elif data == 'b':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(1, self.__readline(self.dataList.getOnIndex(1)))
-            elif data == '\f':
+            elif data == 'c':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(2, self.__readline(self.dataList.getOnIndex(2)))
-            elif data == 'q':
+            elif data == 'd':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(3, self.__readline(self.dataList.getOnIndex(3)))
-            elif data == '\t':
+            elif data == 'e':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(4, self.__readline(self.dataList.getOnIndex(4)))
-            elif data == '\v':
+            elif data == 'f':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(5, self.__readline(self.dataList.getOnIndex(5)))
-            elif data == '\\':
+            elif data == 'g':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(6, self.__readline(self.dataList.getOnIndex(6)))
-            elif data == '^':
+            elif data == 'h':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(7, self.__readline(self.dataList.getOnIndex(7)))
-            elif data == '\'':
+            elif data == 'i':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(8, self.__readline(self.dataList.getOnIndex(8)))
-            elif data == '\"':
+            elif data == 'j':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(9, self.__readline(self.dataList.getOnIndex(9)))
-            elif data == '~':
+            elif data == 'k':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(10, self.__readline(self.dataList.getOnIndex(10)))
-            elif data == '@':
+            elif data == 'l':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(11, self.__readline(self.dataList.getOnIndex(11)))
-            elif data == '#':
+            elif data == 'm':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(12, self.__readline(self.dataList.getOnIndex(12)))
-            elif data == '$':
+            elif data == 'n':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(13, self.__readline(self.dataList.getOnIndex(13)))
-            elif data == 'Y':
+            elif data == 'o':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(14, self.__readline(self.dataList.getOnIndex(14)))
-            elif data == 'Z':
+            elif data == 'p':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
