@@ -147,7 +147,7 @@ class SerialCom:
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(2, self.__readline(self.dataList.getOnIndex(2)))
-            elif data == '\n':
+            elif data == 'q':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(3, self.__readline(self.dataList.getOnIndex(3)))
@@ -222,6 +222,9 @@ class SerialCom:
                 print("That wasn't a char")
                 continue
             if ch=='\r':
+                continue
+
+            if ch=='\n':
                 LEDfunc.greenLED(0)
                 print(rv)
                 self.lastTimeDataReceived = time.strftime("%I:%M:%S")
