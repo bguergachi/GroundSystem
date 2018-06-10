@@ -136,6 +136,7 @@ class SerialCom:
             print(data+"\n")
             #save data to txt file
             self.__fileSaver.addToTelemetry(data)
+            self.__divider = 1
             if data=='a':
                 print("Starting")
                 with self.lock:
@@ -159,10 +160,12 @@ class SerialCom:
             elif data == 'f':
                 print("Starting")
                 with self.lock:
+                    self.__divider = 10**6
                     self.dataList.setOnIndex(5, self.__readline(self.dataList.getOnIndex(5)))
             elif data == 'g':
                 print("Starting")
                 with self.lock:
+                    self.__divider = 10**6
                     self.dataList.setOnIndex(6, self.__readline(self.dataList.getOnIndex(6)))
             elif data == 'h':
                 print("Starting")
@@ -232,7 +235,7 @@ class SerialCom:
                 self.lastTimeDataReceived = time.strftime("%I:%M:%S")
                 self.lastTimeDataRecivedNumber = time.time()
                 try:
-                    return float(rv)
+                    return float(rv)/self.__divider
                 except:
                     return old
 
