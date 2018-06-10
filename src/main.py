@@ -45,19 +45,17 @@ class Display:
 
         #Craete setup gpio pins for LEDs
         LEDfunc.setupLED()
+
+        LEDfunc.redLED(1)
         
         # Make serial object
         self.__serialData = serialCOM.SerialCom(baudRate, 'ttyS0')
 
         self.__placeMainFrame()
 
-        # Turn on LED
-        LEDfunc.slowRGB1(1)
-
-        # Turn off other LEDs
-        LEDfunc.slowRGB2(0)
-        LEDfunc.fastRGB1(0)
-        LEDfunc.fastRGB2(0)
+        #Start LED flash cycle
+        self.__cycleCounter = 0
+        self.__flashCycle()
 
         # Load compass image and render image
         load = Image.open(os.path.dirname(os.path.realpath(__file__)) + "/../appImages/rocketry.png")
@@ -71,6 +69,20 @@ class Display:
         self.__printLabel()
         self.__statusBar()
         self.__startDataThread()
+
+    def __flashCycle(self):
+        if self.__cycleCounter == 3:
+            self.__cycleCounter = 0
+
+        switch = [0,0,0,0]
+
+        switch[self.__cycleCounter] = 1
+
+        LEDfunc.rgbLED(switch)
+
+        self.__cycleCounter += 1
+
+        self.__master.after(100,self.__flashCycle)
 
     def __startDataThread(self):
         self.__serialData.startThread(self.__serialData.dataList)
@@ -205,13 +217,7 @@ class Display:
         self.__mapBackgroundUpdate()
         self.__runMap.firstImage = 5
 
-        #Turn on LED
-        LEDfunc.slowRGB2(1)
 
-        #Turn off other LEDs
-        LEDfunc.slowRGB1(0)
-        LEDfunc.fastRGB1(0)
-        LEDfunc.fastRGB2(0)
 
         # Unbind when pushed
         self.__mapCoordinates.unbind("<ButtonPress-1>")
@@ -236,14 +242,6 @@ class Display:
         self.__placeMainFrame()
         self.__statusFrame = Status.Display(self.__mainFrame)
         self.__statusBackgroundUpdate()
-
-        # Turn on LED
-        LEDfunc.fastRGB1(1)
-
-        # Turn off other LEDs
-        LEDfunc.slowRGB1(0)
-        LEDfunc.slowRGB2(0)
-        LEDfunc.fastRGB2(0)
 
         # Unbind when pushed
         self.__statusStopWatch.unbind("<ButtonPress-1>")
@@ -274,15 +272,7 @@ class Display:
         self.__mainFrame.destroy()
         self.__placeMainFrame()
         self.__statusAltimeter = System_Plots.Plot(self.__mainFrame)
-        self.__altimeterBagroundUpdate()
-
-        # Turn on LED
-        LEDfunc.fastRGB2(1)
-
-        # Turn off other LEDs
-        LEDfunc.slowRGB1(0)
-        LEDfunc.slowRGB2(0)
-        LEDfunc.fastRGB1(0)
+        #self.__altimeterBagroundUpdate()
         
         # Unbind when pushed
         self.__altitudePressure.unbind("<ButtonPress-1>")

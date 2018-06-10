@@ -77,6 +77,15 @@ class DataSave:
         self.__acceleration.write("\n")
         self.__acceleration.close()
 
+    def addToAccelerationBoth(self, dataObj):
+        self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/accelerationBoth.csv",
+                                   "a")
+        self.__acceleration.write(str(time.time() - self.__notTime))
+        self.__acceleration.write("," + str(dataObj.getOnIndex(15)))
+        self.__acceleration.write("," + str(dataObj.getOnIndex(12)))
+        self.__acceleration.write("\n")
+        self.__acceleration.close()
+
 
 if __name__ == '__main__':
     save = DataSave()
