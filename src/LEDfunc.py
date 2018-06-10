@@ -22,7 +22,7 @@ def redLED(switch):
 
 
 def rgbLED(switch):
-    GPIO.output(6, switch[0])
-    GPIO.output(5, switch[1])
+    GPIO.output(5, switch[0])
+    GPIO.output(6, switch[1])
     GPIO.output(12, switch[2])
     GPIO.output(13, switch[3])

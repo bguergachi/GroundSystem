@@ -191,11 +191,11 @@ class SerialCom:
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(13, self.__readline(self.dataList.getOnIndex(13)))
-            elif data == '&':
+            elif data == 'Y':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(14, self.__readline(self.dataList.getOnIndex(14)))
-            elif data == '%':
+            elif data == 'Z':
                 print("Starting")
                 with self.lock:
                     self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
