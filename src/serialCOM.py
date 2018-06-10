@@ -133,6 +133,7 @@ class SerialCom:
         print("Starting to read")
         while True:
             data = self.__serial.read().decode('utf-8')
+            print(data+"\n")
             #save data to txt file
             self.__fileSaver.addToTelemetry(data)
             if data=='\a':
@@ -209,6 +210,7 @@ class SerialCom:
             self.__fileSaver.addToAccelerationEx(dataList)
             self.__fileSaver.addToAccelerationIn(dataList)
             self.__fileSaver.addToBatTemperature(dataList)
+            self.__fileSaver.addToAccelerationBoth(dataList)
 
 
     #This function will data char for what ever amount is needed
