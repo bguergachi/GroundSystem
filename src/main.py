@@ -74,9 +74,9 @@ class Display:
         if self.__cycleCounter == 4:
             self.__cycleCounter = 0
 
-        switch = [0,0,0,0]
+        switch = [1,1,1,1]
 
-        switch[self.__cycleCounter] = 1
+        switch[self.__cycleCounter] = 0
 
         LEDfunc.rgbLED(switch)
 
