@@ -112,6 +112,7 @@ class Display:
         
     def __homeReturn(self):
         self.__mainFrame.destroy()
+        self.__placeMainFrame()
         # Load compass image and render image
         load = Image.open(os.path.dirname(os.path.realpath(__file__)) + "/../appImages/rocketry.png")
         load.thumbnail(size=(220, 435))
