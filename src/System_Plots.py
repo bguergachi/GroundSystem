@@ -59,7 +59,8 @@ class Plot:
         pullData = file.read()
 
         try:
-            self.__widget.destroy()
+            if self.__widget is not None:
+                self.__widget.destroy()
         except:
             print("Couldn't destroy")
 

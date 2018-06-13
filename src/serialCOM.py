@@ -104,10 +104,15 @@ class SerialCom:
 
     
     def __init__(self,baud,port):
+        #Set time for data file sampling
+        self.__sampleTime = None
+        
         #Create new data object to start saving data
         self.dataList = Data()
+
         #Create lock for threading
         self.lock = threading.Lock()
+
         #Set communication settings
         self.__baud = baud
         self.__port = port
@@ -137,87 +142,111 @@ class SerialCom:
             except UnicodeDecodeError:
                 print("That wasn't a char")
                 continue
+            except serial.serialutil.SerialException:
+                print("Device reports readiness to read but returned no data")
+                continue
+            
             print(data+"\n")
             #save data to txt file
             self.__fileSaver.addToTelemetry(data)
             self.__divider = 1
-            if data=='a':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(0, self.__readline(self.dataList.getOnIndex(0)))
-            elif data == 'b':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(1, self.__readline(self.dataList.getOnIndex(1)))
-            elif data == 'c':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(2, self.__readline(self.dataList.getOnIndex(2)))
-            elif data == 'd':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(3, self.__readline(self.dataList.getOnIndex(3)))
-            elif data == 'e':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(4, self.__readline(self.dataList.getOnIndex(4)))
-            elif data == 'f':
-                print("Starting")
-                with self.lock:
-                    self.__divider = 10**6
-                    self.dataList.setOnIndex(5, self.__readline(self.dataList.getOnIndex(5)))
-            elif data == 'g':
-                print("Starting")
-                with self.lock:
-                    self.__divider = 10**6
-                    self.dataList.setOnIndex(6, self.__readline(self.dataList.getOnIndex(6)))
-            elif data == 'h':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(7, self.__readline(self.dataList.getOnIndex(7)))
-            elif data == 'i':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(8, self.__readline(self.dataList.getOnIndex(8)))
-            elif data == 'j':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(9, self.__readline(self.dataList.getOnIndex(9)))
-            elif data == 'k':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(10, self.__readline(self.dataList.getOnIndex(10)))
-            elif data == 'l':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(11, self.__readline(self.dataList.getOnIndex(11)))
-            elif data == 'm':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(12, self.__readline(self.dataList.getOnIndex(12)))
-            elif data == 'n':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(13, self.__readline(self.dataList.getOnIndex(13)))
-            elif data == 'o':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(14, self.__readline(self.dataList.getOnIndex(14)))
-            elif data == 'p':
-                print("Starting")
-                with self.lock:
-                    self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
 
-            #Save Graph data to files
-            self.__fileSaver.addToCSV(dataList)
-            self.__fileSaver.addToAltitude(dataList)
-            self.__fileSaver.addToPressure(dataList)
-            self.__fileSaver.addToDistance(dataList)
-            self.__fileSaver.addToTemperature(dataList)
-            self.__fileSaver.addToAccelerationEx(dataList)
-            self.__fileSaver.addToAccelerationIn(dataList)
-            self.__fileSaver.addToBatTemperature(dataList)
-            self.__fileSaver.addToAccelerationBoth(dataList)
+            try:
+                if data=='a':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(0, self.__readline(self.dataList.getOnIndex(0)))
+                elif data == 'b':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(1, self.__readline(self.dataList.getOnIndex(1)))
+                elif data == 'c':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(2, self.__readline(self.dataList.getOnIndex(2)))
+                elif data == 'd':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(3, self.__readline(self.dataList.getOnIndex(3)))
+                elif data == 'e':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(4, self.__readline(self.dataList.getOnIndex(4)))
+                elif data == 'f':
+                    print("Starting")
+                    with self.lock:
+                        self.__divider = 10**6
+                        self.dataList.setOnIndex(5, self.__readline(self.dataList.getOnIndex(5)))
+                elif data == 'g':
+                    print("Starting")
+                    with self.lock:
+                        self.__divider = 10**6
+                        self.dataList.setOnIndex(6, self.__readline(self.dataList.getOnIndex(6)))
+                elif data == 'h':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(7, self.__readline(self.dataList.getOnIndex(7)))
+                elif data == 'i':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(8, self.__readline(self.dataList.getOnIndex(8)))
+                elif data == 'j':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(9, self.__readline(self.dataList.getOnIndex(9)))
+                elif data == 'k':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(10, self.__readline(self.dataList.getOnIndex(10)))
+                elif data == 'l':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(11, self.__readline(self.dataList.getOnIndex(11)))
+                elif data == 'm':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(12, self.__readline(self.dataList.getOnIndex(12)))
+                elif data == 'n':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(13, self.__readline(self.dataList.getOnIndex(13)))
+                elif data == 'o':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(14, self.__readline(self.dataList.getOnIndex(14)))
+                elif data == 'p':
+                    print("Starting")
+                    with self.lock:
+                        self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
+            except :
+                print("Device reports readiness to read but returned no data")
+                continue
+
+            timeT = time.time()
+
+            if (self.__sampleTime is None) or (timeT > self.__sampleTime + 2):
+                self.__sampleTime = timeT
+            
+            #print("Hi  ")
+            #print(str(timeT) + "\n")
+            #print(str(self.__sampleTime)+"\n")
+            
+            if self.__sampleTime <= timeT <= (self.__sampleTime + 1):
+                print("INSIDE")
+                
+                #Reset for next data sample
+                self.__sampleTime += 1
+                
+                #Save Graph data to files
+                self.__fileSaver.addToCSV(dataList)
+                self.__fileSaver.addToAltitude(dataList)
+                self.__fileSaver.addToPressure(dataList)
+                self.__fileSaver.addToDistance(dataList)
+                self.__fileSaver.addToTemperature(dataList)
+                self.__fileSaver.addToAccelerationEx(dataList)
+                self.__fileSaver.addToAccelerationIn(dataList)
+                self.__fileSaver.addToBatTemperature(dataList)
+                self.__fileSaver.addToAccelerationBoth(dataList)
 
 
     #This function will data char for what ever amount is needed

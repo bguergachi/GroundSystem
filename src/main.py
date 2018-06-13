@@ -57,6 +57,9 @@ class Display:
         self.__cycleCounter = 0
         self.__flashCycle()
 
+        #Alarm identifier for LED lighting function
+        self.__id = None
+    
         # Load compass image and render image
         load = Image.open(os.path.dirname(os.path.realpath(__file__)) + "/../appImages/rocketry.png")
         load.thumbnail(size=(220, 435))
@@ -70,7 +73,7 @@ class Display:
         self.__statusBar()
         self.__startDataThread()
 
-    def __flashCycle(self):
+    def __flashCycle(self):        
         if self.__cycleCounter == 4:
             self.__cycleCounter = 0
 
@@ -81,8 +84,9 @@ class Display:
         LEDfunc.rgbLED(switch)
 
         self.__cycleCounter += 1
-
-        self.__master.after(1000-(100*self.__cycleCounter),self.__flashCycle)
+        time = 5000/(1+(2.5)**(self.__cycleCounter - 2)) + 300
+        #print("Time LED:  "+str(time))
+        self.__master.after(int(time),self.__flashCycle)
 
     def __startDataThread(self):
         self.__serialData.startThread(self.__serialData.dataList)
