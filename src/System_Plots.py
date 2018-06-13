@@ -4,7 +4,7 @@ import matplotlib  # Control / to comment out/in paragraphs
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-import matplotlib.animation as animation
+import matplotlib.pyplot as plt
 import sys, os, time
 
 # Screen Resolution
@@ -85,9 +85,10 @@ class Plot:
         figure = Figure(figsize=(5, 5), dpi=100)
         a = figure.add_subplot(111)
         figure.subplots_adjust(bottom=0.15)
-
+        
         a.clear()
         a.plot(xList, yList)
+        a.gca().axes.get_xaxis().set_visible(False)
         if filepath == "/../DataFiles/accelerationBoth.csv":
             a.plot(xList,yListExtra)
 

@@ -3,7 +3,6 @@ import RPi.GPIO as GPIO
 
 
 def setupLED():
-    GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(5, GPIO.OUT)
     GPIO.setup(6, GPIO.OUT)
@@ -26,3 +25,7 @@ def rgbLED(switch):
     GPIO.output(6, switch[1])
     GPIO.output(12, switch[2])
     GPIO.output(13, switch[3])
+
+def cleanUp():
+    print("LEDs are clean")
+    GPIO.cleanup()

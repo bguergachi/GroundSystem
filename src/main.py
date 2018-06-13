@@ -47,18 +47,16 @@ class Display:
         LEDfunc.setupLED()
 
         LEDfunc.redLED(1)
-        
+
         # Make serial object
         self.__serialData = serialCOM.SerialCom(baudRate, 'ttyS0')
 
+        #Place main frame where items are to be displayed on
         self.__placeMainFrame()
 
         #Start LED flash cycle
         self.__cycleCounter = 0
         self.__flashCycle()
-
-        #Alarm identifier for LED lighting function
-        self.__id = None
     
         # Load compass image and render image
         load = Image.open(os.path.dirname(os.path.realpath(__file__)) + "/../appImages/rocketry.png")
@@ -72,6 +70,7 @@ class Display:
         self.__printLabel()
         self.__statusBar()
         self.__startDataThread()
+        self.__keepThreadAlive()
 
     def __flashCycle(self):        
         if self.__cycleCounter == 4:
@@ -89,7 +88,12 @@ class Display:
         self.__master.after(int(time),self.__flashCycle)
 
     def __startDataThread(self):
-        self.__serialData.startThread(self.__serialData.dataList)
+        self.__thread = self.__serialData.startThread(self.__serialData.dataList)
+
+    def __keepThreadAlive(self):
+        if not self.__thread.is_alive():
+            self.__thread = self.__serialData.startThread(self.__serialData.dataList)
+        self.__master.after(100,self.__keepThreadAlive)
 
     def __placeMainFrame(self):
         self.__mainFrame = Frame(self.__master, height=220, width=475, bg=statusBackGround)
@@ -103,13 +107,18 @@ class Display:
         self.__timeFrame = Frame(self.__master)
         self.__timeFrame.pack(side=TOP)
         self.__time = Label(self.__timeFrame)
-        self.__time.config(bd=1, relief=SUNKEN, width=57)
+        self.__time.config(bd=1, relief=SUNKEN, width=54)
         self.__time.bind("<ButtonPress-1>", lambda ev: self.__homeReturn())
         self.__time.pack_propagate(False)
         self.__time.pack(side=RIGHT, anchor=NE, padx=3)
-        self.__exit = Label(self.__timeFrame,text="X",bg="red",relief=RAISED, height=1,width=1)
+
+        def LEDexit(ev):
+            LEDfunc.cleanUp()
+            os._exit(0)
+
+        self.__exit = Label(self.__timeFrame,text="X",bg="red",relief=RAISED,width=4)
         self.__exit.bind("<ButtonPress-1>", lambda ev: self.__exit.config(relief=SUNKEN))
-        self.__exit.bind("<ButtonRelease-1>", lambda ev: sys.exit())
+        self.__exit.bind("<ButtonRelease-1>", lambda ev: LEDexit(ev))
         self.__exit.pack_propagate(False)
         self.__exit.pack(anchor=NW)
         self.__getTime()

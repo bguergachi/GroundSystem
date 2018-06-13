@@ -96,7 +96,7 @@ class Data:
         elif index == 15:
             self.accelZ1 = value
 
-
+t = None
 
 #Class to start serial communication
 class SerialCom:
@@ -128,10 +128,12 @@ class SerialCom:
             self.__start(self.dataList)
 
     def startThread(self,dataList):
-        print("Started Thread")
+        print("Starting Thread...")
         t = threading.Thread(target=self.__start, args= (dataList,))
         t.daemon = True
         t.start()
+        return t
+        
         
     def __start(self,dataList):
         #Start reading data
@@ -220,7 +222,7 @@ class SerialCom:
                         self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
             except :
                 print("Device reports readiness to read but returned no data")
-                continue
+                break
 
             timeT = time.time()
 
