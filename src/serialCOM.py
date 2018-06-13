@@ -132,7 +132,11 @@ class SerialCom:
         #Start reading data
         print("Starting to read")
         while True:
-            data = self.__serial.read().decode('utf-8')
+            try:
+                data = self.__serial.read().decode('utf-8')
+            except UnicodeDecodeError:
+                print("That wasn't a char")
+                continue
             print(data+"\n")
             #save data to txt file
             self.__fileSaver.addToTelemetry(data)

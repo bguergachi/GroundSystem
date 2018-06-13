@@ -82,7 +82,7 @@ class Display:
 
         self.__cycleCounter += 1
 
-        self.__master.after(500,self.__flashCycle)
+        self.__master.after(1000-(100*self.__cycleCounter),self.__flashCycle)
 
     def __startDataThread(self):
         self.__serialData.startThread(self.__serialData.dataList)

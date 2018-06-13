@@ -58,6 +58,11 @@ class Plot:
         file = open(os.path.dirname(os.path.realpath(__file__)) + filepath, "r")
         pullData = file.read()
 
+        try:
+            self.__widget.destroy()
+        except:
+            print("Couldn't destroy")
+
         dataList = pullData.split('\n')
         xList = []
         yList = []

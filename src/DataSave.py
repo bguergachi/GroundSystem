@@ -19,8 +19,9 @@ class DataSave:
         self.__acceleration = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/accelerationBoth.csv", "w")
 
 
-
     def addToTelemetry(self,string):
+        if (time.time()-self.__notTime)-int(time.time()-self.__notTime)
+
         self.__telemetry = open(os.path.dirname(os.path.realpath(__file__)) + "/../DataFiles/telemetry.txt", "a")
         self.__telemetry.write(" "+string)
         self.__telemetry.close()
