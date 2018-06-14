@@ -26,6 +26,9 @@ class Data:
         self.pressure = 0
         self.gpsDate = 0
 
+        self.lastTimeDataReceived = time.strftime("%I:%M:%S")
+        self.lastTimeDataRecivedNumber = time.time()
+
     #Get function to get value of stored data
     def getOnIndex(self,index):
         if index == 0:
@@ -98,17 +101,18 @@ class Data:
 
 t = None
 
+
 #Class to start serial communication
 class SerialCom:
     
 
     
-    def __init__(self,baud,port):
+    def __init__(self,baud,port,dataList,filesaver):
         #Set time for data file sampling
         self.__sampleTime = None
         
         #Create new data object to start saving data
-        self.dataList = Data()
+        self.dataList = dataList
 
         #Create lock for threading
         self.lock = threading.Lock()
@@ -121,9 +125,7 @@ class SerialCom:
                                       stopbits=serial.STOPBITS_ONE,
                                       bytesize=serial.EIGHTBITS)
 
-        self.lastTimeDataReceived = time.strftime("%I:%M:%S")
-        self.lastTimeDataRecivedNumber = time.time()
-        self.__fileSaver = DataSave.DataSave()
+        self.__fileSaver = filesaver
         if __name__ == '__main__':
             self.__start(self.dataList)
 
@@ -133,7 +135,6 @@ class SerialCom:
         t.daemon = True
         t.start()
         return t
-        
         
     def __start(self,dataList):
         #Start reading data
@@ -146,83 +147,80 @@ class SerialCom:
                 continue
             except serial.serialutil.SerialException:
                 print("Device reports readiness to read but returned no data")
-                continue
+                break
             
             print(data+"\n")
             #save data to txt file
             self.__fileSaver.addToTelemetry(data)
             self.__divider = 1
 
-            try:
-                if data=='a':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(0, self.__readline(self.dataList.getOnIndex(0)))
-                elif data == 'b':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(1, self.__readline(self.dataList.getOnIndex(1)))
-                elif data == 'c':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(2, self.__readline(self.dataList.getOnIndex(2)))
-                elif data == 'd':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(3, self.__readline(self.dataList.getOnIndex(3)))
-                elif data == 'e':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(4, self.__readline(self.dataList.getOnIndex(4)))
-                elif data == 'f':
-                    print("Starting")
-                    with self.lock:
-                        self.__divider = 10**6
-                        self.dataList.setOnIndex(5, self.__readline(self.dataList.getOnIndex(5)))
-                elif data == 'g':
-                    print("Starting")
-                    with self.lock:
-                        self.__divider = 10**6
-                        self.dataList.setOnIndex(6, self.__readline(self.dataList.getOnIndex(6)))
-                elif data == 'h':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(7, self.__readline(self.dataList.getOnIndex(7)))
-                elif data == 'i':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(8, self.__readline(self.dataList.getOnIndex(8)))
-                elif data == 'j':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(9, self.__readline(self.dataList.getOnIndex(9)))
-                elif data == 'k':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(10, self.__readline(self.dataList.getOnIndex(10)))
-                elif data == 'l':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(11, self.__readline(self.dataList.getOnIndex(11)))
-                elif data == 'm':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(12, self.__readline(self.dataList.getOnIndex(12)))
-                elif data == 'n':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(13, self.__readline(self.dataList.getOnIndex(13)))
-                elif data == 'o':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(14, self.__readline(self.dataList.getOnIndex(14)))
-                elif data == 'p':
-                    print("Starting")
-                    with self.lock:
-                        self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
-            except :
-                print("Device reports readiness to read but returned no data")
-                break
+            if data=='a':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(0, self.__readline(self.dataList.getOnIndex(0)))
+            elif data == 'b':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(1, self.__readline(self.dataList.getOnIndex(1)))
+            elif data == 'c':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(2, self.__readline(self.dataList.getOnIndex(2)))
+            elif data == 'd':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(3, self.__readline(self.dataList.getOnIndex(3)))
+            elif data == 'e':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(4, self.__readline(self.dataList.getOnIndex(4)))
+            elif data == 'f':
+                print("Starting")
+                with self.lock:
+                    self.__divider = 10**6
+                    self.dataList.setOnIndex(5, self.__readline(self.dataList.getOnIndex(5)))
+            elif data == 'g':
+                print("Starting")
+                with self.lock:
+                    self.__divider = 10**6
+                    self.dataList.setOnIndex(6, self.__readline(self.dataList.getOnIndex(6)))
+            elif data == 'h':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(7, self.__readline(self.dataList.getOnIndex(7)))
+            elif data == 'i':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(8, self.__readline(self.dataList.getOnIndex(8)))
+            elif data == 'j':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(9, self.__readline(self.dataList.getOnIndex(9)))
+            elif data == 'k':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(10, self.__readline(self.dataList.getOnIndex(10)))
+            elif data == 'l':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(11, self.__readline(self.dataList.getOnIndex(11)))
+            elif data == 'm':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(12, self.__readline(self.dataList.getOnIndex(12)))
+            elif data == 'n':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(13, self.__readline(self.dataList.getOnIndex(13)))
+            elif data == 'o':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(14, self.__readline(self.dataList.getOnIndex(14)))
+            elif data == 'p':
+                print("Starting")
+                with self.lock:
+                    self.dataList.setOnIndex(15, self.__readline(self.dataList.getOnIndex(15)))
+
 
             timeT = time.time()
 
@@ -251,7 +249,7 @@ class SerialCom:
                 self.__fileSaver.addToAccelerationBoth(dataList)
 
 
-    #This function will data char for what ever amount is needed
+    #This function will pick up data as chars for what ever amount is needed
     def __readline(self, old):
         LEDfunc.greenLED(1)
         rv = ""
@@ -267,8 +265,8 @@ class SerialCom:
             if ch=='\n':
                 LEDfunc.greenLED(0)
                 print(rv)
-                self.lastTimeDataReceived = time.strftime("%I:%M:%S")
-                self.lastTimeDataRecivedNumber = time.time()
+                self.dataList.lastTimeDataReceived = time.strftime("%I:%M:%S")
+                self.dataList.lastTimeDataRecivedNumber = time.time()
                 try:
                     return float(rv)/self.__divider
                 except:

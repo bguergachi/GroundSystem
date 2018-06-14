@@ -7,7 +7,7 @@ import os, sys, random, socket
 sys.path.append("..")
 from PIL import ImageTk, Image, ImageDraw
 import time
-import src.GPSMap as GPSMap, src.Status as Status, src.System_Plots as System_Plots, src.serialCOM as serialCOM, src.LEDfunc as LEDfunc
+import src.GPSMap as GPSMap, src.Status as Status, src.System_Plots as System_Plots, src.serialCOM as serialCOM, src.LEDfunc as LEDfunc, src.DataSave as DataSave
 import threading
 from queue import Queue
 
@@ -42,6 +42,11 @@ class Display:
         # To make window borderless
         self.__master.overrideredirect(True)
 
+        #Set up data saving to files
+        self.__dataList = serialCOM.Data()
+
+        #File saver to save data
+        self.__filesaver=DataSave.DataSave()
 
         #Craete setup gpio pins for LEDs
         LEDfunc.setupLED()
@@ -49,7 +54,7 @@ class Display:
         LEDfunc.redLED(1)
 
         # Make serial object
-        self.__serialData = serialCOM.SerialCom(baudRate, 'ttyS0')
+        self.__serialData = serialCOM.SerialCom(baudRate, 'ttyS0',self.__dataList,self.__filesaver)
 
         #Place main frame where items are to be displayed on
         self.__placeMainFrame()
@@ -88,11 +93,13 @@ class Display:
         self.__master.after(int(time),self.__flashCycle)
 
     def __startDataThread(self):
-        self.__thread = self.__serialData.startThread(self.__serialData.dataList)
+        self.__thread = self.__serialData.startThread(self.__dataList)
 
     def __keepThreadAlive(self):
+        print("Restarting data receive thread")
+        self.__serialData = serialCOM.SerialCom(baudRate, 'ttyS0',self.__dataList,self.__filesaver)
         if not self.__thread.is_alive():
-            self.__thread = self.__serialData.startThread(self.__serialData.dataList)
+            self.__thread = self.__serialData.startThread(self.__dataList)
         self.__master.after(100,self.__keepThreadAlive)
 
     def __placeMainFrame(self):
@@ -138,7 +145,7 @@ class Display:
     def __getTime(self):
         ## 12 hour format ##
         currentTime = time.strftime("%I:%M:%S")  # Current time to display
-        lastMesgTime = self.__serialData.lastTimeDataReceived  # Time of last message
+        lastMesgTime = self.__dataList.lastTimeDataReceived  # Time of last message
         self.__time.config(text="Time:  " + currentTime + "\t\t" + "Time of Last Message:  " + lastMesgTime)
         self.__master.after(10, self.__getTime)
 
@@ -185,7 +192,7 @@ class Display:
         self.__latitude_longitude.bind("<ButtonPress-1>", self.__changeFrameMap)
 
         # Paint stopwatch timer
-        self.__stopWatch = Label(self.__statusStopWatch, text= "%.5f" % (float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)) + " s", bg=statusBackGround,
+        self.__stopWatch = Label(self.__statusStopWatch, text= "%.5f" % (float(time.time())-float(self.__dataList.lastTimeDataRecivedNumber)) + " s", bg=statusBackGround,
                                  fg="black")
         self.__stopWatch.config(font=("times", 20))
         self.__stopWatch.pack(side=TOP, anchor=N)
@@ -215,8 +222,8 @@ class Display:
     def __updateStatus(self):
         self.__latitude_longitude.config(text="%.5f" % self.getgpsLat() + " ,\n" + "%.5f" % self.getgpsLong() + "")
         
-        self.__stopWatch.config(text= "%.5f" % (float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)) + " s")
-        #print(str(float(time.time())-float(self.__serialData.lastTimeDataRecivedNumber)))        
+        self.__stopWatch.config(text= "%.5f" % (float(time.time())-float(self.__dataList.lastTimeDataRecivedNumber)) + " s")
+        #print(str(float(time.time())-float(self.__dataList.lastTimeDataRecivedNumber)))        
         self.__altitude_pressure.config(text=str(self.getpressAlt()) + " m")
         
         self.__master.after(10,self.__updateStatus)
@@ -308,71 +315,71 @@ class Display:
 
     def getgpsLat(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.gpsLat
+            return self.__dataList.gpsLat
 
     def getgpsLong(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.gpsLong
+            return self.__dataList.gpsLong
 
     def getgpsSpeed(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.gpsSpeed
+            return self.__dataList.gpsSpeed
 
     def getgpsTime(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.gpsTime
+            return self.__dataList.gpsTime
 
     def gpsAlt(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.gpsAlt
+            return self.__dataList.gpsAlt
 
     def getaccelX(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelX
+            return self.__dataList.accelX
 
     def getaccelY(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelY
+            return self.__dataList.accelY
 
     def getaccelZ(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelZ
+            return self.__dataList.accelZ
 
     def getaccelX1(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelX1
+            return self.__dataList.accelX1
 
     def getaccelY1(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelY1
+            return self.__dataList.accelY1
 
     def getaccelZ1(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.accelZ1
+            return self.__dataList.accelZ1
 
     def getpressAlt(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.pressAlt
+            return self.__dataList.pressAlt
 
     def getpressTemp(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.pressTemp
+            return self.__dataList.pressTemp
 
     def gettempBattery(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.tempBattery
+            return self.__dataList.tempBattery
 
     def getstrainGauge(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.strainGauge
+            return self.__dataList.strainGauge
 
     def getIRdistance(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.IRdistance
+            return self.__dataList.IRdistance
 
     def getpressure(self):
         with self.__serialData.lock:
-            return self.__serialData.dataList.pressure
+            return self.__dataList.pressure
 
 
 if __name__ == '__main__':
