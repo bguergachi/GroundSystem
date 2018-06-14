@@ -212,7 +212,7 @@ class Display:
         self.__altitude_pressure.bind("<ButtonPress-1>", self.__changeFrameAltimeter)
 
         # Paint descriptive label of data
-        self.__title_of_data = Label(self.__altitudePressure, text="Altitude", bg=statusBackGround)
+        self.__title_of_data = Label(self.__altitudePressure, text="Plots", bg=statusBackGround)
         self.__title_of_data.config(font=("times", 18))
         self.__title_of_data.pack(side=TOP)
         self.__title_of_data.bind("<ButtonPress-1>", self.__changeFrameAltimeter)

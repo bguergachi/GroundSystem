@@ -8,7 +8,7 @@ import sys, os, time
 
 # Screen Resolution
 height = 422
-width = 250
+width = 270
 
 
 class Plot:

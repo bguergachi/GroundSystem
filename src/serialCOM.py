@@ -224,18 +224,18 @@ class SerialCom:
 
             timeT = time.time()
 
-            if (self.__sampleTime is None) or (timeT > self.__sampleTime + 2):
+            if (self.__sampleTime is None) or (timeT > self.__sampleTime + 3):
                 self.__sampleTime = timeT
             
             #print("Hi  ")
             #print(str(timeT) + "\n")
             #print(str(self.__sampleTime)+"\n")
             
-            if self.__sampleTime <= timeT <= (self.__sampleTime + 1):
+            if self.__sampleTime <= timeT <= (self.__sampleTime + 2):
                 print("INSIDE")
                 
                 #Reset for next data sample
-                self.__sampleTime += 1
+                self.__sampleTime += 2
                 
                 #Save Graph data to files
                 self.__fileSaver.addToCSV(dataList)
